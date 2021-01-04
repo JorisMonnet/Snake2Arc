@@ -67,7 +67,6 @@ namespace Sake2Arc{
             //refresh managment
             DispatcherTimer timer = new DispatcherTimer();
             timer.Tick += new EventHandler(TimerTick);
-
             //snakes speed
             timer.Interval = REFRESHDELAY;
             timer.Start();
@@ -75,20 +74,12 @@ namespace Sake2Arc{
             //keyboard managment
             this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
             AddFood();
-
-            addFoodOrPoison();
-            addFoodOrPoison();
-            addFoodOrPoison();
-            addFoodOrPoison();
-            addFoodOrPoison();
-            addFoodOrPoison();
-            addFoodOrPoison();
             addFoodOrPoison();
             addFoodOrPoison();
         }
 
 
-        private void DrawFoods()
+        private void DrawFoodsAndPoisons()
         {
             for(int i=0;i<foodPoints.Count;i++)
             {
@@ -128,7 +119,7 @@ namespace Sake2Arc{
         private void addFoodOrPoison()
         {
             int alea = rand.Next(0, 10);
-            if (alea % 4 == 0)
+            if (alea % 1 == 0)
             {
                 //malus
                 Point poisonPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
@@ -166,15 +157,54 @@ namespace Sake2Arc{
                 paintCanvas.Children.Add(snakeEllipse);
             }
         }
-
-        private void TimerTick(object sender, EventArgs e){
-
+        private void TimerTick(object sender, EventArgs e)
+        {
             paintCanvas.Children.Clear();
             snake1.UpdateSnake();
             snake2.UpdateSnake();
             DrawSnakes();
-            DrawFoods();
+            DrawFoodsAndPoisons();
             checkColisions();
+            checkFood(snake1);
+            checkPoison(snake1);
+            checkFood(snake2);
+            checkPoison(snake2);
+            
+        }
+
+        private void checkPoison(Snake snake)
+        {
+            Point head = snake.snakeBody[0];
+
+            foreach (Point p in poisonPoints)
+            {
+                if ((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
+                     (Math.Abs(p.Y - head.Y) < (SNAKETHICK)))
+                {
+                    snake.PoisonSnake(this);
+                    snake.PoisonSnake(this);//poison Twice to be punitive
+                    poisonPoints.Remove(p);
+                    addFoodOrPoison();
+                    break;
+                }
+            }
+        }
+
+        private void checkFood(Snake snake)
+        {
+            Point head = snake.snakeBody[0];
+
+            foreach (Point p in foodPoints)
+            {
+                if ((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
+                     (Math.Abs(p.Y - head.Y) < (SNAKETHICK)))
+                {
+                    snake.Eat();
+                    foodPoints.Remove(p);
+                    addFoodOrPoison();
+                    break;
+                }
+            }
         }
 
         private void checkColisions()
@@ -229,7 +259,7 @@ namespace Sake2Arc{
                 || snake.snakeBody[0].Y<0+SNAKETHICK 
                 || snake.snakeBody[0].Y > 450 - 2*SNAKETHICK)
             {
-                EndGame(snake.snakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake" + " snake");
+                EndGame(snake.snakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake");
             }
         }
 
@@ -269,8 +299,19 @@ namespace Sake2Arc{
             }
         }
 
-        private void EndGame(String s){
+        public void EndGame(String s){
             MessageBox.Show(s+" made a mistake ! ","Snake2Arc Over",MessageBoxButton.OK,MessageBoxImage.Hand);
+            this.Close();
+        }
+
+        private void WindowMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        
+        private void BtnCloseClick(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }

@@ -14,15 +14,13 @@ namespace Sake2Arc{
     {
         public List<Point> snakeBody;
         public Brush snakeColor;
-        public int snakeLen;
         private int direction = -1;
-
+        public int score;
 
         public Snake(Brush color,bool oneOrTwo)
         {
             this.snakeColor = color;
             this.snakeBody = new List<Point>();
-            this.snakeLen = 5;
             if (oneOrTwo)
             {
                 snakeBody.Add(new Point(100, 100));
@@ -60,6 +58,20 @@ namespace Sake2Arc{
                 newBody.Add(p);
             }
             snakeBody = newBody;
+            score = snakeBody.Count;
+        }
+
+        public void PoisonSnake(GameWindow gW)
+        {
+            if (snakeBody.Count - 1 > 0) { 
+            this.snakeBody.RemoveAt(snakeBody.Count - 1);
+            UpdateSnake();
+            }
+            else
+            {
+                gW.EndGame(snakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake" );
+
+            }
         }
 
         public void Eat()
