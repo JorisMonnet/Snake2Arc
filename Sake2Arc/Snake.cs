@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,6 @@ namespace Sake2Arc{
         public Brush snakeColor;
         public int snakeLen;
         private int direction = -1;
-        private int oldDirection = -1;
 
 
         public Snake(Brush color,bool oneOrTwo)
@@ -87,9 +87,15 @@ namespace Sake2Arc{
         }
 
         public void ChangeSnakeDirection(DIRECTION dir){
-            if ((int)dir != this.oldDirection){
+            bool valid = false;
+            if(dir==DIRECTION.DOWN && snakeBody[1].Y <= snakeBody[0].Y) { valid = true; }
+            if(dir == DIRECTION.UP && snakeBody[1].Y >= snakeBody[0].Y) { valid = true; }
+            if(dir == DIRECTION.LEFT && snakeBody[1].X >= snakeBody[0].X){ valid = true; }
+            if(dir == DIRECTION.RIGHT && snakeBody[1].X <= snakeBody[0].X){ valid = true; }
+
+            if (valid)
+            {
                 this.direction = (int)dir;
-                this.oldDirection = this.direction;
             }
         }
     }
