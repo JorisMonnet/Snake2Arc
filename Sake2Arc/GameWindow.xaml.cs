@@ -311,8 +311,26 @@ namespace Sake2Arc{
         }
 
         public void EndGame(String s="BG "){
-            MessageBox.Show(s+" made a mistake ! ","Snake2Arc Over",MessageBoxButton.OK,MessageBoxImage.Hand);
-            this.Close();
+            int result = (int)MessageBox.Show(s+" made a mistake ! \n Wanna Play Again ? ","Snake2Arc Over",MessageBoxButton.YesNo,MessageBoxImage.Information);
+            if (result == 6){//for yes
+                this.Restart();
+            }
+            else{
+                this.Close();
+            }
+        }
+
+        private void Restart()
+        {
+            if (IsNotAlone){
+                snake2.Reset(IsNotAlone);
+            }
+            snake1.Reset(IsNotAlone);
+            foodPoints.Clear();
+            poisonPoints.Clear();
+            AddFood();
+            AddFoodOrPoison();
+            AddFoodOrPoison();
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)

@@ -109,5 +109,18 @@ namespace Sake2Arc{
                 this.direction = (int)dir;
             }
         }
+
+        internal void Reset(bool oneOrTwo)
+        {
+            SnakeBody.Clear();
+            if (!oneOrTwo){
+                SnakeBody.Add(new Point(100, 100));
+                SnakeBody.Add(new Point(100 + GameWindow.SNAKETHICK, 100));
+            }
+            else{
+                SnakeBody.Add(new Point(300, 300));
+                SnakeBody.Add(new Point(300 + GameWindow.SNAKETHICK, 300));
+            }
+        }
     }
 }
