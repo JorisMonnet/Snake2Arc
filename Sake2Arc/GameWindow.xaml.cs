@@ -114,18 +114,21 @@ namespace Sake2Arc{
             if (alea % 4 == 0 && foodPoints.Count!=0)
             {
                 //malus
-                Point poisonPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
+                Point poisonPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
                 poisonPoints.Add(poisonPoint);
             }
             else
             {
-                Point foodPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
+                Point foodPoint = new Point(SnakeCeiling(rand.Next(0+SNAKETHICK, (int)(paintCanvas.Width-SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
                 foodPoints.Add(foodPoint);
             }
         }
+        private int SnakeCeiling(int entry)
+        {
+            return (int)Math.Ceiling(entry /(SNAKETHICK*1.0)) * SNAKETHICK;
+        }
         private void AddFood() {
-            Point foodPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
-            
+            Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
             foodPoints.Add(foodPoint);
         }
 
