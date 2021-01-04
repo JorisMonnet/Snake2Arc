@@ -49,7 +49,6 @@ namespace Sake2Arc{
 
         public GameWindow() {
             InitializeComponent();
-
             IsNotAlone = false;//set To TRUE to with 2 snakes
 
             snake1 = new Snake(Brushes.BlueViolet, true);
@@ -169,10 +168,10 @@ namespace Sake2Arc{
                 CheckPoison(snake2);
             }
             if (IsNotAlone) {
-                scoreBoard.Text = "- Score : Player1(purple)="+snake1.Score+"  | Player2(green)="+snake2.Score;
+                scoreBoard.Text = "- Score : Player1(purple)="+snake1.Score+"  | Player2(green)="+snake2.Score+" -";
              }
             else{
-                scoreBoard.Text = "- Score : Player1(purple)=" + snake1.Score;
+                scoreBoard.Text = "- Score : Player1(purple)=" + snake1.Score + " -";
             }
         }
 
