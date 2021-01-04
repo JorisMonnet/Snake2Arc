@@ -12,24 +12,24 @@ using System.Windows.Shapes;
 namespace Sake2Arc{
     class Snake
     {
-        public List<Point> snakeBody;
-        public Brush snakeColor;
+        public List<Point> SnakeBody { get; set; }
+        public Brush SnakeColor { get; set; }
         private int direction = -1;
-        public int score;
+        public int Score { get; set; }
 
         public Snake(Brush color,bool oneOrTwo)
         {
-            this.snakeColor = color;
-            this.snakeBody = new List<Point>();
+            this.SnakeColor = color;
+            this.SnakeBody = new List<Point>();
             if (oneOrTwo)
             {
-                snakeBody.Add(new Point(100, 100));
-                snakeBody.Add(new Point(100 + GameWindow.SNAKETHICK, 100));
+                SnakeBody.Add(new Point(100, 100));
+                SnakeBody.Add(new Point(100 + GameWindow.SNAKETHICK, 100));
             }
             else
             {   
-                snakeBody.Add(new Point(300, 300));
-                snakeBody.Add(new Point(300 + GameWindow.SNAKETHICK, 300));
+                SnakeBody.Add(new Point(300, 300));
+                SnakeBody.Add(new Point(300 + GameWindow.SNAKETHICK, 300));
             }
         }
 
@@ -38,72 +38,72 @@ namespace Sake2Arc{
             List<Point> newBody = new List<Point>();
             if (direction == (int)DIRECTION.UP)
             {
-                newBody.Add(new Point(snakeBody[0].X,snakeBody[0].Y-GameWindow.SNAKETHICK));
+                newBody.Add(new Point(SnakeBody[0].X,SnakeBody[0].Y-GameWindow.SNAKETHICK));
             }
             else if (direction == (int)DIRECTION.DOWN)
             {
-                newBody.Add(new Point(snakeBody[0].X, snakeBody[0].Y+ GameWindow.SNAKETHICK));
+                newBody.Add(new Point(SnakeBody[0].X, SnakeBody[0].Y+ GameWindow.SNAKETHICK));
             }
             else if (direction == (int)DIRECTION.LEFT)
             {
-                newBody.Add(new Point(snakeBody[0].X- GameWindow.SNAKETHICK, snakeBody[0].Y));
+                newBody.Add(new Point(SnakeBody[0].X- GameWindow.SNAKETHICK, SnakeBody[0].Y));
             }
             else if (direction == (int)DIRECTION.RIGHT)
             {
-                newBody.Add(new Point(snakeBody[0].X + GameWindow.SNAKETHICK, snakeBody[0].Y));
+                newBody.Add(new Point(SnakeBody[0].X + GameWindow.SNAKETHICK, SnakeBody[0].Y));
             }
-            snakeBody.RemoveAt(snakeBody.Count-1);
-            foreach(Point p in snakeBody)
+            SnakeBody.RemoveAt(SnakeBody.Count-1);
+            foreach(Point p in SnakeBody)
             {
                 newBody.Add(p);
             }
-            snakeBody = newBody;
-            score = snakeBody.Count;
+            SnakeBody = newBody;
+            Score = SnakeBody.Count;
         }
 
         public void PoisonSnake(GameWindow gW)
         {
-            if (snakeBody.Count - 1 > 0) { 
-            this.snakeBody.RemoveAt(snakeBody.Count - 1);
+            if (SnakeBody.Count - 1 > 0) { 
+            this.SnakeBody.RemoveAt(SnakeBody.Count - 1);
             UpdateSnake();
             }
             else
             {
-                gW.EndGame(snakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake" );
+                gW.EndGame(SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake" );
 
             }
         }
 
         public void Eat()
         {
-            if(snakeBody[snakeBody.Count - 1].X > snakeBody[snakeBody.Count - 2].X)
+            if(SnakeBody[SnakeBody.Count - 1].X > SnakeBody[SnakeBody.Count - 2].X)
             {
                 //cas on dernier a droite
-                this.snakeBody.Add(new Point(snakeBody[snakeBody.Count - 1].X+GameWindow.SNAKETHICK, snakeBody[snakeBody.Count - 1].Y));
+                this.SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X+GameWindow.SNAKETHICK, SnakeBody[SnakeBody.Count - 1].Y));
             }
-            else if (snakeBody[snakeBody.Count - 1].X < snakeBody[snakeBody.Count - 2].X)
+            else if (SnakeBody[SnakeBody.Count - 1].X < SnakeBody[SnakeBody.Count - 2].X)
             {
                 //cas on est dernier sur la gauche
-                this.snakeBody.Add(new Point(snakeBody[snakeBody.Count - 1].X-GameWindow.SNAKETHICK, snakeBody[snakeBody.Count - 1].Y));
+                this.SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X-GameWindow.SNAKETHICK, SnakeBody[SnakeBody.Count - 1].Y));
             }
-            else if (snakeBody[snakeBody.Count - 1].Y < snakeBody[snakeBody.Count - 2].Y)
+            else if (SnakeBody[SnakeBody.Count - 1].Y < SnakeBody[SnakeBody.Count - 2].Y)
             {
                 //cas on est dernier en haut
-                this.snakeBody.Add(new Point(snakeBody[snakeBody.Count - 1].X , snakeBody[snakeBody.Count - 1].Y- GameWindow.SNAKETHICK));
+                this.SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X , SnakeBody[SnakeBody.Count - 1].Y- GameWindow.SNAKETHICK));
             }
-            else if (snakeBody[snakeBody.Count - 1].Y > snakeBody[snakeBody.Count - 2].Y)
+            else if (SnakeBody[SnakeBody.Count - 1].Y > SnakeBody[SnakeBody.Count - 2].Y)
             {
                 //cas on est dernier  en bas
-                this.snakeBody.Add(new Point(snakeBody[snakeBody.Count - 1].X , snakeBody[snakeBody.Count - 1].Y + GameWindow.SNAKETHICK));
+                this.SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X , SnakeBody[SnakeBody.Count - 1].Y + GameWindow.SNAKETHICK));
             }
         }
 
         public void ChangeSnakeDirection(DIRECTION dir){
             bool valid = false;
-            if(dir==DIRECTION.DOWN && snakeBody[1].Y <= snakeBody[0].Y) { valid = true; }
-            if(dir == DIRECTION.UP && snakeBody[1].Y >= snakeBody[0].Y) { valid = true; }
-            if(dir == DIRECTION.LEFT && snakeBody[1].X >= snakeBody[0].X){ valid = true; }
-            if(dir == DIRECTION.RIGHT && snakeBody[1].X <= snakeBody[0].X){ valid = true; }
+            if(dir==DIRECTION.DOWN && SnakeBody[1].Y <= SnakeBody[0].Y) { valid = true; }
+            if(dir == DIRECTION.UP && SnakeBody[1].Y >= SnakeBody[0].Y) { valid = true; }
+            if(dir == DIRECTION.LEFT && SnakeBody[1].X >= SnakeBody[0].X){ valid = true; }
+            if(dir == DIRECTION.RIGHT && SnakeBody[1].X <= SnakeBody[0].X){ valid = true; }
 
             if (valid)
             {
