@@ -63,14 +63,13 @@ namespace Sake2Arc{
 
         public void PoisonSnake(GameWindow gW)
         {
-            if (SnakeBody.Count - 1 > 0) { 
+            if (SnakeBody.Count - 2 > 0) { 
             this.SnakeBody.RemoveAt(SnakeBody.Count - 1);
             UpdateSnake();
             }
             else
             {
                 gW.EndGame(SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake" );
-
             }
         }
 
@@ -108,6 +107,19 @@ namespace Sake2Arc{
             if (valid)
             {
                 this.direction = (int)dir;
+            }
+        }
+
+        internal void Reset(bool oneOrTwo)
+        {
+            SnakeBody.Clear();
+            if (!oneOrTwo){
+                SnakeBody.Add(new Point(100, 100));
+                SnakeBody.Add(new Point(100 + GameWindow.SNAKETHICK, 100));
+            }
+            else{
+                SnakeBody.Add(new Point(300, 300));
+                SnakeBody.Add(new Point(300 + GameWindow.SNAKETHICK, 300));
             }
         }
     }

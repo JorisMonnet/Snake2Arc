@@ -29,7 +29,7 @@ namespace Sake2Arc{
     public partial class GameWindow : Window{
 
         public bool IsNotAlone { get; set; }
-
+        private bool IsDisplayingEnd { get; set; }
         //things to eat
         private readonly List<Point> foodPoints = new List<Point>();
         private readonly List<Point> poisonPoints = new List<Point>();
@@ -49,9 +49,8 @@ namespace Sake2Arc{
 
         public GameWindow() {
             InitializeComponent();
-
             IsNotAlone = false;//set To TRUE to with 2 snakes
-
+            IsDisplayingEnd = false;
             snake1 = new Snake(Brushes.BlueViolet, true);
             if (IsNotAlone) {
                 snake2 = new Snake(Brushes.DarkGreen, false);
@@ -156,8 +155,7 @@ namespace Sake2Arc{
         {
             paintCanvas.Children.Clear();
             snake1.UpdateSnake();
-            if (IsNotAlone)
-            {
+            if (IsNotAlone){
                 snake2.UpdateSnake();
             }
             DrawSnakes();
@@ -165,10 +163,15 @@ namespace Sake2Arc{
             CheckColisions();
             CheckFood(snake1);
             CheckPoison(snake1);
-            if (IsNotAlone)
-            {
+            if (IsNotAlone) {
                 CheckFood(snake2);
                 CheckPoison(snake2);
+            }
+            if (IsNotAlone) {
+                scoreBoard.Text = "- Score : Player1(purple)="+snake1.Score+"  | Player2(green)="+snake2.Score+" -";
+             }
+            else{
+                scoreBoard.Text = "- Score : Player1(purple)=" + snake1.Score + " -";
             }
         }
 
@@ -226,7 +229,9 @@ namespace Sake2Arc{
                     if ((Math.Abs(p.X - head1.X) < (SNAKETHICK)) &&
                          (Math.Abs(p.Y - head1.Y) < (SNAKETHICK)))
                     {
-                        EndGame("Purple  snake");
+                        if (!IsDisplayingEnd) { 
+                            EndGame("Purple  snake");
+                        }
                         break;
                     }
                 }
@@ -235,7 +240,9 @@ namespace Sake2Arc{
                     if ((Math.Abs(p.X - head2.X) < (SNAKETHICK)) &&
                          (Math.Abs(p.Y - head2.Y) < (SNAKETHICK)))
                     {
-                        EndGame("Green  snake");
+                        if (!IsDisplayingEnd){
+                            EndGame("Green  snake");
+                        }
                         break;
                     }
                 }
@@ -252,7 +259,9 @@ namespace Sake2Arc{
                 if ((Math.Abs(point.X - head.X) < (SNAKETHICK)) &&
                      (Math.Abs(point.Y - head.Y) < (SNAKETHICK)))
                 {
-                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple  snake" : "Green  snake");
+                    if (!IsDisplayingEnd){
+                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple  snake" : "Green  snake");
+                    }
                     break;
                 }
             }
@@ -265,7 +274,9 @@ namespace Sake2Arc{
                 || snake.SnakeBody[0].Y<0+SNAKETHICK 
                 || snake.SnakeBody[0].Y > 450 - 2*SNAKETHICK)
             {
-                EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake");
+                if (!IsDisplayingEnd){
+                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake");
+                }
             }
         }
 
@@ -308,8 +319,27 @@ namespace Sake2Arc{
         }
 
         public void EndGame(String s="BG "){
-            MessageBox.Show(s+" made a mistake ! ","Snake2Arc Over",MessageBoxButton.OK,MessageBoxImage.Hand);
-            this.Close();
+            int result = (int)MessageBox.Show(s+" made a mistake ! \n Wanna Play Again ? ","Snake2Arc Over",MessageBoxButton.YesNo,MessageBoxImage.Information);
+            if (result == 6){//for yes
+                this.Restart();
+            }
+            else{
+                this.Close();
+            }
+        }
+
+        private void Restart()
+        {
+            if (IsNotAlone){
+                snake2.Reset(IsNotAlone);
+            }
+            snake1.Reset(IsNotAlone);
+            foodPoints.Clear();
+            poisonPoints.Clear();
+            AddFood();
+            AddFoodOrPoison();
+            AddFoodOrPoison();
+            IsDisplayingEnd = false;
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
