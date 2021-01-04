@@ -127,8 +127,52 @@ namespace Sake2Arc{
 
         }
 
-        private void OnButtonKeyDown(object sender, EventArgs e){
+        private void OnButtonKeyDown(object sender, KeyEventArgs e){
+            switch (e.Key)
+            {
+                //player1
+                case Key.Down:
+                    if (oldDirectionSake1 != (int)DIRECTION.UP)
+                        directionSake1 = (int)DIRECTION.DOWN;
+                    break;
+                case Key.Up:
+                    if (oldDirectionSake1 != (int)DIRECTION.DOWN)
+                        directionSake1 = (int)DIRECTION.UP;
+                    break;
+                case Key.Left:
+                    if (oldDirectionSake1 != (int)DIRECTION.RIGHT)
+                        directionSake1 = (int)DIRECTION.LEFT;
+                    break;
+                case Key.Right:
+                    if (oldDirectionSake1 != (int)DIRECTION.LEFT)
+                        directionSake1 = (int)DIRECTION.RIGHT;
+                    break;
 
+                //player2
+                case Key.S:
+                    if (oldDirectionSake2 != (int)DIRECTION.UP)
+                        directionSake2 = (int)DIRECTION.DOWN;
+                    break;
+                case Key.Z:
+                    if (oldDirectionSake2 != (int)DIRECTION.DOWN)
+                        directionSake2 = (int)DIRECTION.UP;
+                    break;
+                case Key.Q:
+                    if (oldDirectionSake2 != (int)DIRECTION.RIGHT)
+                        directionSake2 = (int)DIRECTION.LEFT;
+                    break;
+                case Key.D:
+                    if (oldDirectionSake2 != (int)DIRECTION.LEFT)
+                        directionSake2 = (int)DIRECTION.RIGHT;
+                    break;
+            }
+            oldDirectionSake1 = directionSake1;
+            oldDirectionSake2 = directionSake2;
+        }
+
+        private void EndOver(){
+            MessageBox.Show("Some One Lose","Snake2Arc Over",MessageBoxButton.OK,MessageBoxImage.Hand);
+            this.Close();
         }
     }
 }
