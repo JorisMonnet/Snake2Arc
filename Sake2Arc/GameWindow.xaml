@@ -5,15 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sake2Arc"
         mc:Ignorable="d"
-        Title="Snake2Arc" Height="500" Width="600">
-    <Grid Background="Black">
+        Title="Snake2Arc" Height="475" Width="575" ResizeMode="NoResize" WindowStyle="None" MouseDown="WindowMouseDown">
+    <Grid Background="Gray">
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Consolas" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="FontWeight" Value="Bold" />
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Canvas Name="paintCanvas" Background="White"
-                Grid.Column="1" HorizontalAlignment="Stretch" MaxHeight="450" MaxWidth="550">
-            
+        <Canvas Name="paintCanvas" Background="Black"
+                        Grid.Column="1" HorizontalAlignment="Stretch" MaxHeight="450" MaxWidth="550">
+
         </Canvas>
     </Grid>
 </Window>
