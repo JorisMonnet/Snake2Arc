@@ -119,7 +119,7 @@ namespace Sake2Arc{
         private void addFoodOrPoison()
         {
             int alea = rand.Next(0, 10);
-            if (alea % 1 == 0)
+            if (alea % 4 == 0)
             {
                 //malus
                 Point poisonPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
