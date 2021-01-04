@@ -31,6 +31,7 @@ namespace Sake2Arc{
         //bool to adapt code
         public bool IsNotAlone { get; set; }
         private bool IsDisplayingEnd { get; set; }
+        private bool IsPaused { get; set; }
         //things to eat
         private readonly List<Point> foodPoints = new List<Point>();
         private readonly List<Point> poisonPoints = new List<Point>();
@@ -56,6 +57,7 @@ namespace Sake2Arc{
             InitializeComponent();
             IsNotAlone = false;//set To TRUE to with 2 snakes
             IsDisplayingEnd = false;
+            IsPaused = false;
             snake1 = new Snake(Brushes.BlueViolet, true);
             if (IsNotAlone) {
                 snake2 = new Snake(Brushes.DarkGreen, false);
@@ -331,7 +333,13 @@ namespace Sake2Arc{
 
         private void Pause()
         {
-            
+            if (IsPaused){
+                timer.Start();
+                IsPaused = false;
+            }
+            else { 
+            timer.Stop();
+            }
         }
 
         public void EndGame(String s="BG "){
