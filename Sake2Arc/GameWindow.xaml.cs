@@ -56,18 +56,12 @@ namespace Sake2Arc{
             snake1.Eat();
             snake1.Eat();
             snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
-            snake1.Eat();
+        
+
+            snake2.Eat();
+            snake2.Eat();
+            snake2.Eat();
+            snake2.Eat();
 
             //refresh managment
             DispatcherTimer timer = new DispatcherTimer();
@@ -145,23 +139,45 @@ namespace Sake2Arc{
         {
             checkHeadOfSnake(snake1);
             checkHeadOfSnake(snake2);
-            checkSnakes(snake1);
-            checkSnakes(snake2);
+            checkSelfCollision(snake1);
+            checkSelfCollision(snake2);
+            Point head1 = snake1.snakeBody[0];
+            Point head2 = snake2.snakeBody[0];
+
+            foreach(Point p in snake2.snakeBody)
+            { 
+                if ((Math.Abs(p.X - head1.X) < (SNAKETHICK)) &&
+                     (Math.Abs(p.Y - head1.Y) < (SNAKETHICK)))
+                {
+                    EndGame("Purple  snake");
+                    break;
+                }
+            }
+            foreach (Point p in snake1.snakeBody)
+            {
+                if ((Math.Abs(p.X - head2.X) < (SNAKETHICK)) &&
+                     (Math.Abs(p.Y - head2.Y) < (SNAKETHICK)))
+                {
+                    EndGame("Green  snake");
+                    break;
+                }
+            }
         }
 
-        private void checkSnakes(Snake snake)
+
+        private void checkSelfCollision(Snake snake)
         {
             Point head = snake.snakeBody[0];
-            for(int i=1; i < snake.snakeBody.Count; i++)
+            for (int i = 1; i < snake.snakeBody.Count; i++)
             {
-                    Point point = new Point(snake.snakeBody[i].X, snake.snakeBody[i].Y);
-                    if ((Math.Abs(point.X - head.X) < (SNAKETHICK)) &&
-                         (Math.Abs(point.Y - head.Y) < (SNAKETHICK)))
-                    {
-                    EndGame(snake.snakeColor.ToString()=="#FF8A2BE2"? "Purple  snake" : "Green  snake");
+                Point point = new Point(snake.snakeBody[i].X, snake.snakeBody[i].Y);
+                if ((Math.Abs(point.X - head.X) < (SNAKETHICK)) &&
+                     (Math.Abs(point.Y - head.Y) < (SNAKETHICK)))
+                {
+                    EndGame(snake.snakeColor.ToString() == "#FF8A2BE2" ? "Purple  snake" : "Green  snake");
                     break;
-                    }
                 }
+            }
         }
 
         private void checkHeadOfSnake(Snake snake)
