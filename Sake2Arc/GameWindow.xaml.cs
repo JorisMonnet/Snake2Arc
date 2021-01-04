@@ -29,11 +29,11 @@ namespace Sake2Arc{
     public partial class GameWindow : Window{
 
         //things to eat
-        private List<Point> foodPoints = new List<Point>();
-        private List<Point> poisonPoints = new List<Point>();
+        private readonly List<Point> foodPoints = new List<Point>();
+        private readonly List<Point> poisonPoints = new List<Point>();
 
-        private Snake snake1;
-        private Snake snake2;
+        private readonly Snake snake1;
+        private readonly Snake snake2;
 
         //refresh delay
         private TimeSpan REFRESHDELAY = new TimeSpan(1000000);
@@ -43,7 +43,7 @@ namespace Sake2Arc{
         public const int SNAKETHICK = 10;
 
         //random number for food spawning
-        private Random rand = new Random();
+        private readonly Random rand = new Random();
 
         public GameWindow(){
             InitializeComponent();
@@ -51,7 +51,7 @@ namespace Sake2Arc{
             snake1 = new Snake(Brushes.BlueViolet,true);
             snake2 = new Snake(Brushes.DarkGreen,false);
             
-            snake1.Eat();
+         /*   snake1.Eat();
             snake1.Eat();
             snake1.Eat();
             snake1.Eat();
@@ -62,7 +62,7 @@ namespace Sake2Arc{
             snake2.Eat();
             snake2.Eat();
             snake2.Eat();
-            snake2.Eat();
+            snake2.Eat();*/
 
             //refresh managment
             DispatcherTimer timer = new DispatcherTimer();
@@ -164,15 +164,14 @@ namespace Sake2Arc{
             snake2.UpdateSnake();
             DrawSnakes();
             DrawFoodsAndPoisons();
-            checkColisions();
-            checkFood(snake1);
-            checkPoison(snake1);
-            checkFood(snake2);
-            checkPoison(snake2);
-            
+            CheckColisions();
+            CheckFood(snake1);
+            CheckPoison(snake1);
+            CheckFood(snake2);
+            CheckPoison(snake2);
         }
 
-        private void checkPoison(Snake snake)
+        private void CheckPoison(Snake snake)
         {
             Point head = snake.snakeBody[0];
 
@@ -190,7 +189,7 @@ namespace Sake2Arc{
             }
         }
 
-        private void checkFood(Snake snake)
+        private void CheckFood(Snake snake)
         {
             Point head = snake.snakeBody[0];
 
@@ -207,12 +206,12 @@ namespace Sake2Arc{
             }
         }
 
-        private void checkColisions()
+        private void CheckColisions()
         {
-            checkHeadOfSnake(snake1);
-            checkHeadOfSnake(snake2);
-            checkSelfCollision(snake1);
-            checkSelfCollision(snake2);
+            CheckHeadOfSnake(snake1);
+            CheckHeadOfSnake(snake2);
+            CheckSelfCollision(snake1);
+            CheckSelfCollision(snake2);
             Point head1 = snake1.snakeBody[0];
             Point head2 = snake2.snakeBody[0];
 
@@ -237,7 +236,7 @@ namespace Sake2Arc{
         }
 
 
-        private void checkSelfCollision(Snake snake)
+        private void CheckSelfCollision(Snake snake)
         {
             Point head = snake.snakeBody[0];
             for (int i = 1; i < snake.snakeBody.Count; i++)
@@ -252,7 +251,7 @@ namespace Sake2Arc{
             }
         }
 
-        private void checkHeadOfSnake(Snake snake)
+        private void CheckHeadOfSnake(Snake snake)
         {
             if(snake.snakeBody[0].X<0+SNAKETHICK 
                 || snake.snakeBody[0].X>550-2*SNAKETHICK 
@@ -299,7 +298,7 @@ namespace Sake2Arc{
             }
         }
 
-        public void EndGame(String s){
+        public void EndGame(String s="BG "){
             MessageBox.Show(s+" made a mistake ! ","Snake2Arc Over",MessageBoxButton.OK,MessageBoxImage.Hand);
             this.Close();
         }
