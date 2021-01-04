@@ -50,8 +50,7 @@ namespace Sake2Arc{
         //random number for food spawning
         private readonly Random rand = new Random();
 
-        //time management
-        private DispatcherTimer timer;
+        
 
         public GameWindow() {
             InitializeComponent();
@@ -64,7 +63,7 @@ namespace Sake2Arc{
             }
 
             //refresh managment
-            timer = new DispatcherTimer();
+            DispatcherTimer timer = new DispatcherTimer();
             timer.Tick += new EventHandler(TimerTick);
             //snakes speed
             timer.Interval = REFRESHDELAY;
@@ -163,25 +162,35 @@ namespace Sake2Arc{
         }
         private void TimerTick(object sender, EventArgs e)
         {
-            paintCanvas.Children.Clear();
-            snake1.UpdateSnake();
-            if (IsNotAlone){
-                snake2.UpdateSnake();
+            if (!IsPaused){
+                paintCanvas.Children.Clear();
+                snake1.UpdateSnake();
+                if (IsNotAlone){
+                    snake2.UpdateSnake();
+                }
+                DrawSnakes();
+                DrawFoodsAndPoisons();
+                CheckColisions();
+                CheckFood(snake1);
+                CheckPoison(snake1);
+                if (IsNotAlone) {
+                    CheckFood(snake2);
+                    CheckPoison(snake2);
+                }
+                if (IsNotAlone) {
+                    scoreBoard.Text = "- Score : Player1(purple)="+snake1.Score+"  | Player2(green)="+snake2.Score+" -";
+                 }
+                else{
+                    scoreBoard.Text = "- Score : Player1(purple)=" + snake1.Score + " -";
+                }
             }
-            DrawSnakes();
-            DrawFoodsAndPoisons();
-            CheckColisions();
-            CheckFood(snake1);
-            CheckPoison(snake1);
-            if (IsNotAlone) {
-                CheckFood(snake2);
-                CheckPoison(snake2);
-            }
-            if (IsNotAlone) {
-                scoreBoard.Text = "- Score : Player1(purple)="+snake1.Score+"  | Player2(green)="+snake2.Score+" -";
-             }
-            else{
-                scoreBoard.Text = "- Score : Player1(purple)=" + snake1.Score + " -";
+            else { 
+                if (IsNotAlone){
+                    scoreBoard.Text = "PAUSED - Score : Player1(purple)=" + snake1.Score + "  | Player2(green)=" + snake2.Score + " -";
+                }
+                else{
+                    scoreBoard.Text = "PAUSED - Score : Player1(purple)=" + snake1.Score + " -";
+                }
             }
         }
 
@@ -333,12 +342,13 @@ namespace Sake2Arc{
 
         private void Pause()
         {
-            if (IsPaused){
-                timer.Start();
+            if (IsPaused)
+            {
                 IsPaused = false;
             }
-            else { 
-            timer.Stop();
+            else
+            {
+                IsPaused = true;
             }
         }
 
