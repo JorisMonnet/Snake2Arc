@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sake2Arc"
         mc:Ignorable="d"
-        Title="Snake2Arc" Height="450" Width="550">
+        Title="Snake2Arc" Height="500" Width="600">
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>

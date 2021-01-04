@@ -40,7 +40,6 @@ namespace Sake2Arc{
 
         //snakes thick
         public const int SNAKETHICK = 10;
- 
 
         //random number for food spawning
         private Random rand = new Random();
@@ -106,7 +105,7 @@ namespace Sake2Arc{
 
         private void DrawASnake(Snake snake)
         {
-            foreach(Point p in snake.snakeBody)
+        foreach (Point p in snake.snakeBody)
             {
                 Ellipse snakeEllipse = new Ellipse();
                 snakeEllipse.Fill = snake.snakeColor;
@@ -127,11 +126,25 @@ namespace Sake2Arc{
             snake2.UpdateSnake();
             DrawSnakes();
             DrawFoods();
-
-
+            checkColisions();
         }
 
-      
+        private void checkColisions()
+        {
+            checkHeadOfSnake(snake1);
+            checkHeadOfSnake(snake2);
+        }
+        private void checkHeadOfSnake(Snake snake)
+        {
+            if(snake.snakeBody[0].X<0+SNAKETHICK 
+                || snake.snakeBody[0].X>550-2*SNAKETHICK 
+                || snake.snakeBody[0].Y<0+SNAKETHICK 
+                || snake.snakeBody[0].Y > 450 - 2*SNAKETHICK)
+            {
+                EndGame();
+            }
+        }
+
 
         private void OnButtonKeyDown(object sender, KeyEventArgs e){
 
