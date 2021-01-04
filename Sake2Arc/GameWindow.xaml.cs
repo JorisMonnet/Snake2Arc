@@ -28,12 +28,15 @@ namespace Sake2Arc{
     /// </summary>
     public partial class GameWindow : Window{
 
+        //bool to adapt code
         public bool IsNotAlone { get; set; }
         private bool IsDisplayingEnd { get; set; }
+        private bool IsPaused { get; set; }
         //things to eat
         private readonly List<Point> foodPoints = new List<Point>();
         private readonly List<Point> poisonPoints = new List<Point>();
 
+        //snakes management
         private readonly Snake snake1;
         private readonly Snake snake2;
 
@@ -47,10 +50,13 @@ namespace Sake2Arc{
         //random number for food spawning
         private readonly Random rand = new Random();
 
+        
+
         public GameWindow() {
             InitializeComponent();
             IsNotAlone = false;//set To TRUE to with 2 snakes
             IsDisplayingEnd = false;
+            IsPaused = false;
             snake1 = new Snake(Brushes.BlueViolet, true);
             if (IsNotAlone) {
                 snake2 = new Snake(Brushes.DarkGreen, false);
@@ -156,25 +162,35 @@ namespace Sake2Arc{
         }
         private void TimerTick(object sender, EventArgs e)
         {
-            paintCanvas.Children.Clear();
-            snake1.UpdateSnake();
-            if (IsNotAlone){
-                snake2.UpdateSnake();
+            if (!IsPaused){
+                paintCanvas.Children.Clear();
+                snake1.UpdateSnake();
+                if (IsNotAlone){
+                    snake2.UpdateSnake();
+                }
+                DrawSnakes();
+                DrawFoodsAndPoisons();
+                CheckColisions();
+                CheckFood(snake1);
+                CheckPoison(snake1);
+                if (IsNotAlone) {
+                    CheckFood(snake2);
+                    CheckPoison(snake2);
+                }
+                if (IsNotAlone) {
+                    scoreBoard.Text = "- Score : Player1(purple)="+snake1.Score+"  | Player2(green)="+snake2.Score+" -";
+                 }
+                else{
+                    scoreBoard.Text = "- Score : Player1(purple)=" + snake1.Score + " -";
+                }
             }
-            DrawSnakes();
-            DrawFoodsAndPoisons();
-            CheckColisions();
-            CheckFood(snake1);
-            CheckPoison(snake1);
-            if (IsNotAlone) {
-                CheckFood(snake2);
-                CheckPoison(snake2);
-            }
-            if (IsNotAlone) {
-                scoreBoard.Text = "- Score : Player1(purple)="+snake1.Score+"  | Player2(green)="+snake2.Score+" -";
-             }
-            else{
-                scoreBoard.Text = "- Score : Player1(purple)=" + snake1.Score + " -";
+            else { 
+                if (IsNotAlone){
+                    scoreBoard.Text = "PAUSED - Score : Player1(purple)=" + snake1.Score + "  | Player2(green)=" + snake2.Score + " -";
+                }
+                else{
+                    scoreBoard.Text = "PAUSED - Score : Player1(purple)=" + snake1.Score + " -";
+                }
             }
         }
 
@@ -288,6 +304,9 @@ namespace Sake2Arc{
 
             switch (e.Key)
             {
+                case Key.P:
+                    this.Pause();
+                    break;
                 //player1
                 case Key.Down:
                     snake1.ChangeSnakeDirection(DIRECTION.DOWN);
@@ -318,6 +337,18 @@ namespace Sake2Arc{
                         snake2.ChangeSnakeDirection(DIRECTION.RIGHT);
                         break;
                 }
+            }
+        }
+
+        private void Pause()
+        {
+            if (IsPaused)
+            {
+                IsPaused = false;
+            }
+            else
+            {
+                IsPaused = true;
             }
         }
 
