@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sake2Arc"
         mc:Ignorable="d"
-        Title="Snake2Arc" Height="700" Width="700" MinHeight="490" WindowStyle="SingleBorderWindow" MouseDown="WindowMouseDown"  Background="Gray">
+        Title="Snake2Arc" Height="700" Width="700" MinHeight="490" WindowStyle="SingleBorderWindow" MouseDown="WindowMouseDown"  Background="#272928">
   
 
     <Grid  HorizontalAlignment="Center" VerticalAlignment="Center"  >
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -20,11 +20,11 @@
         <WrapPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
             <TextBlock Name="scoreBoard" Foreground="White">-Score : -</TextBlock>
         </WrapPanel>
+
         <Viewbox x:Name="viewBoxCanvas" MaxHeight="980" MaxWidth="1460" Grid.Row="1" Grid.Column="0">
             <Canvas Name="paintCanvas" Background="Black"
-                            Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Height="450" Width="550">
-
-            </Canvas>
+                                Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Height="450" Width="550">
+                </Canvas>
         </Viewbox>
     </Grid>
 </Window>
