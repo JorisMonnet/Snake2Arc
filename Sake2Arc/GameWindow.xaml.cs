@@ -30,48 +30,33 @@ namespace Sake2Arc{
 
         //things to eat
         private List<Point> foodPoints = new List<Point>();
-        //snake1 body
-        private List<Point> snake1Points = new List<Point>();
-        //snake2 body
-        private List<Point> snake2Points = new List<Point>();
 
-        private Brush snake1Color = Brushes.DarkBlue;
-        private Brush snake2Color = Brushes.GreenYellow;
-
-        
+        private Snake snake1;
+        private Snake snake2;
 
         //refresh delay
-        private TimeSpan REFRESHDELAY = new TimeSpan(10000);
+        private TimeSpan REFRESHDELAY = new TimeSpan(1000000);
 
-        //starting points
-        private Point startPointSnake1 = new Point(50,50);
-        private Point startPointSnake2 = new Point(350,350);
-        //acutal position
-        private Point pointSnake1 = new Point();
-        private Point pointSnake2 = new Point();
-
-        //directions values
-        private int directionSake1 = 0;
-        private int directionSake2 = 0;
-        //oldDirection to not back on himself
-        private int oldDirectionSake1 = 0;
-        private int oldDirectionSake2 = 0;
 
         //snakes thick
-        private int snakeThick = 10;
-        //snakes size
-        private int snake1Lenght = 50;
-        private int snake2Lenght = 50;
-
-        //scores
-        private int snake1Score = 0;
-        private int snake2Score = 0;
+        public const int SNAKETHICK = 10;
+ 
 
         //random number for food spawning
         private Random rand = new Random();
 
         public GameWindow(){
             InitializeComponent();
+
+            snake1 = new Snake(Brushes.BlueViolet,true);
+            snake2 = new Snake(Brushes.DarkGreen,false);
+            
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+
 
             //refresh managment
             DispatcherTimer timer = new DispatcherTimer();
@@ -83,95 +68,108 @@ namespace Sake2Arc{
 
             //keyboard managment
             this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
-            DrawSnakes(startPointSnake1, startPointSnake2);
-            DrawAndAddFood();
+            AddFood();
         }
 
-        private void DrawAndAddFood()
+
+        private void DrawFoods()
         {
-            Point foodPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
+            for(int i=0;i<foodPoints.Count;i++)
+            {
+                DrawFood(i,foodPoints[i]);
+            }
+        }
+
+        private void DrawFood(int index,Point foodPoint)
+        {
             Ellipse foodEllipse = new Ellipse();
             foodEllipse.Fill = Brushes.IndianRed;
-            foodEllipse.Width = snakeThick;
-            foodEllipse.Height = snakeThick;
+            foodEllipse.Width = SNAKETHICK;
+            foodEllipse.Height = SNAKETHICK;
 
             Canvas.SetTop(foodEllipse, foodPoint.Y);
             Canvas.SetLeft(foodEllipse, foodPoint.X);
 
-            paintCanvas.Children.Add(foodEllipse);
+            paintCanvas.Children.Insert(index, foodEllipse);
+        }
+
+        private void AddFood() { 
+            Point foodPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
+            
             foodPoints.Add(foodPoint);
         }
 
-        private void DrawSnakes(Point startPointSnake1, Point startPointSnake2){
-            DrawASnake(snake1Color, startPointSnake1,0);
-            DrawASnake(snake2Color, startPointSnake2, 1);
+        private void DrawSnakes(){
+            DrawASnake(snake1);
+            DrawASnake(snake2);
         }
 
-        private void DrawASnake(Brush color, Point position,int index)
+        private void DrawASnake(Snake snake)
         {
-            List<Point> snakePoints = index == 0 ? snake1Points : snake2Points;
+            foreach(Point p in snake.snakeBody)
+            {
+                Ellipse snakeEllipse = new Ellipse();
+                snakeEllipse.Fill = snake.snakeColor;
+                snakeEllipse.Width = SNAKETHICK;
+                snakeEllipse.Height = SNAKETHICK;
 
-            Ellipse snakeEllipse = new Ellipse();
-            snakeEllipse.Fill = color;
-            snakeEllipse.Width = snakeThick;
-            snakeEllipse.Height = snakeThick;
+                Canvas.SetTop(snakeEllipse, p.Y);
+                Canvas.SetLeft(snakeEllipse, p.X);
 
-            Canvas.SetTop(snakeEllipse, position.Y);
-            Canvas.SetLeft(snakeEllipse, position.X);
-
-            paintCanvas.Children.Add(snakeEllipse);
-            snakePoints.Add(position);
+                paintCanvas.Children.Add(snakeEllipse);
+            }
         }
 
         private void TimerTick(object sender, EventArgs e){
 
+            paintCanvas.Children.Clear();
+            snake1.UpdateSnake();
+            snake2.UpdateSnake();
+            DrawSnakes();
+            DrawFoods();
+
+
         }
 
+      
+
         private void OnButtonKeyDown(object sender, KeyEventArgs e){
+
             switch (e.Key)
             {
                 //player1
                 case Key.Down:
-                    if (oldDirectionSake1 != (int)DIRECTION.UP)
-                        directionSake1 = (int)DIRECTION.DOWN;
+                    snake1.ChangeSnakeDirection(DIRECTION.DOWN);
                     break;
                 case Key.Up:
-                    if (oldDirectionSake1 != (int)DIRECTION.DOWN)
-                        directionSake1 = (int)DIRECTION.UP;
+                    snake1.ChangeSnakeDirection(DIRECTION.UP);
                     break;
                 case Key.Left:
-                    if (oldDirectionSake1 != (int)DIRECTION.RIGHT)
-                        directionSake1 = (int)DIRECTION.LEFT;
+                    snake1.ChangeSnakeDirection(DIRECTION.LEFT);
                     break;
                 case Key.Right:
-                    if (oldDirectionSake1 != (int)DIRECTION.LEFT)
-                        directionSake1 = (int)DIRECTION.RIGHT;
-                    break;
-
-                //player2
-                case Key.S:
-                    if (oldDirectionSake2 != (int)DIRECTION.UP)
-                        directionSake2 = (int)DIRECTION.DOWN;
-                    break;
-                case Key.Z:
-                    if (oldDirectionSake2 != (int)DIRECTION.DOWN)
-                        directionSake2 = (int)DIRECTION.UP;
-                    break;
-                case Key.Q:
-                    if (oldDirectionSake2 != (int)DIRECTION.RIGHT)
-                        directionSake2 = (int)DIRECTION.LEFT;
-                    break;
-                case Key.D:
-                    if (oldDirectionSake2 != (int)DIRECTION.LEFT)
-                        directionSake2 = (int)DIRECTION.RIGHT;
+                    snake1.ChangeSnakeDirection(DIRECTION.RIGHT);
                     break;
             }
-            oldDirectionSake1 = directionSake1;
-            oldDirectionSake2 = directionSake2;
+            switch (e.Key) { 
+                //player2
+                case Key.S:
+                    snake2.ChangeSnakeDirection(DIRECTION.DOWN);
+                    break;
+                case Key.Z:
+                    snake2.ChangeSnakeDirection(DIRECTION.UP);
+                    break;
+                case Key.Q:
+                    snake2.ChangeSnakeDirection(DIRECTION.LEFT);
+                    break;
+                case Key.D:
+                    snake2.ChangeSnakeDirection(DIRECTION.RIGHT);
+                    break;
+            }
         }
 
-        private void EndOver(){
-            MessageBox.Show("Some One Lose","Snake2Arc Over",MessageBoxButton.OK,MessageBoxImage.Hand);
+        private void EndGame(){
+            MessageBox.Show("Some One Losed","Snake2Arc Over",MessageBoxButton.OK,MessageBoxImage.Hand);
             this.Close();
         }
     }
