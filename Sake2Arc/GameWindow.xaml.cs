@@ -35,7 +35,7 @@ namespace Sake2Arc{
         //snake2 body
         private List<Point> snake2Points = new List<Point>();
 
-        private Brush snake1Color = Brushes.AliceBlue;
+        private Brush snake1Color = Brushes.DarkBlue;
         private Brush snake2Color = Brushes.GreenYellow;
 
         
@@ -45,7 +45,7 @@ namespace Sake2Arc{
 
         //starting points
         private Point startPointSnake1 = new Point(50,50);
-        private Point startPointSnake2 = new Point(50,50);
+        private Point startPointSnake2 = new Point(350,350);
         //acutal position
         private Point pointSnake1 = new Point();
         private Point pointSnake2 = new Point();
@@ -75,7 +75,7 @@ namespace Sake2Arc{
 
             //refresh managment
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Tick += new EventHandler(timerTick);
+            timer.Tick += new EventHandler(TimerTick);
 
             //snakes speed
             timer.Interval = REFRESHDELAY;
@@ -83,14 +83,11 @@ namespace Sake2Arc{
 
             //keyboard managment
             this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
-            drawSnakes(startPointSnake1, startPointSnake2);
-            drawFood();
-            drawFood();
-            drawFood();
-            drawFood();
+            DrawSnakes(startPointSnake1, startPointSnake2);
+            DrawAndAddFood();
         }
 
-        private void drawFood()
+        private void DrawAndAddFood()
         {
             Point foodPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
             Ellipse foodEllipse = new Ellipse();
@@ -105,12 +102,28 @@ namespace Sake2Arc{
             foodPoints.Add(foodPoint);
         }
 
-        private void drawSnakes(Point startPointSnake1, Point startPointSnake2)
-        {
-            
+        private void DrawSnakes(Point startPointSnake1, Point startPointSnake2){
+            DrawASnake(snake1Color, startPointSnake1,0);
+            DrawASnake(snake2Color, startPointSnake2, 1);
         }
 
-        private void timerTick(object sender, EventArgs e){
+        private void DrawASnake(Brush color, Point position,int index)
+        {
+            List<Point> snakePoints = index == 0 ? snake1Points : snake2Points;
+
+            Ellipse snakeEllipse = new Ellipse();
+            snakeEllipse.Fill = color;
+            snakeEllipse.Width = snakeThick;
+            snakeEllipse.Height = snakeThick;
+
+            Canvas.SetTop(snakeEllipse, position.Y);
+            Canvas.SetLeft(snakeEllipse, position.X);
+
+            paintCanvas.Children.Add(snakeEllipse);
+            snakePoints.Add(position);
+        }
+
+        private void TimerTick(object sender, EventArgs e){
 
         }
 
