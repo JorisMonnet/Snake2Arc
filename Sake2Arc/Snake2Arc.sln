@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sake2Arc", "Sake2Arc.csproj", "{53E35522-850C-4790-89E7-18D6D658D39B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake2Arc", "Snake2Arc.csproj", "{53E35522-850C-4790-89E7-18D6D658D39B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
