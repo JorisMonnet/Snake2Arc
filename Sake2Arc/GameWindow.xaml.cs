@@ -156,8 +156,7 @@ namespace Sake2Arc{
         {
             paintCanvas.Children.Clear();
             snake1.UpdateSnake();
-            if (IsNotAlone)
-            {
+            if (IsNotAlone){
                 snake2.UpdateSnake();
             }
             DrawSnakes();
@@ -165,10 +164,15 @@ namespace Sake2Arc{
             CheckColisions();
             CheckFood(snake1);
             CheckPoison(snake1);
-            if (IsNotAlone)
-            {
+            if (IsNotAlone) {
                 CheckFood(snake2);
                 CheckPoison(snake2);
+            }
+            if (IsNotAlone) {
+                scoreBoard.Text = "- Score : Player1(purple)="+snake1.Score+"  | Player2(green)="+snake2.Score;
+             }
+            else{
+                scoreBoard.Text = "- Score : Player1(purple)=" + snake1.Score;
             }
         }
 
