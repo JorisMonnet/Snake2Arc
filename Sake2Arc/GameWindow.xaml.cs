@@ -30,6 +30,7 @@ namespace Sake2Arc{
 
         //things to eat
         private List<Point> foodPoints = new List<Point>();
+        private List<Point> poisonPoints = new List<Point>();
 
         private Snake snake1;
         private Snake snake2;
@@ -74,6 +75,16 @@ namespace Sake2Arc{
             //keyboard managment
             this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
             AddFood();
+
+            addFoodOrPoison();
+            addFoodOrPoison();
+            addFoodOrPoison();
+            addFoodOrPoison();
+            addFoodOrPoison();
+            addFoodOrPoison();
+            addFoodOrPoison();
+            addFoodOrPoison();
+            addFoodOrPoison();
         }
 
 
@@ -82,6 +93,10 @@ namespace Sake2Arc{
             for(int i=0;i<foodPoints.Count;i++)
             {
                 DrawFood(i,foodPoints[i]);
+            }
+            for (int i = 0; i < poisonPoints.Count; i++)
+            {
+                DrawPoison(i, poisonPoints[i]);
             }
         }
 
@@ -97,8 +112,35 @@ namespace Sake2Arc{
 
             paintCanvas.Children.Insert(index, foodEllipse);
         }
+        private void DrawPoison(int index, Point poisonPoint)
+        {
+            Ellipse foodEllipse = new Ellipse();
+            foodEllipse.Fill = Brushes.Yellow;
+            foodEllipse.Width = SNAKETHICK;
+            foodEllipse.Height = SNAKETHICK;
 
-        private void AddFood() { 
+            Canvas.SetTop(foodEllipse, poisonPoint.Y);
+            Canvas.SetLeft(foodEllipse, poisonPoint.X);
+
+            paintCanvas.Children.Insert(index, foodEllipse);
+        }
+
+        private void addFoodOrPoison()
+        {
+            int alea = rand.Next(0, 10);
+            if (alea % 4 == 0)
+            {
+                //malus
+                Point poisonPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
+                poisonPoints.Add(poisonPoint);
+            }
+            else
+            {
+                Point foodPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
+                foodPoints.Add(foodPoint);
+            }
+        }
+        private void AddFood() {
             Point foodPoint = new Point(rand.Next(10, 540), rand.Next(10, 440));
             
             foodPoints.Add(foodPoint);
