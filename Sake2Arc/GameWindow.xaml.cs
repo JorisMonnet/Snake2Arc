@@ -55,7 +55,19 @@ namespace Sake2Arc{
             snake1.Eat();
             snake1.Eat();
             snake1.Eat();
-
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
+            snake1.Eat();
 
             //refresh managment
             DispatcherTimer timer = new DispatcherTimer();
@@ -133,7 +145,25 @@ namespace Sake2Arc{
         {
             checkHeadOfSnake(snake1);
             checkHeadOfSnake(snake2);
+            checkSnakes(snake1);
+            checkSnakes(snake2);
         }
+
+        private void checkSnakes(Snake snake)
+        {
+            Point head = snake.snakeBody[0];
+            for(int i=1; i < snake.snakeBody.Count; i++)
+            {
+                    Point point = new Point(snake.snakeBody[i].X, snake.snakeBody[i].Y);
+                    if ((Math.Abs(point.X - head.X) < (SNAKETHICK)) &&
+                         (Math.Abs(point.Y - head.Y) < (SNAKETHICK)))
+                    {
+                    EndGame(snake.snakeColor.ToString()=="#FF8A2BE2"? "Purple  snake" : "Green  snake");
+                    break;
+                    }
+                }
+        }
+
         private void checkHeadOfSnake(Snake snake)
         {
             if(snake.snakeBody[0].X<0+SNAKETHICK 
@@ -141,7 +171,7 @@ namespace Sake2Arc{
                 || snake.snakeBody[0].Y<0+SNAKETHICK 
                 || snake.snakeBody[0].Y > 450 - 2*SNAKETHICK)
             {
-                EndGame();
+                EndGame(snake.snakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake" + " snake");
             }
         }
 
@@ -181,8 +211,8 @@ namespace Sake2Arc{
             }
         }
 
-        private void EndGame(){
-            MessageBox.Show("Some One Losed","Snake2Arc Over",MessageBoxButton.OK,MessageBoxImage.Hand);
+        private void EndGame(String s){
+            MessageBox.Show(s+" made a mistake ! ","Snake2Arc Over",MessageBoxButton.OK,MessageBoxImage.Hand);
             this.Close();
         }
     }
