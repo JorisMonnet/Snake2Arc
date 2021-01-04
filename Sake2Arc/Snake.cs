@@ -63,14 +63,13 @@ namespace Sake2Arc{
 
         public void PoisonSnake(GameWindow gW)
         {
-            if (SnakeBody.Count - 1 > 0) { 
+            if (SnakeBody.Count - 2 > 0) { 
             this.SnakeBody.RemoveAt(SnakeBody.Count - 1);
             UpdateSnake();
             }
             else
             {
                 gW.EndGame(SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake" );
-
             }
         }
 
