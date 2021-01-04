@@ -28,12 +28,14 @@ namespace Sake2Arc{
     /// </summary>
     public partial class GameWindow : Window{
 
+        //bool to adapt code
         public bool IsNotAlone { get; set; }
         private bool IsDisplayingEnd { get; set; }
         //things to eat
         private readonly List<Point> foodPoints = new List<Point>();
         private readonly List<Point> poisonPoints = new List<Point>();
 
+        //snakes management
         private readonly Snake snake1;
         private readonly Snake snake2;
 
@@ -47,6 +49,9 @@ namespace Sake2Arc{
         //random number for food spawning
         private readonly Random rand = new Random();
 
+        //time management
+        private DispatcherTimer timer;
+
         public GameWindow() {
             InitializeComponent();
             IsNotAlone = false;//set To TRUE to with 2 snakes
@@ -57,7 +62,7 @@ namespace Sake2Arc{
             }
 
             //refresh managment
-            DispatcherTimer timer = new DispatcherTimer();
+            timer = new DispatcherTimer();
             timer.Tick += new EventHandler(TimerTick);
             //snakes speed
             timer.Interval = REFRESHDELAY;
@@ -288,6 +293,9 @@ namespace Sake2Arc{
 
             switch (e.Key)
             {
+                case Key.P:
+                    this.Pause();
+                    break;
                 //player1
                 case Key.Down:
                     snake1.ChangeSnakeDirection(DIRECTION.DOWN);
@@ -319,6 +327,11 @@ namespace Sake2Arc{
                         break;
                 }
             }
+        }
+
+        private void Pause()
+        {
+            
         }
 
         public void EndGame(String s="BG "){
