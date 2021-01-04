@@ -29,7 +29,7 @@ namespace Sake2Arc{
     public partial class GameWindow : Window{
 
         public bool IsNotAlone { get; set; }
-
+        private bool IsDisplayingEnd { get; set; }
         //things to eat
         private readonly List<Point> foodPoints = new List<Point>();
         private readonly List<Point> poisonPoints = new List<Point>();
@@ -50,7 +50,7 @@ namespace Sake2Arc{
         public GameWindow() {
             InitializeComponent();
             IsNotAlone = false;//set To TRUE to with 2 snakes
-
+            IsDisplayingEnd = false;
             snake1 = new Snake(Brushes.BlueViolet, true);
             if (IsNotAlone) {
                 snake2 = new Snake(Brushes.DarkGreen, false);
@@ -229,7 +229,9 @@ namespace Sake2Arc{
                     if ((Math.Abs(p.X - head1.X) < (SNAKETHICK)) &&
                          (Math.Abs(p.Y - head1.Y) < (SNAKETHICK)))
                     {
-                        EndGame("Purple  snake");
+                        if (!IsDisplayingEnd) { 
+                            EndGame("Purple  snake");
+                        }
                         break;
                     }
                 }
@@ -238,7 +240,9 @@ namespace Sake2Arc{
                     if ((Math.Abs(p.X - head2.X) < (SNAKETHICK)) &&
                          (Math.Abs(p.Y - head2.Y) < (SNAKETHICK)))
                     {
-                        EndGame("Green  snake");
+                        if (!IsDisplayingEnd){
+                            EndGame("Green  snake");
+                        }
                         break;
                     }
                 }
@@ -255,7 +259,9 @@ namespace Sake2Arc{
                 if ((Math.Abs(point.X - head.X) < (SNAKETHICK)) &&
                      (Math.Abs(point.Y - head.Y) < (SNAKETHICK)))
                 {
-                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple  snake" : "Green  snake");
+                    if (!IsDisplayingEnd){
+                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple  snake" : "Green  snake");
+                    }
                     break;
                 }
             }
@@ -268,7 +274,9 @@ namespace Sake2Arc{
                 || snake.SnakeBody[0].Y<0+SNAKETHICK 
                 || snake.SnakeBody[0].Y > 450 - 2*SNAKETHICK)
             {
-                EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake");
+                if (!IsDisplayingEnd){
+                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake");
+                }
             }
         }
 
@@ -331,6 +339,7 @@ namespace Sake2Arc{
             AddFood();
             AddFoodOrPoison();
             AddFoodOrPoison();
+            IsDisplayingEnd = false;
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
