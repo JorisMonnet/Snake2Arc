@@ -84,7 +84,7 @@ namespace Snake2Arc {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Sake2Arc;component/gamewindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Snake2Arc;component/gamewindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\GameWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -268,7 +268,8 @@ namespace Snake2Arc{
                     if ((Math.Abs(p.X - head2.X) < (SNAKETHICK)) &&
                          (Math.Abs(p.Y - head2.Y) < (SNAKETHICK)))
                     {
-                        if (!IsDisplayingEnd){
+                        if (!IsDisplayingEnd)
+                        {
                             EndGame("Green  snake");
                         }
                         break;
