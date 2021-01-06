@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -70,7 +64,7 @@ namespace Snake2Arc{
             timer.Start();
 
             //keyboard managment
-            this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
+            KeyDown += new KeyEventHandler(OnButtonKeyDown);
             AddFood();
             AddFoodOrPoison();
             AddFoodOrPoison();
@@ -91,10 +85,12 @@ namespace Snake2Arc{
 
         private void DrawFood(int index,Point foodPoint)
         {
-            Ellipse foodEllipse = new Ellipse();
-            foodEllipse.Fill = Brushes.IndianRed;
-            foodEllipse.Width = SNAKETHICK;
-            foodEllipse.Height = SNAKETHICK;
+            Ellipse foodEllipse = new Ellipse
+            {
+                Fill = Brushes.IndianRed,
+                Width = SNAKETHICK,
+                Height = SNAKETHICK
+            };
 
             Canvas.SetTop(foodEllipse, foodPoint.Y);
             Canvas.SetLeft(foodEllipse, foodPoint.X);
@@ -103,10 +99,12 @@ namespace Snake2Arc{
         }
         private void DrawPoison(int index, Point poisonPoint)
         {
-            Ellipse foodEllipse = new Ellipse();
-            foodEllipse.Fill = Brushes.Yellow;
-            foodEllipse.Width = SNAKETHICK;
-            foodEllipse.Height = SNAKETHICK;
+            Ellipse foodEllipse = new Ellipse
+            {
+                Fill = Brushes.Yellow,
+                Width = SNAKETHICK,
+                Height = SNAKETHICK
+            };
 
             Canvas.SetTop(foodEllipse, poisonPoint.Y);
             Canvas.SetLeft(foodEllipse, poisonPoint.X);
@@ -149,10 +147,12 @@ namespace Snake2Arc{
         {
         foreach (Point p in snake.SnakeBody)
             {
-                Ellipse snakeEllipse = new Ellipse();
-                snakeEllipse.Fill = snake.SnakeColor;
-                snakeEllipse.Width = SNAKETHICK;
-                snakeEllipse.Height = SNAKETHICK;
+                Ellipse snakeEllipse = new Ellipse
+                {
+                    Fill = snake.SnakeColor,
+                    Width = SNAKETHICK,
+                    Height = SNAKETHICK
+                };
 
                 Canvas.SetTop(snakeEllipse, p.Y);
                 Canvas.SetLeft(snakeEllipse, p.X);
@@ -305,7 +305,7 @@ namespace Snake2Arc{
             switch (e.Key)
             {
                 case Key.P:
-                    this.Pause();
+                    Pause();
                     break;
                 //player1
                 case Key.Down:
@@ -355,10 +355,10 @@ namespace Snake2Arc{
         public void EndGame(String s="BG "){
             int result = (int)MessageBox.Show(s+" made a mistake ! \n Wanna Play Again ? ","Snake2Arc Over",MessageBoxButton.YesNo,MessageBoxImage.Information);
             if (result == 6){//for yes
-                this.Restart();
+                Restart();
             }
             else{
-                this.Close();
+                Close();
             }
         }
 
@@ -378,13 +378,12 @@ namespace Snake2Arc{
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            DragMove();
         }
 
-        
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }
