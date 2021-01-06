@@ -162,10 +162,12 @@ namespace Snake2Arc{
         }
         private void TimerTick(object sender, EventArgs e)
         {
-            if (!IsPaused){
+            if (!IsPaused)
+            {
                 paintCanvas.Children.Clear();
                 snake1.UpdateSnake();
-                if (IsNotAlone){
+                if (IsNotAlone)
+                {
                     snake2.UpdateSnake();
                 }
                 DrawSnakes();
@@ -173,22 +175,28 @@ namespace Snake2Arc{
                 CheckColisions();
                 CheckFood(snake1);
                 CheckPoison(snake1);
-                if (IsNotAlone) {
+                if (IsNotAlone) 
+                {
                     CheckFood(snake2);
                     CheckPoison(snake2);
                 }
-                if (IsNotAlone) {
+                if (IsNotAlone)
+                {
                     scoreBoard.Text = "- Score : Player1(purple)="+snake1.Score+"  | Player2(green)="+snake2.Score+" -";
                  }
-                else{
+                else
+                {
                     scoreBoard.Text = "- Score : Player1(purple)=" + snake1.Score + " -";
                 }
             }
-            else { 
-                if (IsNotAlone){
+            else 
+            { 
+                if (IsNotAlone)
+                {
                     scoreBoard.Text = "PAUSED - Score : Player1(purple)=" + snake1.Score + "  | Player2(green)=" + snake2.Score + " -";
                 }
-                else{
+                else
+                {
                     scoreBoard.Text = "PAUSED - Score : Player1(purple)=" + snake1.Score + " -";
                 }
             }
@@ -248,7 +256,8 @@ namespace Snake2Arc{
                     if ((Math.Abs(p.X - head1.X) < (SNAKETHICK)) &&
                          (Math.Abs(p.Y - head1.Y) < (SNAKETHICK)))
                     {
-                        if (!IsDisplayingEnd) { 
+                        if (!IsDisplayingEnd) 
+                        { 
                             EndGame("Purple  snake");
                         }
                         break;
@@ -352,7 +361,7 @@ namespace Snake2Arc{
             }
         }
 
-        public void EndGame(String s="BG "){
+        public void EndGame(string s ="BG "){
             int result = (int)MessageBox.Show(s+" made a mistake ! \n Wanna Play Again ? ","Snake2Arc Over",MessageBoxButton.YesNo,MessageBoxImage.Information);
             if (result == 6){//for yes
                 Restart();

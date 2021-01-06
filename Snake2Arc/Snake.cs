@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Snake2Arc{
     class Snake
@@ -63,9 +56,10 @@ namespace Snake2Arc{
 
         public void PoisonSnake(GameWindow gW)
         {
-            if (SnakeBody.Count - 2 > 0) { 
-            SnakeBody.RemoveAt(SnakeBody.Count - 1);
-            UpdateSnake();
+            if (SnakeBody.Count - 2 > 0) 
+            { 
+                SnakeBody.RemoveAt(SnakeBody.Count - 1);
+                UpdateSnake();
             }
             else
             {
