@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snake2Arc"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Snake2Arc" Height="450" Width="800"
+        Background="Black">
+    <Viewbox x:Name="mainViewBox" >
+        <WrapPanel Margin="30" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" >
+            <Image></Image>
+            <Button Margin="5" Padding="2" BorderThickness="0" Background="#FF8A2BE2">Play</Button>
+            <Button Margin="5" Padding="2" BorderThickness="0" Background="#FF8A2BE2">LeaderBoard</Button>
+            <Button Margin="5" Padding="2" BorderThickness="0" Background="#FF8A2BE2">Options</Button>
+            <Button Margin="5" Padding="2" BorderThickness="0" Background="#FF8A2BE2">Quit</Button>
+        </WrapPanel>
+    </Viewbox>
 </Window>
