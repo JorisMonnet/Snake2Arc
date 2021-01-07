@@ -395,5 +395,28 @@ namespace Snake2Arc{
         {
             Close();
         }
+
+        private void Button_Play_Click(object sender,RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Play_Double_Click(object sender,RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_LeaderBoard_Click(object sender,RoutedEventArgs e)
+        {
+
+        }
+        private void Button_Options_Click(object sender,RoutedEventArgs e)
+        {
+
+        }
+        private void Button_Quit_Click(object sender,RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
