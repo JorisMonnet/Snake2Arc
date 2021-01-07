@@ -33,7 +33,7 @@
             <Viewbox x:Name="viewBoxCanvas" MaxHeight="980" MaxWidth="1460" Grid.Row="1" Grid.Column="0">
                 <Canvas Name="paintCanvas" Background="Black"
                                     Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Height="450" Width="550">
-                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="bdrWelcomeMessage" Panel.ZIndex="1">
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="mainMenu" Panel.ZIndex="1">
                         <StackPanel Orientation="Vertical" Background="AliceBlue">
                             <Image></Image>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Click">Play Solo</Button>
