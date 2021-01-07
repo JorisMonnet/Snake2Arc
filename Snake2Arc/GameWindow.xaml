@@ -4,8 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snake2Arc"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
         Title="Snake2Arc" WindowStyle="SingleBorderWindow" MouseDown="WindowMouseDown"  Background="#272928">
+
+     <Window.Resources>
+        <CollectionViewSource Source="{Binding ElementName=window, Path=LeaderBoardList}" x:Key="LeaderBoardListSource">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription Direction="Descending" PropertyName="Score" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+     </Window.Resources>
 
     <Viewbox x:Name="mainViewBox">
         <Grid  HorizontalAlignment="Center" VerticalAlignment="Center"  >
@@ -24,7 +33,17 @@
             <Viewbox x:Name="viewBoxCanvas" MaxHeight="980" MaxWidth="1460" Grid.Row="1" Grid.Column="0">
                 <Canvas Name="paintCanvas" Background="Black"
                                     Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Height="450" Width="550">
-                    </Canvas>
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="mainMenu" Panel.ZIndex="1">
+                        <StackPanel Orientation="Vertical" Background="AliceBlue">
+                            <Image></Image>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Click">Play Solo</Button>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Double_Click">Play Double</Button>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_LeaderBoard_Click">LeaderBoard</Button>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Options_Click">Options</Button>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="BtnCloseClick">Quit</Button>
+                        </StackPanel>
+                    </Border>
+                </Canvas>
             </Viewbox>
         </Grid>
     </Viewbox>

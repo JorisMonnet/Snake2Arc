@@ -31,8 +31,8 @@ namespace Snake2Arc{
         private readonly List<Point> poisonPoints = new List<Point>();
 
         //snakes management
-        private readonly Snake snake1;
-        private readonly Snake snake2;
+        private Snake snake1;
+        private Snake snake2;
 
         //refresh delay
         private TimeSpan REFRESHDELAY = new TimeSpan(1000000);
@@ -46,14 +46,21 @@ namespace Snake2Arc{
 
         
 
-        public GameWindow() {
+        public GameWindow() 
+        {
             InitializeComponent();
-            IsNotAlone = false;//set To TRUE to with 2 snakes
+            IsPaused = true;
+        }
+
+        private void RunGame(Boolean IsNotAlone)
+        {
+            this.IsNotAlone = IsNotAlone;//set To TRUE to with 2 snakes
             IsDisplayingEnd = false;
             IsPaused = false;
-            snake1 = new Snake(Brushes.BlueViolet, true);
-            if (IsNotAlone) {
-                snake2 = new Snake(Brushes.DarkGreen, false);
+            snake1 = new Snake(Brushes.BlueViolet,true);
+            if(IsNotAlone)
+            {
+                snake2 = new Snake(Brushes.DarkGreen,false);
             }
 
             //refresh managment
@@ -69,8 +76,6 @@ namespace Snake2Arc{
             AddFoodOrPoison();
             AddFoodOrPoison();
         }
-
-
         private void DrawFoodsAndPoisons()
         {
             for(int i=0;i<foodPoints.Count;i++)
@@ -268,7 +273,8 @@ namespace Snake2Arc{
                     if ((Math.Abs(p.X - head2.X) < (SNAKETHICK)) &&
                          (Math.Abs(p.Y - head2.Y) < (SNAKETHICK)))
                     {
-                        if (!IsDisplayingEnd){
+                        if (!IsDisplayingEnd)
+                        {
                             EndGame("Green  snake");
                         }
                         break;
@@ -314,7 +320,7 @@ namespace Snake2Arc{
             switch (e.Key)
             {
                 case Key.P:
-                    Pause();
+                    IsPaused = !IsPaused;
                     break;
                 //player1
                 case Key.Down:
@@ -349,40 +355,14 @@ namespace Snake2Arc{
             }
         }
 
-        private void Pause()
-        {
-            if (IsPaused)
-            {
-                IsPaused = false;
-            }
-            else
-            {
-                IsPaused = true;
-            }
-        }
-
         public void EndGame(string s ="BG "){
             int result = (int)MessageBox.Show(s+" made a mistake ! \n Wanna Play Again ? ","Snake2Arc Over",MessageBoxButton.YesNo,MessageBoxImage.Information);
             if (result == 6){//for yes
-                Restart();
+                RunGame(IsNotAlone);
             }
             else{
                 Close();
             }
-        }
-
-        private void Restart()
-        {
-            if (IsNotAlone){
-                snake2.Reset(IsNotAlone);
-            }
-            snake1.Reset(IsNotAlone);
-            foodPoints.Clear();
-            poisonPoints.Clear();
-            AddFood();
-            AddFoodOrPoison();
-            AddFoodOrPoison();
-            IsDisplayingEnd = false;
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
@@ -393,6 +373,27 @@ namespace Snake2Arc{
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Button_Play_Click(object sender,RoutedEventArgs e)
+        {
+            mainMenu.Visibility = Visibility.Collapsed;
+            RunGame(false);
+        }
+
+        private void Button_Play_Double_Click(object sender,RoutedEventArgs e)
+        {
+            mainMenu.Visibility = Visibility.Collapsed;
+            RunGame(true);
+        }
+
+        private void Button_LeaderBoard_Click(object sender,RoutedEventArgs e)
+        {
+
+        }
+        private void Button_Options_Click(object sender,RoutedEventArgs e)
+        {
+
         }
     }
 }
