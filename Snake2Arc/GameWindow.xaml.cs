@@ -185,25 +185,11 @@ namespace Snake2Arc{
                     CheckFood(snake2);
                     CheckPoison(snake2);
                 }
-                if (IsNotAlone)
-                {
-                    scoreBoard.Text = "- Score : Player1(purple)="+snake1.Score+"  | Player2(green)="+snake2.Score+" -";
-                 }
-                else
-                {
-                    scoreBoard.Text = "- Score : Player1(purple)=" + snake1.Score + " -";
-                }
+                scoreBoard.Text = $"- Score : Player1(purple)={snake1.Score}" + (IsNotAlone ? $"  | Player2(green)={snake2.Score} -" : " -");
             }
             else 
             { 
-                if (IsNotAlone)
-                {
-                    scoreBoard.Text = "PAUSED - Score : Player1(purple)=" + snake1.Score + "  | Player2(green)=" + snake2.Score + " -";
-                }
-                else
-                {
-                    scoreBoard.Text = "PAUSED - Score : Player1(purple)=" + snake1.Score + " -";
-                }
+               scoreBoard.Text = $"PAUSED - Score : Player1(purple)={snake1.Score}"+ (IsNotAlone?$"  | Player2(green)={snake2.Score} -":" -");
             }
         }
 
