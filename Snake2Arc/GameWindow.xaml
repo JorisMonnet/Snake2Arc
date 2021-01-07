@@ -40,7 +40,7 @@
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Double_Click">Play Double</Button>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_LeaderBoard_Click">LeaderBoard</Button>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Options_Click">Options</Button>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Quit_Click">Quit</Button>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="BtnCloseClick">Quit</Button>
                         </StackPanel>
                     </Border>
                 </Canvas>

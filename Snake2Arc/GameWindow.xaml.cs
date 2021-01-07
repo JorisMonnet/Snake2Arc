@@ -320,7 +320,7 @@ namespace Snake2Arc{
             switch (e.Key)
             {
                 case Key.P:
-                    Pause();
+                    IsPaused = !IsPaused;
                     break;
                 //player1
                 case Key.Down:
@@ -353,11 +353,6 @@ namespace Snake2Arc{
                         break;
                 }
             }
-        }
-
-        private void Pause()
-        {
-            IsPaused = !IsPaused;
         }
 
         public void EndGame(string s ="BG "){
@@ -399,10 +394,6 @@ namespace Snake2Arc{
         private void Button_Options_Click(object sender,RoutedEventArgs e)
         {
 
-        }
-        private void Button_Quit_Click(object sender,RoutedEventArgs e)
-        {
-            Close();
         }
     }
 }
