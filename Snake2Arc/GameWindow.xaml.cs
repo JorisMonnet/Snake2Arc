@@ -357,38 +357,17 @@ namespace Snake2Arc{
 
         private void Pause()
         {
-            if (IsPaused)
-            {
-                IsPaused = false;
-            }
-            else
-            {
-                IsPaused = true;
-            }
+            IsPaused = !IsPaused;
         }
 
         public void EndGame(string s ="BG "){
             int result = (int)MessageBox.Show(s+" made a mistake ! \n Wanna Play Again ? ","Snake2Arc Over",MessageBoxButton.YesNo,MessageBoxImage.Information);
             if (result == 6){//for yes
-                Restart();
+                RunGame(IsNotAlone);
             }
             else{
                 Close();
             }
-        }
-
-        private void Restart()
-        {
-            if (IsNotAlone){
-                snake2.Reset(IsNotAlone);
-            }
-            snake1.Reset(IsNotAlone);
-            foodPoints.Clear();
-            poisonPoints.Clear();
-            AddFood();
-            AddFoodOrPoison();
-            AddFoodOrPoison();
-            IsDisplayingEnd = false;
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
