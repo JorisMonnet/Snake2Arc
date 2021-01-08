@@ -375,8 +375,10 @@ namespace Snake2Arc{
 
         private void Button_LeaderBoard_Click(object sender,RoutedEventArgs e)
         {
-
+            mainMenu.Visibility = Visibility.Collapsed;
+            leaderBoard.Visibility = Visibility.Visible;
         }
+
         private void Button_Options_Click(object sender,RoutedEventArgs e)
         {
 

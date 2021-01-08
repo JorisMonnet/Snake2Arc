@@ -34,13 +34,30 @@
                 <Canvas Name="paintCanvas" Background="Black"
                                     Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Height="450" Width="550">
                     <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="mainMenu" Panel.ZIndex="1">
-                        <StackPanel Orientation="Vertical" Background="AliceBlue">
+                        <StackPanel Orientation="Vertical" Background="white">
                             <Image></Image>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Click">Play Solo</Button>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Double_Click">Play Double</Button>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_LeaderBoard_Click">LeaderBoard</Button>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Options_Click">Options</Button>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="BtnCloseClick">Quit</Button>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="leaderBoard" Panel.ZIndex="1" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical" Background="white">
+                            <Border BorderThickness="2" BorderBrush="Silver" Margin="0,10">
+                                <TextBlock HorizontalAlignment="Center" FontSize="30" FontWeight="Bold">Leaderboard</TextBlock>
+                            </Border>
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource LeaderBoardListSource}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Margin="7">
+                                            <TextBlock Text="{Binding PlayerName}"  DockPanel.Dock="Left"   FontSize="20"></TextBlock>
+                                            <TextBlock Text="{Binding Score}"       DockPanel.Dock="Right"  FontSize="20" HorizontalAlignment="Right"></TextBlock>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                     </Border>
                 </Canvas>
