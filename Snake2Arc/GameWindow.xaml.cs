@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,8 +10,6 @@ using System.Windows.Threading;
 
 namespace Snake2Arc{
 
-
-   
     //all directions
     public enum DIRECTION
     {
@@ -44,7 +43,10 @@ namespace Snake2Arc{
         //random number for food spawning
         private readonly Random rand = new Random();
 
-        
+        public ObservableCollection<Score> LeaderBoardList              //observable -> get notification when list change
+        {
+            get; set;
+        } = new ObservableCollection<Score>();
 
         public GameWindow() 
         {
@@ -383,5 +385,6 @@ namespace Snake2Arc{
         {
 
         }
+
     }
 }

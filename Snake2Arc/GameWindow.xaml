@@ -52,8 +52,8 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <DockPanel Margin="7">
-                                            <TextBlock Text="{Binding PlayerName}"  DockPanel.Dock="Left"   FontSize="20"></TextBlock>
-                                            <TextBlock Text="{Binding Score}"       DockPanel.Dock="Right"  FontSize="20" HorizontalAlignment="Right"></TextBlock>
+                                            <TextBlock Text="{Binding Name}"  DockPanel.Dock="Left"   FontSize="20"></TextBlock>
+                                            <TextBlock Text="{Binding ScoreValue}"       DockPanel.Dock="Right"  FontSize="20" HorizontalAlignment="Right"></TextBlock>
                                         </DockPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
