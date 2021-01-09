@@ -19,15 +19,15 @@
     <Viewbox x:Name="mainViewBox">
         <Grid  HorizontalAlignment="Center" VerticalAlignment="Center"  >
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
         
             <WrapPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <TextBlock Name="scoreBoard" Foreground="White" FontSize="50">-Score : -</TextBlock>
+                <TextBlock Name="scoreBoard" Foreground="White" FontSize="50" Text="-Score : -"/>
             </WrapPanel>
 
             <Viewbox x:Name="viewBoxCanvas" MaxHeight="980" MaxWidth="1460" Grid.Row="1" Grid.Column="0">
@@ -35,25 +35,24 @@
                                     Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Height="450" Width="550">
                     <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="mainMenu" Panel.ZIndex="1">
                         <StackPanel Orientation="Vertical" Background="white">
-                            <Image></Image>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Click">Play Solo</Button>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Double_Click">Play Double</Button>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_LeaderBoard_Click">LeaderBoard</Button>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Options_Click">Options</Button>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="BtnCloseClick">Quit</Button>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Click"         Content="Play Solo"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Double_Click"  Content="Play Double"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_LeaderBoard_Click"  Content="LeaderBoard"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Options_Click"      Content="Options"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="BtnCloseClick"             Content="Quit"/>
                         </StackPanel>
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="leaderBoard" Panel.ZIndex="1" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="white">
                             <Border BorderThickness="2" BorderBrush="Silver" Margin="0,10">
-                                <TextBlock HorizontalAlignment="Center" FontSize="30" FontWeight="Bold">Leaderboard</TextBlock>
+                                <TextBlock HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Text="Leaderboard"/>
                             </Border>
                             <ItemsControl ItemsSource="{Binding Source={StaticResource LeaderBoardListSource}}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <DockPanel Margin="7">
-                                            <TextBlock Text="{Binding Name}"  DockPanel.Dock="Left"   FontSize="20"></TextBlock>
-                                            <TextBlock Text="{Binding ScoreValue}"       DockPanel.Dock="Right"  FontSize="20" HorizontalAlignment="Right"></TextBlock>
+                                            <TextBlock Text="{Binding Name}"        DockPanel.Dock="Left"   FontSize="20"/>
+                                            <TextBlock Text="{Binding ScoreValue}"  DockPanel.Dock="Right"  FontSize="20" HorizontalAlignment="Right"/>
                                         </DockPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -62,9 +61,9 @@
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="addNewScore" Panel.ZIndex="1" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="AliceBlue">
-                            <TextBlock  HorizontalAlignment="Center"        FontSize="30" FontWeight="Bold" Margin="15">You are one of the 5 best scorers !</TextBlock>
-                            <TextBox    HorizontalContentAlignment="Center" FontSize="30" MaxLength="25"    Margin="20"  Name="playerNameAdded"></TextBox>
-                            <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Name="button_add_new_score" Click="add_new_score" >Add your score</Button>
+                            <TextBlock  HorizontalAlignment="Center"        FontSize="30" FontWeight="Bold" Margin="15" Text="You are one of the 5 best scorers !"/>
+                            <TextBox    HorizontalContentAlignment="Center" FontSize="30" MaxLength="25"    Margin="20"         Name="playerNameAdded"/>
+                            <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Click="add_new_score"   Name="button_add_new_score" Content="Add your score"/>
                         </StackPanel>
                     </Border>
                 </Canvas>
