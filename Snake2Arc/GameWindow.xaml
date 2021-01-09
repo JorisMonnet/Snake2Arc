@@ -60,6 +60,13 @@
                             </ItemsControl>
                         </StackPanel>
                     </Border>
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="addNewScore" Panel.ZIndex="1" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical" Background="AliceBlue">
+                            <TextBlock  HorizontalAlignment="Center"        FontSize="30" FontWeight="Bold" Margin="15">You are one of the 5 best scorers !</TextBlock>
+                            <TextBox    HorizontalContentAlignment="Center" FontSize="30" MaxLength="25"    Margin="20"  Name="playerNameAdded"></TextBox>
+                            <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Name="button_add_new_score" Click="add_new_score" >Add your score</Button>
+                        </StackPanel>
+                    </Border>
                 </Canvas>
             </Viewbox>
         </Grid>
