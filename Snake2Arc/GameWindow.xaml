@@ -44,9 +44,7 @@
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="leaderBoard" Panel.ZIndex="1" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="white">
-                            <Border BorderThickness="2" BorderBrush="Silver" Margin="0,10">
-                                <TextBlock HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Text="Leaderboard"/>
-                            </Border>
+                            <TextBlock HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Text="Leaderboard"/>
                             <ItemsControl ItemsSource="{Binding Source={StaticResource LeaderBoardListSource}}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -57,13 +55,21 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="button_return_menu_click"  Content="Return to main menu"/>
                         </StackPanel>
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="addNewScore" Panel.ZIndex="1" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="AliceBlue">
-                            <TextBlock  HorizontalAlignment="Center"        FontSize="30" FontWeight="Bold" Margin="15" Text="You are one of the 5 best scorers !"/>
+                            <TextBlock  HorizontalAlignment="Center"        FontSize="30" FontWeight="Bold" Margin="15"         Text="You are one of the 5 best scorers !"/>
                             <TextBox    HorizontalContentAlignment="Center" FontSize="30" MaxLength="25"    Margin="20"         Name="playerNameAdded"/>
-                            <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Click="add_new_score"   Name="button_add_new_score" Content="Add your score"/>
+                            <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Click="add_new_score"   Name="button_add_new_score" Background="#FF8A2BE2" Content="Add your score"/>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="gameOver1Player" Panel.ZIndex="1" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical" Background="AliceBlue">
+                            <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Text="GAME OVER, Your score:"/>
+                            <TextBlock Name="score" TextAlignment="Center" FontSize="36" Foreground="red">0</TextBlock>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="button_return_menu_click"  Content="Return to main menu"/>
                         </StackPanel>
                     </Border>
                 </Canvas>
