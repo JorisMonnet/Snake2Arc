@@ -165,13 +165,13 @@ namespace Snake2Arc
             if (alea%4==1)
             {
                 //slow
-                Point slowPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+                Point slowPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2*SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2*SNAKETHICK, (int)(paintCanvas.Height - 2*SNAKETHICK))));
                 slowPoints.Add(slowPoint);
             }
             else if (true)
             {
                 //speed
-                Point speedPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+                Point speedPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
                 speedPoints.Add(speedPoint);
             }
         }
@@ -182,12 +182,12 @@ namespace Snake2Arc
             if (alea % 4 == 0 && foodPoints.Count != 0)
             {
                 //malus
-                Point poisonPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+                Point poisonPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
                 poisonPoints.Add(poisonPoint);
             }
             else
             {
-                Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+                Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
                 foodPoints.Add(foodPoint);
             }
         }
@@ -199,7 +199,7 @@ namespace Snake2Arc
         }
         private void AddFood()
         {
-            Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+            Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
             foodPoints.Add(foodPoint);
         }
 
@@ -541,7 +541,13 @@ namespace Snake2Arc
 
         private void Change_Snake_Thick(object sender, RoutedEventArgs e)
         {
+            if ((int)thickSlider.Value != 15) { 
             GameWindow.SNAKETHICK = (int)thickSlider.Value;
+            }
+            else
+            {
+                thickSlider.Value = 10;
+            }
         }
     }
 }
