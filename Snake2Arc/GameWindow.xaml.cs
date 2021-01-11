@@ -61,7 +61,6 @@ namespace Snake2Arc
 
         private void RunGame(Boolean IsNotAlone)
         {
-            IsPlaying = true;
             this.IsNotAlone = IsNotAlone;//set To TRUE to with 2 snakes
             IsDisplayingEnd = false;
             IsPaused = false;
@@ -282,7 +281,6 @@ namespace Snake2Arc
             }
         }
 
-
         private void CheckSelfCollision(Snake snake)
         {
             Point head = snake.SnakeBody[0];
@@ -362,6 +360,8 @@ namespace Snake2Arc
 
         public void EndGame(string s = "BG ")
         {
+            //stop refresh
+            timer.Tick -= new EventHandler(TimerTick);
             int result = (int)MessageBox.Show(s + " made a mistake ! \n Wanna Play Again ? ","Snake2Arc Over",MessageBoxButton.YesNo,MessageBoxImage.Information);
             if(result == 6)
             {//for yes
@@ -370,8 +370,7 @@ namespace Snake2Arc
             else
             {
                 mainMenu.Visibility = Visibility.Visible;
-                IsPaused = true;
-                
+                paintCanvas.Children.Add(mainMenu);          
             }
         }
 
