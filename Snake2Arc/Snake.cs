@@ -10,9 +10,12 @@ namespace Snake2Arc
         public Brush SnakeColor { get; set; }
         private int direction = -1;
         public int Score { get; set; }
-
+        public int Speed { get; set; }
+        public int SpeedDelay { get; set; }
         public Snake(Brush color,bool oneOrTwo)
         {
+            Speed = 1;
+            SpeedDelay = 20;
             SnakeColor = color;
             SnakeBody = new List<Point>();
             int size = oneOrTwo ? 100 : 300;
@@ -20,32 +23,56 @@ namespace Snake2Arc
             SnakeBody.Add(new Point(size + GameWindow.SNAKETHICK,size));
         }
 
-        public void UpdateSnake()
+        public void UpdateSnake(bool isNotWaiting)
         {
-            List<Point> newBody = new List<Point>();
-            if(direction == (int)DIRECTION.UP)
-            {
-                newBody.Add(new Point(SnakeBody[0].X,SnakeBody[0].Y - GameWindow.SNAKETHICK));
+            if (isNotWaiting) { 
+                if (Speed != 1 && SpeedDelay>0)
+                {
+                    SpeedDelay--;
+                }    
+                else if (SpeedDelay <= 0)
+                {
+                    SpeedDelay = 20;
+                    Speed = 1;
+                }
+            
+                List<Point> newBody = new List<Point>();
+                if(direction == (int)DIRECTION.UP)
+                {
+                    newBody.Add(new Point(SnakeBody[0].X,SnakeBody[0].Y - GameWindow.SNAKETHICK));
+                }
+                else if(direction == (int)DIRECTION.DOWN)
+                {
+                    newBody.Add(new Point(SnakeBody[0].X,SnakeBody[0].Y + GameWindow.SNAKETHICK));
+                }
+                else if(direction == (int)DIRECTION.LEFT)
+                {
+                    newBody.Add(new Point(SnakeBody[0].X - GameWindow.SNAKETHICK,SnakeBody[0].Y));
+                }
+                else if(direction == (int)DIRECTION.RIGHT)
+                {
+                    newBody.Add(new Point(SnakeBody[0].X + GameWindow.SNAKETHICK,SnakeBody[0].Y));
+                }
+                SnakeBody.RemoveAt(SnakeBody.Count - 1);
+                foreach(Point p in SnakeBody)
+                {
+                    newBody.Add(p);
+                }
+                SnakeBody = newBody;
+                Score = SnakeBody.Count;
             }
-            else if(direction == (int)DIRECTION.DOWN)
+            else
             {
-                newBody.Add(new Point(SnakeBody[0].X,SnakeBody[0].Y + GameWindow.SNAKETHICK));
+                if (Speed ==0 && SpeedDelay > 0)
+                {
+                    SpeedDelay--;
+                }
+                else if (SpeedDelay <= 0)
+                {
+                    SpeedDelay = 20;
+                    Speed = 1;
+                }
             }
-            else if(direction == (int)DIRECTION.LEFT)
-            {
-                newBody.Add(new Point(SnakeBody[0].X - GameWindow.SNAKETHICK,SnakeBody[0].Y));
-            }
-            else if(direction == (int)DIRECTION.RIGHT)
-            {
-                newBody.Add(new Point(SnakeBody[0].X + GameWindow.SNAKETHICK,SnakeBody[0].Y));
-            }
-            SnakeBody.RemoveAt(SnakeBody.Count - 1);
-            foreach(Point p in SnakeBody)
-            {
-                newBody.Add(p);
-            }
-            SnakeBody = newBody;
-            Score = SnakeBody.Count;
         }
 
         public void PoisonSnake(GameWindow gW)
@@ -53,7 +80,7 @@ namespace Snake2Arc
             if(SnakeBody.Count - 2 > 0)
             {
                 SnakeBody.RemoveAt(SnakeBody.Count - 1);
-                UpdateSnake();
+                UpdateSnake(Speed!=0);
             }
             else
             {

@@ -30,11 +30,13 @@ namespace Snake2Arc
         //things to eat
         private readonly List<Point> foodPoints = new List<Point>();
         private readonly List<Point> poisonPoints = new List<Point>();
+        private readonly List<Point> speedPoints = new List<Point>();
+        private readonly List<Point> slowPoints = new List<Point>();
 
         //snakes management
         private Snake snake1;
         private Snake snake2;
-
+       
         //refresh delay
         private TimeSpan REFRESHDELAY = new TimeSpan(1000000);
 
@@ -77,13 +79,21 @@ namespace Snake2Arc
             timer.Interval = REFRESHDELAY;
             timer.Start();
 
+            foodPoints.Clear();
+            poisonPoints.Clear();
+            speedPoints.Clear();
+            slowPoints.Clear();
             //keyboard managment
             KeyDown += new KeyEventHandler(OnButtonKeyDown);
             AddFood();
             AddFoodOrPoison();
             AddFoodOrPoison();
+            AddSlowOrSpeed();
+            AddSlowOrSpeed();
+            AddSlowOrSpeed();
+            AddSlowOrSpeed();
         }
-        private void DrawFoodsAndPoisons()
+        private void DrawFoodsAndPoisonsAndSlowAndSpeed()
         {
             for (int i = 0; i < foodPoints.Count; i++)
             {
@@ -93,6 +103,29 @@ namespace Snake2Arc
             {
                 DrawPoison(i, poisonPoints[i]);
             }
+            for (int i = 0; i < speedPoints.Count; i++)
+            {
+                DrawSlowOrSpeed(i, speedPoints[i]);
+            }
+            for (int i = 0; i < slowPoints.Count; i++)
+            {
+                DrawSlowOrSpeed(i, slowPoints[i]);
+            }
+        }
+
+        private void DrawSlowOrSpeed(int index, Point point)
+        {
+            Ellipse speedOrSlowEllipse = new Ellipse
+            {
+                Fill = Brushes.DeepSkyBlue,
+                Width = SNAKETHICK,
+                Height = SNAKETHICK
+            };
+
+            Canvas.SetTop(speedOrSlowEllipse, point.Y);
+            Canvas.SetLeft(speedOrSlowEllipse, point.X);
+
+            paintCanvas.Children.Insert(index, speedOrSlowEllipse);
         }
 
         private void DrawFood(int index, Point foodPoint)
@@ -124,6 +157,23 @@ namespace Snake2Arc
             paintCanvas.Children.Insert(index, foodEllipse);
         }
 
+        private void AddSlowOrSpeed()
+        {
+            int alea = rand.Next(0, 20);
+            if (alea%4==1)
+            {
+                //slow
+                Point slowPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+                slowPoints.Add(slowPoint);
+            }
+            else if (true)
+            {
+                //speed
+                Point speedPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+                speedPoints.Add(speedPoint);
+            }
+        }
+
         private void AddFoodOrPoison()
         {
             int alea = rand.Next(0, 10);
@@ -139,6 +189,8 @@ namespace Snake2Arc
                 foodPoints.Add(foodPoint);
             }
         }
+
+
         private int SnakeCeiling(int entry)
         {
             return (int)Math.Ceiling(entry / (SNAKETHICK * 1.0)) * SNAKETHICK;
@@ -180,21 +232,36 @@ namespace Snake2Arc
             if (!IsPaused)
             {
                 paintCanvas.Children.Clear();
-                snake1.UpdateSnake();
+                for (int i = 0; i < snake1.Speed; i++)
+                {
+                    snake1.UpdateSnake(true);
+                    CheckColisions();
+                    CheckFood(snake1);
+                    CheckPoison(snake1);
+                    CheckSpeedOrSlow(snake1);
+                }
+                if (snake1.Speed == 0)
+                {
+                    snake1.UpdateSnake(false);
+                }
                 if (IsNotAlone)
                 {
-                    snake2.UpdateSnake();
+                    for (int i = 0; i < snake2.Speed; i++)
+                    {
+                        snake2.UpdateSnake(true);
+                        CheckColisions();
+                        CheckFood(snake2);
+                        CheckPoison(snake2);
+                        CheckSpeedOrSlow(snake2);
+                    }
+                    if (snake2.Speed == 0)
+                    {
+                        snake2.UpdateSnake(false);
+                    }
                 }
                 DrawSnakes();
-                DrawFoodsAndPoisons();
-                CheckColisions();
-                CheckFood(snake1);
-                CheckPoison(snake1);
-                if (IsNotAlone)
-                {
-                    CheckFood(snake2);
-                    CheckPoison(snake2);
-                }
+                DrawFoodsAndPoisonsAndSlowAndSpeed();
+            
                 scoreBoard.Text = $"- Score : Player1(purple)={snake1.Score}" + (IsNotAlone ? $"  | Player2(green)={snake2.Score} -" : " -");
             }
             else
@@ -202,6 +269,33 @@ namespace Snake2Arc
                 scoreBoard.Text = $"PAUSED - Score : Player1(purple)={snake1.Score}" + (IsNotAlone ? $"  | Player2(green)={snake2.Score} -" : " -");
                 paintCanvas.Children.Clear();
                 paintCanvas.Children.Add(pauseMenu);
+            }
+        }
+        private void CheckSpeedOrSlow(Snake snake)
+        {
+            Point head = snake.SnakeBody[0];
+
+            foreach (Point p in slowPoints)
+            {
+                if ((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
+                     (Math.Abs(p.Y - head.Y) < (SNAKETHICK)))
+                {
+                    snake.Speed= snake.Speed<0?1:snake.Speed-1;
+                    slowPoints.Remove(p);
+                    AddFoodOrPoison();
+                    break;
+                }
+            }
+            foreach (Point p in speedPoints)
+            {
+                if ((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
+                     (Math.Abs(p.Y - head.Y) < (SNAKETHICK)))
+                {
+                    snake.Speed = snake.Speed >= 2 ? 2 : snake.Speed + 1;
+                    speedPoints.Remove(p);
+                    AddFoodOrPoison();
+                    break;
+                }
             }
         }
 
@@ -379,10 +473,6 @@ namespace Snake2Arc
             }
         }
 
-        private void WindowMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
 
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
