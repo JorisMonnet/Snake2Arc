@@ -40,6 +40,9 @@ namespace Snake2Arc
         //refresh delay
         private TimeSpan REFRESHDELAY = new TimeSpan(1000000);
 
+        //stock wining score/lastScores
+        private int finalScoreSnake1;
+        private int finalScoreSnake2;
 
         //snakes thick
         public static int SNAKETHICK = 10;
@@ -235,6 +238,7 @@ namespace Snake2Arc
                 for (int i = 0; i < snake1.Speed; i++)
                 {
                     snake1.UpdateSnake(true);
+                    finalScoreSnake1 = snake1.Score;
                     CheckColisions();
                     CheckFood(snake1);
                     CheckPoison(snake1);
@@ -249,6 +253,7 @@ namespace Snake2Arc
                     for (int i = 0; i < snake2.Speed; i++)
                     {
                         snake2.UpdateSnake(true);
+                        finalScoreSnake2 = snake2.Score;
                         CheckColisions();
                         CheckFood(snake2);
                         CheckPoison(snake2);
@@ -355,7 +360,7 @@ namespace Snake2Arc
                     {
                         if (!IsDisplayingEnd)
                         {
-                            EndGame("Purple  snake");
+                            EndGame(true);
                         }
                         break;
                     }
@@ -367,7 +372,7 @@ namespace Snake2Arc
                     {
                         if (!IsDisplayingEnd)
                         {
-                            EndGame("Green  snake");
+                            EndGame(false);
                         }
                         break;
                     }
@@ -386,7 +391,7 @@ namespace Snake2Arc
                 {
                     if (!IsDisplayingEnd)
                     {
-                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple  snake" : "Green  snake");
+                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
                     }
                     break;
                 }
@@ -402,7 +407,7 @@ namespace Snake2Arc
             {
                 if (!IsDisplayingEnd)
                 {
-                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake");
+                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
                 }
             }
         }
@@ -457,7 +462,7 @@ namespace Snake2Arc
             }
         }
 
-        public void EndGame(string s = "BG ")
+        public void EndGame(bool isFirstLooser)
         {
             //stop refresh
             timer.Tick -= new EventHandler(TimerTick);
@@ -465,12 +470,14 @@ namespace Snake2Arc
                 gameOver2Player.Visibility = Visibility.Visible;
                 paintCanvas.Children.Clear();
                 paintCanvas.Children.Add(gameOver2Player);
+
             }
             else
             {
                 gameOver1Player.Visibility = Visibility.Visible;
                 paintCanvas.Children.Clear();
                 paintCanvas.Children.Add(gameOver1Player);
+                scoreWin1Player.Text = finalScoreSnake1.ToString();
             }
 
         }
