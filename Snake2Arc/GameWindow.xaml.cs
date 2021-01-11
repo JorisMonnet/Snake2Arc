@@ -27,6 +27,7 @@ namespace Snake2Arc
         public bool IsNotAlone { get; set; }
         private bool IsDisplayingEnd { get; set; }
         private bool IsPaused { get; set; }
+        private bool IsPlaying { get; set; }
         //things to eat
         private readonly List<Point> foodPoints = new List<Point>();
         private readonly List<Point> poisonPoints = new List<Point>();
@@ -58,6 +59,7 @@ namespace Snake2Arc
 
         private void RunGame(Boolean IsNotAlone)
         {
+            IsPlaying = true;
             this.IsNotAlone = IsNotAlone;//set To TRUE to with 2 snakes
             IsDisplayingEnd = false;
             IsPaused = false;
@@ -174,6 +176,7 @@ namespace Snake2Arc
         }
         private void TimerTick(object sender,EventArgs e)
         {
+            if (IsPlaying) { 
             if(!IsPaused)
             {
                 paintCanvas.Children.Clear();
@@ -199,6 +202,12 @@ namespace Snake2Arc
                 scoreBoard.Text = $"PAUSED - Score : Player1(purple)={snake1.Score}" + (IsNotAlone ? $"  | Player2(green)={snake2.Score} -" : " -");
                 paintCanvas.Children.Clear();
                 paintCanvas.Children.Add(pauseMenu);
+            }
+            }
+            else
+            {
+                paintCanvas.Children.Clear();
+                paintCanvas.Children.Add(mainMenu);
             }
         }
 
@@ -423,8 +432,7 @@ namespace Snake2Arc
         {
             pauseMenu.Visibility = Visibility.Collapsed;
             mainMenu.Visibility = Visibility.Visible;
-            paintCanvas.Children.Clear();
-            paintCanvas.Children.Add(mainMenu);
+            IsPlaying = false;
         }
     }
 }
