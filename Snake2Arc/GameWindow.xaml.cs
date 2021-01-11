@@ -40,9 +40,8 @@ namespace Snake2Arc
         //refresh delay
         private TimeSpan REFRESHDELAY = new TimeSpan(1000000);
 
-        //stock wining score/lastScores
-        private int finalScoreSnake1;
-        private int finalScoreSnake2;
+        //stock wining score/lastScore
+        private int finalScoreSolo;
 
         //snakes thick
         public static int SNAKETHICK = 10;
@@ -238,7 +237,7 @@ namespace Snake2Arc
                 for (int i = 0; i < snake1.Speed; i++)
                 {
                     snake1.UpdateSnake(true);
-                    finalScoreSnake1 = snake1.Score;
+                    finalScoreSolo = snake1.Score;
                     CheckColisions();
                     CheckFood(snake1);
                     CheckPoison(snake1);
@@ -253,7 +252,6 @@ namespace Snake2Arc
                     for (int i = 0; i < snake2.Speed; i++)
                     {
                         snake2.UpdateSnake(true);
-                        finalScoreSnake2 = snake2.Score;
                         CheckColisions();
                         CheckFood(snake2);
                         CheckPoison(snake2);
@@ -470,14 +468,14 @@ namespace Snake2Arc
                 gameOver2Player.Visibility = Visibility.Visible;
                 paintCanvas.Children.Clear();
                 paintCanvas.Children.Add(gameOver2Player);
-
+                whoLose2Player.Text = "GAME OVER, Player " + (isFirstLooser ? "1 " : "2 ")+"\nLoosed\n Player "+ (!isFirstLooser ? "1 " : "2 ")+" wins.";
             }
             else
             {
                 gameOver1Player.Visibility = Visibility.Visible;
                 paintCanvas.Children.Clear();
                 paintCanvas.Children.Add(gameOver1Player);
-                scoreWin1Player.Text = finalScoreSnake1.ToString();
+                scoreWin1Player.Text = finalScoreSolo.ToString();
             }
 
         }
