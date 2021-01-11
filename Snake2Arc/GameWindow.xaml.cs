@@ -42,7 +42,7 @@ namespace Snake2Arc
 
 
         //snakes thick
-        public const int SNAKETHICK = 10;
+        public static int SNAKETHICK = 10;
 
         //random number for food spawning
         private readonly Random rand = new Random();
@@ -501,7 +501,9 @@ namespace Snake2Arc
 
         private void Button_Options_Click(object sender, RoutedEventArgs e)
         {
-
+            optionMenu.Visibility = Visibility.Visible;
+            paintCanvas.Children.Clear();
+            paintCanvas.Children.Add(optionMenu);
         }
 
         private void Button_return_menu_click(object sender, RoutedEventArgs e)
@@ -528,6 +530,11 @@ namespace Snake2Arc
             timer.Tick -= new EventHandler(TimerTick);
             paintCanvas.Children.Add(mainMenu);
             scoreBoard.Text = "Snake2Arc";
+        }
+
+        private void Change_Snake_Thick(object sender, RoutedEventArgs e)
+        {
+            GameWindow.SNAKETHICK = (int)thickSlider.Value;
         }
     }
 }

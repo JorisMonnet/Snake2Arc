@@ -79,6 +79,14 @@
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_leave_click" Content="Leave"/>
                         </StackPanel>
                     </Border>
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="optionMenu" Panel.ZIndex="2" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical" Background="white">
+                            <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Padding="2"  Text="Option"/>
+                            <TextBlock Margin="20" TextAlignment="Center" FontSize="12" Text="Snakes Size"/>
+                            <Slider Maximum="20" Minimum="5" IsSnapToTickEnabled="True" TickPlacement="BottomRight" TickFrequency="5" Value="10" ValueChanged="Change_Snake_Thick" Name="thickSlider"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click" Content="Back to Main"/>
+                        </StackPanel>
+                    </Border>
                 </Canvas>
             </Viewbox>
         </Grid>
