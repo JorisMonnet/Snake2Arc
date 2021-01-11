@@ -197,6 +197,8 @@ namespace Snake2Arc
             else
             {
                 scoreBoard.Text = $"PAUSED - Score : Player1(purple)={snake1.Score}" + (IsNotAlone ? $"  | Player2(green)={snake2.Score} -" : " -");
+                paintCanvas.Children.Clear();
+                paintCanvas.Children.Add(pauseMenu);
             }
         }
 
@@ -317,6 +319,7 @@ namespace Snake2Arc
             {
                 case Key.P:
                     IsPaused = !IsPaused;
+                    pauseMenu.Visibility = Visibility.Visible;
                     break;
                 //player1
                 case Key.Down:
@@ -362,7 +365,9 @@ namespace Snake2Arc
             }
             else
             {
-                Close();
+                mainMenu.Visibility = Visibility.Visible;
+                IsPaused = true;
+                
             }
         }
 
@@ -398,6 +403,7 @@ namespace Snake2Arc
         {
 
         }
+
         private void button_return_menu_click(object sender, RoutedEventArgs e)
         {
             mainMenu.Visibility = Visibility.Visible;
@@ -408,5 +414,17 @@ namespace Snake2Arc
 
         }
 
+        private void button_resume_click(object sender, RoutedEventArgs e)
+        {
+            IsPaused = false;   
+            pauseMenu.Visibility = Visibility.Collapsed;
+        }
+        private void button_leave_click(object sender, RoutedEventArgs e)
+        {
+            pauseMenu.Visibility = Visibility.Collapsed;
+            mainMenu.Visibility = Visibility.Visible;
+            paintCanvas.Children.Clear();
+            paintCanvas.Children.Add(mainMenu);
+        }
     }
 }
