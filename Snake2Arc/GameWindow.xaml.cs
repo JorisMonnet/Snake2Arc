@@ -40,6 +40,8 @@ namespace Snake2Arc
         //refresh delay
         private TimeSpan REFRESHDELAY = new TimeSpan(1000000);
 
+        //stock wining score/lastScore
+        private int finalScoreSolo;
 
         //snakes thick
         public static int SNAKETHICK = 10;
@@ -235,6 +237,7 @@ namespace Snake2Arc
                 for (int i = 0; i < snake1.Speed; i++)
                 {
                     snake1.UpdateSnake(true);
+                    finalScoreSolo = snake1.Score;
                     CheckColisions();
                     CheckFood(snake1);
                     CheckPoison(snake1);
@@ -355,7 +358,7 @@ namespace Snake2Arc
                     {
                         if (!IsDisplayingEnd)
                         {
-                            EndGame("Purple  snake");
+                            EndGame(true);
                         }
                         break;
                     }
@@ -367,7 +370,7 @@ namespace Snake2Arc
                     {
                         if (!IsDisplayingEnd)
                         {
-                            EndGame("Green  snake");
+                            EndGame(false);
                         }
                         break;
                     }
@@ -386,7 +389,7 @@ namespace Snake2Arc
                 {
                     if (!IsDisplayingEnd)
                     {
-                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple  snake" : "Green  snake");
+                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
                     }
                     break;
                 }
@@ -402,7 +405,7 @@ namespace Snake2Arc
             {
                 if (!IsDisplayingEnd)
                 {
-                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake");
+                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
                 }
             }
         }
@@ -457,20 +460,24 @@ namespace Snake2Arc
             }
         }
 
-        public void EndGame(string s = "BG ")
+        public void EndGame(bool isFirstLooser)
         {
             //stop refresh
             timer.Tick -= new EventHandler(TimerTick);
-            int result = (int)MessageBox.Show(s + " made a mistake ! \n Wanna Play Again ? ", "Snake2Arc Over", MessageBoxButton.YesNo, MessageBoxImage.Information);
-            if (result == 6)
-            {//for yes
-                RunGame(IsNotAlone);
+            if (IsNotAlone) { 
+                gameOver2Player.Visibility = Visibility.Visible;
+                paintCanvas.Children.Clear();
+                paintCanvas.Children.Add(gameOver2Player);
+                whoLose2Player.Text = "GAME OVER, Player " + (isFirstLooser ? "1 " : "2 ")+"\nLoosed\n Player "+ (!isFirstLooser ? "1 " : "2 ")+" wins.";
             }
             else
             {
-                mainMenu.Visibility = Visibility.Visible;
-                paintCanvas.Children.Add(mainMenu);
+                gameOver1Player.Visibility = Visibility.Visible;
+                paintCanvas.Children.Clear();
+                paintCanvas.Children.Add(gameOver1Player);
+                scoreWin1Player.Text = finalScoreSolo.ToString();
             }
+
         }
 
 
