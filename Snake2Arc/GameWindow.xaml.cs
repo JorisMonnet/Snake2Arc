@@ -180,21 +180,26 @@ namespace Snake2Arc
             if (!IsPaused)
             {
                 paintCanvas.Children.Clear();
-                snake1.UpdateSnake();
+                for (int i = 0; i < snake1.Speed; i++)
+                {
+                    snake1.UpdateSnake();
+                    CheckColisions();
+                    CheckFood(snake1);
+                    CheckPoison(snake1);
+                }
                 if (IsNotAlone)
                 {
-                    snake2.UpdateSnake();
+                    for (int i = 0; i < snake2.Speed; i++)
+                    {
+                        snake2.UpdateSnake();
+                        CheckColisions();
+                        CheckFood(snake2);
+                        CheckPoison(snake2);
+                    }
                 }
                 DrawSnakes();
                 DrawFoodsAndPoisons();
-                CheckColisions();
-                CheckFood(snake1);
-                CheckPoison(snake1);
-                if (IsNotAlone)
-                {
-                    CheckFood(snake2);
-                    CheckPoison(snake2);
-                }
+            
                 scoreBoard.Text = $"- Score : Player1(purple)={snake1.Score}" + (IsNotAlone ? $"  | Player2(green)={snake2.Score} -" : " -");
             }
             else
