@@ -405,6 +405,8 @@ namespace Snake2Arc
         {
             mainMenu.Visibility = Visibility.Collapsed;
             leaderBoard.Visibility = Visibility.Visible;
+            paintCanvas.Children.Clear();
+            paintCanvas.Children.Add(leaderBoard);
         }
 
         private void Button_Options_Click(object sender,RoutedEventArgs e)
@@ -416,6 +418,8 @@ namespace Snake2Arc
         {
             mainMenu.Visibility = Visibility.Visible;
             leaderBoard.Visibility = Visibility.Collapsed;
+            paintCanvas.Children.Clear();
+            paintCanvas.Children.Add(mainMenu);
         }
         private void add_new_score(object sender, RoutedEventArgs e)
         {
@@ -433,6 +437,7 @@ namespace Snake2Arc
             mainMenu.Visibility = Visibility.Visible;
             timer.Tick -= new EventHandler(TimerTick);
             paintCanvas.Children.Add(mainMenu);
+            scoreBoard.Text = "Snake2Arc";
         }
     }
 }

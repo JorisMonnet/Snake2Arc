@@ -27,7 +27,7 @@
             </Grid.ColumnDefinitions>
         
             <WrapPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <TextBlock Name="scoreBoard" Foreground="White" FontSize="50" Text="-Score : -"/>
+                <TextBlock Name="scoreBoard" Foreground="White" FontSize="50" Text="Snake2Arc"/>
             </WrapPanel>
 
             <Viewbox x:Name="viewBoxCanvas" MaxHeight="980" MaxWidth="1460" Grid.Row="1" Grid.Column="0">
