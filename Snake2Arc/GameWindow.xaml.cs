@@ -461,16 +461,18 @@ namespace Snake2Arc
         {
             //stop refresh
             timer.Tick -= new EventHandler(TimerTick);
-            int result = (int)MessageBox.Show(s + " made a mistake ! \n Wanna Play Again ? ", "Snake2Arc Over", MessageBoxButton.YesNo, MessageBoxImage.Information);
-            if (result == 6)
-            {//for yes
-                RunGame(IsNotAlone);
+            if (IsNotAlone) { 
+                gameOver2Player.Visibility = Visibility.Visible;
+                paintCanvas.Children.Clear();
+                paintCanvas.Children.Add(gameOver2Player);
             }
             else
             {
-                mainMenu.Visibility = Visibility.Visible;
-                paintCanvas.Children.Add(mainMenu);
+                gameOver1Player.Visibility = Visibility.Visible;
+                paintCanvas.Children.Clear();
+                paintCanvas.Children.Add(gameOver1Player);
             }
+
         }
 
 

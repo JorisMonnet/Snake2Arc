@@ -67,8 +67,16 @@
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="gameOver1Player" Panel.ZIndex="2" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="AliceBlue">
-                            <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Text="GAME OVER, Your score:"/>
-                            <TextBlock Name="score" TextAlignment="Center" FontSize="36" Foreground="red">0</TextBlock>
+                            <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Text="GAME OVER, Your score:" TextWrapping="Wrap"/>
+                            <TextBlock Name="scoreWin1Player" TextAlignment="Center" FontSize="36" Foreground="red">0</TextBlock>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Add_new_score"  Content="Add score to LeaderBoard"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click"  Content="Return to main menu"/>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="gameOver2Player" Panel.ZIndex="2" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical" Background="AliceBlue">
+                            <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Text="GAME OVER, Player " TextWrapping="Wrap"/>
+                            <TextBlock Name="scoreWin2Player" TextAlignment="Center" FontSize="36" Foreground="red">0</TextBlock>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click"  Content="Return to main menu"/>
                         </StackPanel>
                     </Border>
