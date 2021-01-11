@@ -398,16 +398,18 @@ namespace Snake2Arc
 
         private void CheckHeadOfSnake(Snake snake)
         {
-            if (snake.SnakeBody[0].X < 0 + SNAKETHICK
-                || snake.SnakeBody[0].X > 550 - 2 * SNAKETHICK
-                || snake.SnakeBody[0].Y < 0 + SNAKETHICK
-                || snake.SnakeBody[0].Y > 450 - 2 * SNAKETHICK)
-            {
-                if (!IsDisplayingEnd)
+           
+                if (snake.SnakeBody[0].X < 0 + SNAKETHICK
+                    || snake.SnakeBody[0].X >= paintCanvas.ActualWidth - 1 * SNAKETHICK
+                    || snake.SnakeBody[0].Y < 0 + SNAKETHICK
+                    || snake.SnakeBody[0].Y >= paintCanvas.ActualHeight - 1 * SNAKETHICK)
                 {
-                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
+                    if (!IsDisplayingEnd)
+                    {
+                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
+                    }
                 }
-            }
+            
         }
 
 
