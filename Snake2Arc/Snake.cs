@@ -2,7 +2,8 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace Snake2Arc{
+namespace Snake2Arc
+{
     class Snake
     {
         public List<Point> SnakeBody { get; set; }
@@ -14,38 +15,31 @@ namespace Snake2Arc{
         {
             SnakeColor = color;
             SnakeBody = new List<Point>();
-            if (oneOrTwo)
-            {
-                SnakeBody.Add(new Point(100, 100));
-                SnakeBody.Add(new Point(100 + GameWindow.SNAKETHICK, 100));
-            }
-            else
-            {   
-                SnakeBody.Add(new Point(300, 300));
-                SnakeBody.Add(new Point(300 + GameWindow.SNAKETHICK, 300));
-            }
+            int size = oneOrTwo ? 100 : 300;
+            SnakeBody.Add(new Point(size,size));
+            SnakeBody.Add(new Point(size + GameWindow.SNAKETHICK,size));
         }
 
         public void UpdateSnake()
         {
             List<Point> newBody = new List<Point>();
-            if (direction == (int)DIRECTION.UP)
+            if(direction == (int)DIRECTION.UP)
             {
-                newBody.Add(new Point(SnakeBody[0].X,SnakeBody[0].Y-GameWindow.SNAKETHICK));
+                newBody.Add(new Point(SnakeBody[0].X,SnakeBody[0].Y - GameWindow.SNAKETHICK));
             }
-            else if (direction == (int)DIRECTION.DOWN)
+            else if(direction == (int)DIRECTION.DOWN)
             {
-                newBody.Add(new Point(SnakeBody[0].X, SnakeBody[0].Y+ GameWindow.SNAKETHICK));
+                newBody.Add(new Point(SnakeBody[0].X,SnakeBody[0].Y + GameWindow.SNAKETHICK));
             }
-            else if (direction == (int)DIRECTION.LEFT)
+            else if(direction == (int)DIRECTION.LEFT)
             {
-                newBody.Add(new Point(SnakeBody[0].X- GameWindow.SNAKETHICK, SnakeBody[0].Y));
+                newBody.Add(new Point(SnakeBody[0].X - GameWindow.SNAKETHICK,SnakeBody[0].Y));
             }
-            else if (direction == (int)DIRECTION.RIGHT)
+            else if(direction == (int)DIRECTION.RIGHT)
             {
-                newBody.Add(new Point(SnakeBody[0].X + GameWindow.SNAKETHICK, SnakeBody[0].Y));
+                newBody.Add(new Point(SnakeBody[0].X + GameWindow.SNAKETHICK,SnakeBody[0].Y));
             }
-            SnakeBody.RemoveAt(SnakeBody.Count-1);
+            SnakeBody.RemoveAt(SnakeBody.Count - 1);
             foreach(Point p in SnakeBody)
             {
                 newBody.Add(p);
@@ -56,14 +50,14 @@ namespace Snake2Arc{
 
         public void PoisonSnake(GameWindow gW)
         {
-            if (SnakeBody.Count - 2 > 0) 
-            { 
+            if(SnakeBody.Count - 2 > 0)
+            {
                 SnakeBody.RemoveAt(SnakeBody.Count - 1);
                 UpdateSnake();
             }
             else
             {
-                gW.EndGame(SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake" );
+                gW.EndGame(SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake");
             }
         }
 
@@ -72,33 +66,31 @@ namespace Snake2Arc{
             if(SnakeBody[SnakeBody.Count - 1].X > SnakeBody[SnakeBody.Count - 2].X)
             {
                 //cas on dernier a droite
-                SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X+GameWindow.SNAKETHICK, SnakeBody[SnakeBody.Count - 1].Y));
+                SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X + GameWindow.SNAKETHICK,SnakeBody[SnakeBody.Count - 1].Y));
             }
-            else if (SnakeBody[SnakeBody.Count - 1].X < SnakeBody[SnakeBody.Count - 2].X)
+            else if(SnakeBody[SnakeBody.Count - 1].X < SnakeBody[SnakeBody.Count - 2].X)
             {
                 //cas on est dernier sur la gauche
-                SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X-GameWindow.SNAKETHICK, SnakeBody[SnakeBody.Count - 1].Y));
+                SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X - GameWindow.SNAKETHICK,SnakeBody[SnakeBody.Count - 1].Y));
             }
-            else if (SnakeBody[SnakeBody.Count - 1].Y < SnakeBody[SnakeBody.Count - 2].Y)
+            else if(SnakeBody[SnakeBody.Count - 1].Y < SnakeBody[SnakeBody.Count - 2].Y)
             {
                 //cas on est dernier en haut
-                SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X , SnakeBody[SnakeBody.Count - 1].Y- GameWindow.SNAKETHICK));
+                SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X,SnakeBody[SnakeBody.Count - 1].Y - GameWindow.SNAKETHICK));
             }
-            else if (SnakeBody[SnakeBody.Count - 1].Y > SnakeBody[SnakeBody.Count - 2].Y)
+            else if(SnakeBody[SnakeBody.Count - 1].Y > SnakeBody[SnakeBody.Count - 2].Y)
             {
                 //cas on est dernier  en bas
-                SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X , SnakeBody[SnakeBody.Count - 1].Y + GameWindow.SNAKETHICK));
+                SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X,SnakeBody[SnakeBody.Count - 1].Y + GameWindow.SNAKETHICK));
             }
         }
 
-        public void ChangeSnakeDirection(DIRECTION dir){
-            bool valid = false;
-            if(dir == DIRECTION.DOWN && SnakeBody[1].Y <= SnakeBody[0].Y) { valid = true; }
-            if(dir == DIRECTION.UP && SnakeBody[1].Y >= SnakeBody[0].Y) { valid = true; }
-            if(dir == DIRECTION.LEFT && SnakeBody[1].X >= SnakeBody[0].X){ valid = true; }
-            if(dir == DIRECTION.RIGHT && SnakeBody[1].X <= SnakeBody[0].X){ valid = true; }
-
-            if (valid)
+        public void ChangeSnakeDirection(DIRECTION dir)
+        {
+            if((dir == DIRECTION.DOWN && SnakeBody[1].Y <= SnakeBody[0].Y) ||
+                (dir == DIRECTION.UP && SnakeBody[1].Y >= SnakeBody[0].Y) ||
+                (dir == DIRECTION.LEFT && SnakeBody[1].X >= SnakeBody[0].X) ||
+                (dir == DIRECTION.RIGHT && SnakeBody[1].X <= SnakeBody[0].X))
             {
                 direction = (int)dir;
             }
@@ -107,14 +99,9 @@ namespace Snake2Arc{
         internal void Reset(bool oneOrTwo)
         {
             SnakeBody.Clear();
-            if (!oneOrTwo){
-                SnakeBody.Add(new Point(100, 100));
-                SnakeBody.Add(new Point(100 + GameWindow.SNAKETHICK, 100));
-            }
-            else{
-                SnakeBody.Add(new Point(300, 300));
-                SnakeBody.Add(new Point(300 + GameWindow.SNAKETHICK, 300));
-            }
+            int size = oneOrTwo ? 300 : 100;
+            SnakeBody.Add(new Point(size,size));
+            SnakeBody.Add(new Point(size + GameWindow.SNAKETHICK,size));
         }
     }
 }
