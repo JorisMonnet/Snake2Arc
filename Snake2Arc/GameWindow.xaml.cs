@@ -282,7 +282,7 @@ namespace Snake2Arc
                 {
                     snake.Speed= snake.Speed<0?1:snake.Speed-1;
                     slowPoints.Remove(p);
-                    AddFoodOrPoison();
+                    AddSlowOrSpeed();
                     break;
                 }
             }
@@ -293,7 +293,7 @@ namespace Snake2Arc
                 {
                     snake.Speed = snake.Speed >= 2 ? 2 : snake.Speed + 1;
                     speedPoints.Remove(p);
-                    AddFoodOrPoison();
+                    AddSlowOrSpeed();
                     break;
                 }
             }
