@@ -543,6 +543,7 @@ namespace Snake2Arc
             leaderBoard.Visibility = Visibility.Collapsed;
             paintCanvas.Children.Clear();
             paintCanvas.Children.Add(mainMenu);
+            scoreBoard.Text = "Snake2Arc";
         }
         private void Add_new_score(object sender, RoutedEventArgs e)
         {
