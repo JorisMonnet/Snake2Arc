@@ -501,7 +501,9 @@ namespace Snake2Arc
 
         private void Button_Options_Click(object sender, RoutedEventArgs e)
         {
-
+            optionMenu.Visibility = Visibility.Visible;
+            paintCanvas.Children.Clear();
+            paintCanvas.Children.Add(optionMenu);
         }
 
         private void Button_return_menu_click(object sender, RoutedEventArgs e)
