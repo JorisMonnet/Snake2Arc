@@ -55,28 +55,28 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="button_return_menu_click"  Content="Return to main menu"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click"  Content="Return to main menu"/>
                         </StackPanel>
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="addNewScore" Panel.ZIndex="2" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="AliceBlue">
                             <TextBlock  HorizontalAlignment="Center"        FontSize="30" FontWeight="Bold" Margin="15"         Text="You are one of the 5 best scorers !"/>
                             <TextBox    HorizontalContentAlignment="Center" FontSize="30" MaxLength="25"    Margin="20"         Name="playerNameAdded"/>
-                            <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Click="add_new_score"   Name="button_add_new_score" Background="#FF8A2BE2" Content="Add your score"/>
+                            <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Click="Add_new_score"   Name="button_add_new_score" Background="#FF8A2BE2" Content="Add your score"/>
                         </StackPanel>
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="gameOver1Player" Panel.ZIndex="2" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="AliceBlue">
                             <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Text="GAME OVER, Your score:"/>
                             <TextBlock Name="score" TextAlignment="Center" FontSize="36" Foreground="red">0</TextBlock>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="button_return_menu_click"  Content="Return to main menu"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click"  Content="Return to main menu"/>
                         </StackPanel>
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="pauseMenu" Panel.ZIndex="2" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="white">
                             <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Text="Game Paused"/>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="button_resume_click" Content="Resume"/>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="button_leave_click" Content="Leave"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_resume_click" Content="Resume"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_leave_click" Content="Leave"/>
                         </StackPanel>
                     </Border>
                 </Canvas>
