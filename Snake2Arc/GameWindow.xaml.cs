@@ -27,7 +27,6 @@ namespace Snake2Arc
         public bool IsNotAlone { get; set; }
         private bool IsDisplayingEnd { get; set; }
         private bool IsPaused { get; set; }
-        private bool IsPlaying { get; set; }
         //things to eat
         private readonly List<Point> foodPoints = new List<Point>();
         private readonly List<Point> poisonPoints = new List<Point>();
@@ -45,6 +44,9 @@ namespace Snake2Arc
 
         //random number for food spawning
         private readonly Random rand = new Random();
+
+        private DispatcherTimer timer;
+
 
         public ObservableCollection<Score> LeaderBoardList              //observable -> get notification when list change
         {
@@ -70,7 +72,7 @@ namespace Snake2Arc
             }
 
             //refresh managment
-            DispatcherTimer timer = new DispatcherTimer();
+            timer = new DispatcherTimer();
             timer.Tick += new EventHandler(TimerTick);
             //snakes speed
             timer.Interval = REFRESHDELAY;
@@ -176,7 +178,6 @@ namespace Snake2Arc
         }
         private void TimerTick(object sender,EventArgs e)
         {
-            if (IsPlaying) { 
             if(!IsPaused)
             {
                 paintCanvas.Children.Clear();
@@ -202,12 +203,6 @@ namespace Snake2Arc
                 scoreBoard.Text = $"PAUSED - Score : Player1(purple)={snake1.Score}" + (IsNotAlone ? $"  | Player2(green)={snake2.Score} -" : " -");
                 paintCanvas.Children.Clear();
                 paintCanvas.Children.Add(pauseMenu);
-            }
-            }
-            else
-            {
-                paintCanvas.Children.Clear();
-                paintCanvas.Children.Add(mainMenu);
             }
         }
 
@@ -432,7 +427,8 @@ namespace Snake2Arc
         {
             pauseMenu.Visibility = Visibility.Collapsed;
             mainMenu.Visibility = Visibility.Visible;
-            IsPlaying = false;
+            timer.Tick -= new EventHandler(TimerTick);
+            paintCanvas.Children.Add(mainMenu);
         }
     }
 }
