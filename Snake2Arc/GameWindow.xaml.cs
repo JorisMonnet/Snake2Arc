@@ -319,7 +319,12 @@ namespace Snake2Arc
 
             switch(e.Key)
             {
+                //pause treatment
                 case Key.P:
+                    IsPaused = !IsPaused;
+                    pauseMenu.Visibility = Visibility.Visible;
+                    break;
+                case Key.Escape:
                     IsPaused = !IsPaused;
                     pauseMenu.Visibility = Visibility.Visible;
                     break;
