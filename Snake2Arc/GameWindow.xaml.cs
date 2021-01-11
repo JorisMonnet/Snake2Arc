@@ -87,11 +87,11 @@ namespace Snake2Arc
             slowPoints.Clear();
             //keyboard managment
             KeyDown += new KeyEventHandler(OnButtonKeyDown);
+
+            AddFood();
             AddFood();
             AddFoodOrPoison();
             AddFoodOrPoison();
-            AddSlowOrSpeed();
-            AddSlowOrSpeed();
             AddSlowOrSpeed();
             AddSlowOrSpeed();
         }
@@ -161,14 +161,14 @@ namespace Snake2Arc
 
         private void AddSlowOrSpeed()
         {
-            int alea = rand.Next(0, 20);
-            if (alea%4==1)
+            int alea = rand.Next(0, 10);
+            if (alea%3==1)
             {
                 //slow
                 Point slowPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2*SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2*SNAKETHICK, (int)(paintCanvas.Height - 2*SNAKETHICK))));
                 slowPoints.Add(slowPoint);
             }
-            else if (true)
+            else
             {
                 //speed
                 Point speedPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
@@ -179,7 +179,7 @@ namespace Snake2Arc
         private void AddFoodOrPoison()
         {
             int alea = rand.Next(0, 10);
-            if (alea % 4 == 0 && foodPoints.Count != 0)
+            if (alea % 4 == 2 && foodPoints.Count != 0)
             {
                 //malus
                 Point poisonPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
@@ -197,6 +197,7 @@ namespace Snake2Arc
         {
             return (int)Math.Ceiling(entry / (SNAKETHICK * 1.0)) * SNAKETHICK;
         }
+
         private void AddFood()
         {
             Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
@@ -285,7 +286,11 @@ namespace Snake2Arc
                 {
                     snake.Speed= snake.Speed<0?1:snake.Speed-1;
                     slowPoints.Remove(p);
+                    Random r = new Random();
+                    int t = r.Next(0, 3);
+                    for (int i = 0; i <t ; i++) { 
                     AddSlowOrSpeed();
+                    }
                     break;
                 }
             }
@@ -296,7 +301,12 @@ namespace Snake2Arc
                 {
                     snake.Speed = snake.Speed >= 2 ? 2 : snake.Speed + 1;
                     speedPoints.Remove(p);
-                    AddSlowOrSpeed();
+                    Random r = new Random();
+                    int t = r.Next(0, 3);
+                    for (int i = 0; i < t; i++)
+                    {
+                        AddSlowOrSpeed();
+                    }
                     break;
                 }
             }
@@ -314,7 +324,13 @@ namespace Snake2Arc
                     snake.PoisonSnake(this);
                     snake.PoisonSnake(this);//poison Twice to be punitive
                     poisonPoints.Remove(p);
-                    AddFoodOrPoison();
+                  
+                    Random r = new Random();
+                    int t = r.Next(0, 3);
+                    for (int i = 0; i < t; i++)
+                    {
+                        AddFoodOrPoison();
+                    }
                     break;
                 }
             }
@@ -331,7 +347,13 @@ namespace Snake2Arc
                 {
                     snake.Eat();
                     foodPoints.Remove(p);
-                    AddFoodOrPoison();
+                    
+                    Random r = new Random();
+                    int t = r.Next(0, 5);
+                    for (int i = 0; i < t; i++)
+                    {
+                        AddFoodOrPoison();
+                    }
                     break;
                 }
             }
