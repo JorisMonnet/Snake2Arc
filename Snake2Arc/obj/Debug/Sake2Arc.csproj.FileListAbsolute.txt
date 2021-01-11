@@ -1,0 +1,15 @@
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\bin\Debug\Snake2Arc.exe.config
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\bin\Debug\Snake2Arc.exe
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\bin\Debug\Snake2Arc.pdb
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.csprojAssemblyReference.cache
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\App.g.cs
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc_MarkupCompile.cache
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc_MarkupCompile.lref
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.g.resources
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.Properties.Resources.resources
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.csproj.GenerateResource.cache
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.csproj.CoreCompileInputs.cache
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.exe
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.pdb
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\GameWindow.g.cs
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\GameWindow.baml

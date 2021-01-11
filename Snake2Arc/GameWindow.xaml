@@ -1,0 +1,86 @@
+﻿<Window x:Class="Snake2Arc.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Snake2Arc"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        mc:Ignorable="d"
+        Title="Snake2Arc" WindowStyle="SingleBorderWindow"   Background="#272928">
+
+     <Window.Resources>
+        <CollectionViewSource Source="{Binding ElementName=window, Path=LeaderBoardList}" x:Key="LeaderBoardListSource">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription Direction="Descending" PropertyName="Score" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+     </Window.Resources>
+
+    <Viewbox x:Name="mainViewBox">
+        <Grid  HorizontalAlignment="Center" VerticalAlignment="Center"  >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        
+            <WrapPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
+                <TextBlock Name="scoreBoard" Foreground="White" FontSize="50" Text="Snake2Arc"/>
+            </WrapPanel>
+
+            <Viewbox x:Name="viewBoxCanvas" MaxHeight="980" MaxWidth="1460" Grid.Row="1" Grid.Column="0">
+                <Canvas Name="paintCanvas" Background="Black"
+                                    Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Height="450" Width="550">
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="mainMenu" Panel.ZIndex="2">
+                        <StackPanel Orientation="Vertical" Background="white">
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Click"         Content="Play Solo"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Double_Click"  Content="Play Double"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_LeaderBoard_Click"  Content="LeaderBoard"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Options_Click"      Content="Options"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="BtnCloseClick"             Content="Quit"/>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="leaderBoard" Panel.ZIndex="2" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical" Background="white">
+                            <TextBlock HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Text="Leaderboard"/>
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource LeaderBoardListSource}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Margin="7">
+                                            <TextBlock Text="{Binding Name}"        DockPanel.Dock="Left"   FontSize="20"/>
+                                            <TextBlock Text="{Binding ScoreValue}"  DockPanel.Dock="Right"  FontSize="20" HorizontalAlignment="Right"/>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click"  Content="Return to main menu"/>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="addNewScore" Panel.ZIndex="2" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical" Background="AliceBlue">
+                            <TextBlock  HorizontalAlignment="Center"        FontSize="30" FontWeight="Bold" Margin="15"         Text="You are one of the 5 best scorers !"/>
+                            <TextBox    HorizontalContentAlignment="Center" FontSize="30" MaxLength="25"    Margin="20"         Name="playerNameAdded"/>
+                            <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Click="Add_new_score"   Name="button_add_new_score" Background="#FF8A2BE2" Content="Add your score"/>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="gameOver1Player" Panel.ZIndex="2" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical" Background="AliceBlue">
+                            <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Text="GAME OVER, Your score:"/>
+                            <TextBlock Name="score" TextAlignment="Center" FontSize="36" Foreground="red">0</TextBlock>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click"  Content="Return to main menu"/>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="150" Height="200" Canvas.Left="200" Canvas.Top="100" Name="pauseMenu" Panel.ZIndex="2" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical" Background="white">
+                            <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Text="Game Paused"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_resume_click" Content="Resume"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_leave_click" Content="Leave"/>
+                        </StackPanel>
+                    </Border>
+                </Canvas>
+            </Viewbox>
+        </Grid>
+    </Viewbox>
+</Window>
