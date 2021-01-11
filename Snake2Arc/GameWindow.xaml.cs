@@ -40,9 +40,11 @@ namespace Snake2Arc
         //refresh delay
         private TimeSpan REFRESHDELAY = new TimeSpan(1000000);
 
+        //stock wining score/lastScore
+        private int finalScoreSolo;
 
         //snakes thick
-        public const int SNAKETHICK = 10;
+        public static int SNAKETHICK = 10;
 
         //random number for food spawning
         private readonly Random rand = new Random();
@@ -163,13 +165,13 @@ namespace Snake2Arc
             if (alea%4==1)
             {
                 //slow
-                Point slowPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+                Point slowPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2*SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2*SNAKETHICK, (int)(paintCanvas.Height - 2*SNAKETHICK))));
                 slowPoints.Add(slowPoint);
             }
             else if (true)
             {
                 //speed
-                Point speedPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+                Point speedPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
                 speedPoints.Add(speedPoint);
             }
         }
@@ -180,12 +182,12 @@ namespace Snake2Arc
             if (alea % 4 == 0 && foodPoints.Count != 0)
             {
                 //malus
-                Point poisonPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+                Point poisonPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
                 poisonPoints.Add(poisonPoint);
             }
             else
             {
-                Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+                Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
                 foodPoints.Add(foodPoint);
             }
         }
@@ -197,7 +199,7 @@ namespace Snake2Arc
         }
         private void AddFood()
         {
-            Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Width - SNAKETHICK))), SnakeCeiling(rand.Next(0 + SNAKETHICK, (int)(paintCanvas.Height - SNAKETHICK))));
+            Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
             foodPoints.Add(foodPoint);
         }
 
@@ -235,6 +237,7 @@ namespace Snake2Arc
                 for (int i = 0; i < snake1.Speed; i++)
                 {
                     snake1.UpdateSnake(true);
+                    finalScoreSolo = snake1.Score;
                     CheckColisions();
                     CheckFood(snake1);
                     CheckPoison(snake1);
@@ -282,7 +285,7 @@ namespace Snake2Arc
                 {
                     snake.Speed= snake.Speed<0?1:snake.Speed-1;
                     slowPoints.Remove(p);
-                    AddFoodOrPoison();
+                    AddSlowOrSpeed();
                     break;
                 }
             }
@@ -293,7 +296,7 @@ namespace Snake2Arc
                 {
                     snake.Speed = snake.Speed >= 2 ? 2 : snake.Speed + 1;
                     speedPoints.Remove(p);
-                    AddFoodOrPoison();
+                    AddSlowOrSpeed();
                     break;
                 }
             }
@@ -355,7 +358,7 @@ namespace Snake2Arc
                     {
                         if (!IsDisplayingEnd)
                         {
-                            EndGame("Purple  snake");
+                            EndGame(true);
                         }
                         break;
                     }
@@ -367,7 +370,7 @@ namespace Snake2Arc
                     {
                         if (!IsDisplayingEnd)
                         {
-                            EndGame("Green  snake");
+                            EndGame(false);
                         }
                         break;
                     }
@@ -386,7 +389,7 @@ namespace Snake2Arc
                 {
                     if (!IsDisplayingEnd)
                     {
-                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple  snake" : "Green  snake");
+                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
                     }
                     break;
                 }
@@ -395,16 +398,18 @@ namespace Snake2Arc
 
         private void CheckHeadOfSnake(Snake snake)
         {
-            if (snake.SnakeBody[0].X < 0 + SNAKETHICK
-                || snake.SnakeBody[0].X > 550 - 2 * SNAKETHICK
-                || snake.SnakeBody[0].Y < 0 + SNAKETHICK
-                || snake.SnakeBody[0].Y > 450 - 2 * SNAKETHICK)
-            {
-                if (!IsDisplayingEnd)
+           
+                if (snake.SnakeBody[0].X < 0 + SNAKETHICK
+                    || snake.SnakeBody[0].X >= paintCanvas.ActualWidth - 1 * SNAKETHICK
+                    || snake.SnakeBody[0].Y < 0 + SNAKETHICK
+                    || snake.SnakeBody[0].Y >= paintCanvas.ActualHeight - 1 * SNAKETHICK)
                 {
-                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2" ? "Purple snake" : "Green  snake");
+                    if (!IsDisplayingEnd)
+                    {
+                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
+                    }
                 }
-            }
+            
         }
 
 
@@ -457,20 +462,24 @@ namespace Snake2Arc
             }
         }
 
-        public void EndGame(string s = "BG ")
+        public void EndGame(bool isFirstLooser)
         {
             //stop refresh
             timer.Tick -= new EventHandler(TimerTick);
-            int result = (int)MessageBox.Show(s + " made a mistake ! \n Wanna Play Again ? ", "Snake2Arc Over", MessageBoxButton.YesNo, MessageBoxImage.Information);
-            if (result == 6)
-            {//for yes
-                RunGame(IsNotAlone);
+            if (IsNotAlone) { 
+                gameOver2Player.Visibility = Visibility.Visible;
+                paintCanvas.Children.Clear();
+                paintCanvas.Children.Add(gameOver2Player);
+                whoLose2Player.Text = "GAME OVER, Player " + (isFirstLooser ? "1 " : "2 ")+"\nLoosed\n Player "+ (!isFirstLooser ? "1 " : "2 ")+" wins.";
             }
             else
             {
-                mainMenu.Visibility = Visibility.Visible;
-                paintCanvas.Children.Add(mainMenu);
+                gameOver1Player.Visibility = Visibility.Visible;
+                paintCanvas.Children.Clear();
+                paintCanvas.Children.Add(gameOver1Player);
+                scoreWin1Player.Text = finalScoreSolo.ToString();
             }
+
         }
 
 
@@ -501,7 +510,9 @@ namespace Snake2Arc
 
         private void Button_Options_Click(object sender, RoutedEventArgs e)
         {
-
+            optionMenu.Visibility = Visibility.Visible;
+            paintCanvas.Children.Clear();
+            paintCanvas.Children.Add(optionMenu);
         }
 
         private void Button_return_menu_click(object sender, RoutedEventArgs e)
@@ -528,6 +539,17 @@ namespace Snake2Arc
             timer.Tick -= new EventHandler(TimerTick);
             paintCanvas.Children.Add(mainMenu);
             scoreBoard.Text = "Snake2Arc";
+        }
+
+        private void Change_Snake_Thick(object sender, RoutedEventArgs e)
+        {
+            if ((int)thickSlider.Value != 15) { 
+            GameWindow.SNAKETHICK = (int)thickSlider.Value;
+            }
+            else
+            {
+                thickSlider.Value = 10;
+            }
         }
     }
 }
