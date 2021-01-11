@@ -252,7 +252,7 @@ namespace Snake2Arc
                         CheckColisions();
                         CheckFood(snake2);
                         CheckPoison(snake2);
-                        CheckSpeedOrSlow(snake1);
+                        CheckSpeedOrSlow(snake2);
                     }
                     if (snake2.Speed == 0)
                     {
