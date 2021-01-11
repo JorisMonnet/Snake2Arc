@@ -398,6 +398,15 @@ namespace Snake2Arc
         {
 
         }
+        private void button_return_menu_click(object sender, RoutedEventArgs e)
+        {
+            mainMenu.Visibility = Visibility.Visible;
+            leaderBoard.Visibility = Visibility.Collapsed;
+        }
+        private void add_new_score(object sender, RoutedEventArgs e)
+        {
+
+        }
 
     }
 }
