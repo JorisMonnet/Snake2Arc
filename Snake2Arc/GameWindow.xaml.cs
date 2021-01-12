@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using WMPLib;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,6 +23,9 @@ namespace Snake2Arc
     /// </summary>
     public partial class GameWindow : Window
     {
+
+        //music side
+        private WindowsMediaPlayer player = new WindowsMediaPlayer();
 
         //bool to adapt code
         public bool IsNotAlone { get; set; }
@@ -50,18 +54,24 @@ namespace Snake2Arc
         private readonly Random rand = new Random();
 
         private DispatcherTimer timer;
-
+     
 
         public ObservableCollection<Score> LeaderBoardList              //observable -> get notification when list change
         {
             get; set;
         } = new ObservableCollection<Score>();
+        public bool IsWantedMusic { get; private set; }
 
         public GameWindow()
         {
             InitializeComponent();
+            player.URL = "mainGameMusic.mp3";
+            player.settings.setMode("loop",true);
             IsPaused = true;
+            IsWantedMusic = true;
         }
+
+
 
         private void RunGame(Boolean IsNotAlone)
         {
@@ -230,6 +240,7 @@ namespace Snake2Arc
                 paintCanvas.Children.Add(snakeEllipse);
             }
         }
+
         private void TimerTick(object sender, EventArgs e)
         {
             if (!IsPaused)
@@ -275,6 +286,7 @@ namespace Snake2Arc
                 paintCanvas.Children.Add(pauseMenu);
             }
         }
+
         private void CheckSpeedOrSlow(Snake snake)
         {
             Point head = snake.SnakeBody[0];
@@ -284,12 +296,13 @@ namespace Snake2Arc
                 if ((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
                      (Math.Abs(p.Y - head.Y) < (SNAKETHICK)))
                 {
-                    snake.Speed= snake.Speed<0?1:snake.Speed-1;
+                    snake.Speed = snake.Speed < 0 ? 1 : snake.Speed - 1;
                     slowPoints.Remove(p);
                     Random r = new Random();
                     int t = r.Next(0, 3);
-                    for (int i = 0; i <t ; i++) { 
-                    AddSlowOrSpeed();
+                    for (int i = 0; i < t; i++)
+                    {
+                        AddSlowOrSpeed();
                     }
                     break;
                 }
@@ -311,6 +324,7 @@ namespace Snake2Arc
                 }
             }
         }
+
 
         private void CheckPoison(Snake snake)
         {
@@ -572,6 +586,19 @@ namespace Snake2Arc
             else
             {
                 thickSlider.Value = 10;
+            }
+        }
+
+        private void Change_Check_Music(object sender, RoutedEventArgs e)
+        {
+            IsWantedMusic = !IsWantedMusic;
+            if (!IsWantedMusic)
+            {
+                player.controls.pause();
+            }
+            else
+            {
+                player.controls.play();
             }
         }
     }
