@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,6 +23,9 @@ namespace Snake2Arc
     /// </summary>
     public partial class GameWindow : Window
     {
+
+        //music side
+        
 
         //bool to adapt code
         public bool IsNotAlone { get; set; }
@@ -65,6 +69,8 @@ namespace Snake2Arc
 
         private void RunGame(Boolean IsNotAlone)
         {
+     //       soundPlayer.SoundLocation= "C:/DEV/DOTNET/Snake2Arc/Snake2Arc/bin/mainGameSound.wav";
+     
             this.IsNotAlone = IsNotAlone;//set To TRUE to with 2 snakes
             IsDisplayingEnd = false;
             IsPaused = false;

@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Media;
 using System.Windows;
 using System.Windows.Media;
+
 
 namespace Snake2Arc
 {
     class Snake
     {
+
         public List<Point> SnakeBody { get; set; }
         public Brush SnakeColor { get; set; }
         private int direction = -1;
