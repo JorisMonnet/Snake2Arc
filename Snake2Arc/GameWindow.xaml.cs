@@ -59,8 +59,8 @@ namespace Snake2Arc
 
         private DispatcherTimer timer;
 
-
-        public ObservableCollection<Score> LeaderBoardList              //observable -> get notification when list change
+        //observable -> get notification when list change
+        public ObservableCollection<Score> LeaderBoardList              
         {
             get; set;
         } = new ObservableCollection<Score>();
@@ -349,7 +349,6 @@ namespace Snake2Arc
         private void CheckSpeedOrSlow(Snake snake)
         {
             Point head = snake.SnakeBody[0];
-
             foreach(Point p in slowPoints)
             {
                 if((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
@@ -664,7 +663,7 @@ namespace Snake2Arc
                 paintCanvas.Children.Clear();
                 paintCanvas.Children.Add(addNewScore);
             }
-            else 
+            else
             {
                 mainMenu.Visibility = Visibility.Visible;
                 IsPaused = false;
@@ -781,7 +780,6 @@ namespace Snake2Arc
             using(Stream writer = new FileStream("leadeBoardList.xml",FileMode.Create))
             {
                 serializer.Serialize(writer,LeaderBoardList);
-
             }
         }
     }
