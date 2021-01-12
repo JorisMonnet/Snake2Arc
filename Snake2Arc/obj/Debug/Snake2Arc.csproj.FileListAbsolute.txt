@@ -28,3 +28,6 @@ C:\Users\Joris\Desktop\3\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.csproj.CoreComp
 C:\Users\Joris\Desktop\3\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.exe
 C:\Users\Joris\Desktop\3\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.pdb
 C:\Users\Joris\Desktop\3\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.csprojAssemblyReference.cache
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Interop.AgentWmiLib.dll
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Interop.WMPLib.dll
+C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.csproj.ResolveComReference.cache
