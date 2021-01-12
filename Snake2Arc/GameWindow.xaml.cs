@@ -613,6 +613,7 @@ namespace Snake2Arc
             }
         }
 
+        //music management
         private void Change_Check_Music(object sender, RoutedEventArgs e)
         {
             IsWantedMusic = !IsWantedMusic;
