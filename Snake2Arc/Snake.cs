@@ -6,39 +6,48 @@ using System.Windows.Media;
 
 namespace Snake2Arc
 {
+    /// <summary>
+    /// class representing a snake 
+    /// </summary>
     class Snake
     {
-
         public List<Point> SnakeBody { get; set; }
         public Brush SnakeColor { get; set; }
         private int direction = -1;
         public int Score { get; set; }
         public int Speed { get; set; }
         public int SpeedDelay { get; set; }
+        public int Size { get; set; }
+
         public Snake(Brush color,bool oneOrTwo)
         {
             Speed = 1;
             SpeedDelay = 20;
             SnakeColor = color;
             SnakeBody = new List<Point>();
-            int size = oneOrTwo ? 100 : 300;
-            SnakeBody.Add(new Point(size,size));
-            SnakeBody.Add(new Point(size + GameWindow.SNAKETHICK,size));
+            Size = oneOrTwo ? 100 : 300;
+            SnakeBody.Add(new Point(Size,Size));
+            SnakeBody.Add(new Point(Size + GameWindow.SNAKETHICK,Size));
         }
 
+        /// <summary>
+        /// Update the position of the snake to move it
+        /// </summary>
+        /// <param name="isNotWaiting">boolean if the snake is frozen by a slowFood </param>
         public void UpdateSnake(bool isNotWaiting)
         {
-            if (isNotWaiting) { 
-                if (Speed != 1 && SpeedDelay>0)
+            if(isNotWaiting)
+            {
+                if(Speed != 1 && SpeedDelay > 0)
                 {
                     SpeedDelay--;
-                }    
-                else if (SpeedDelay <= 0)
+                }
+                else if(SpeedDelay <= 0)
                 {
                     SpeedDelay = 20;
                     Speed = 1;
                 }
-            
+
                 List<Point> newBody = new List<Point>();
                 if(direction == (int)DIRECTION.UP)
                 {
@@ -66,11 +75,11 @@ namespace Snake2Arc
             }
             else
             {
-                if (Speed ==0 && SpeedDelay > 0)
+                if(Speed == 0 && SpeedDelay > 0)
                 {
                     SpeedDelay--;
                 }
-                else if (SpeedDelay <= 0)
+                else if(SpeedDelay <= 0)
                 {
                     SpeedDelay = 20;
                     Speed = 1;
@@ -78,43 +87,54 @@ namespace Snake2Arc
             }
         }
 
-        public void PoisonSnake(GameWindow gW)
+        /// <summary>
+        /// Remove point of a snake, manage if he dies because of it
+        /// </summary>
+        /// <param name="gameWindow"></param>
+        public void PoisonSnake(GameWindow gameWindow)
         {
             if(SnakeBody.Count - 2 > 0)
             {
                 SnakeBody.RemoveAt(SnakeBody.Count - 1);
-                UpdateSnake(Speed!=0);
+                UpdateSnake(Speed != 0);
             }
             else
             {
-                gW.EndGame(SnakeColor.ToString() == "#FF8A2BE2" ? true : false);
+                gameWindow.EndGame(SnakeColor.ToString() == "#FF8A2BE2");
             }
         }
 
+        /// <summary>
+        /// Add a point to the body of the snake
+        /// </summary>
         public void Eat()
         {
             if(SnakeBody[SnakeBody.Count - 1].X > SnakeBody[SnakeBody.Count - 2].X)
             {
-                //cas on dernier a droite
+                //add on right
                 SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X + GameWindow.SNAKETHICK,SnakeBody[SnakeBody.Count - 1].Y));
             }
             else if(SnakeBody[SnakeBody.Count - 1].X < SnakeBody[SnakeBody.Count - 2].X)
             {
-                //cas on est dernier sur la gauche
+                //add on left
                 SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X - GameWindow.SNAKETHICK,SnakeBody[SnakeBody.Count - 1].Y));
             }
             else if(SnakeBody[SnakeBody.Count - 1].Y < SnakeBody[SnakeBody.Count - 2].Y)
             {
-                //cas on est dernier en haut
+                //add on top
                 SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X,SnakeBody[SnakeBody.Count - 1].Y - GameWindow.SNAKETHICK));
             }
             else if(SnakeBody[SnakeBody.Count - 1].Y > SnakeBody[SnakeBody.Count - 2].Y)
             {
-                //cas on est dernier  en bas
+                //add on bottom
                 SnakeBody.Add(new Point(SnakeBody[SnakeBody.Count - 1].X,SnakeBody[SnakeBody.Count - 1].Y + GameWindow.SNAKETHICK));
             }
         }
 
+        /// <summary>
+        /// Change direction of the snake if it's possible
+        /// </summary>
+        /// <param name="dir">the direction asked</param>
         public void ChangeSnakeDirection(DIRECTION dir)
         {
             if((dir == DIRECTION.DOWN && SnakeBody[1].Y <= SnakeBody[0].Y) ||
@@ -124,14 +144,6 @@ namespace Snake2Arc
             {
                 direction = (int)dir;
             }
-        }
-
-        internal void Reset(bool oneOrTwo)
-        {
-            SnakeBody.Clear();
-            int size = oneOrTwo ? 300 : 100;
-            SnakeBody.Add(new Point(size,size));
-            SnakeBody.Add(new Point(size + GameWindow.SNAKETHICK,size));
         }
     }
 }
