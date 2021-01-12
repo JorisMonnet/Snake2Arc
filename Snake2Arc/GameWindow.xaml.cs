@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace Snake2Arc
 {
@@ -68,8 +69,8 @@ namespace Snake2Arc
             InitializeComponent();
             player.URL = "mainGameMusic.mp3";
             player.settings.setMode("loop",true);
-            IsPaused = true;
             IsWantedMusic = true;
+            IsPaused = false;
         }
 
         //to restart and relaunch a game
@@ -106,7 +107,9 @@ namespace Snake2Arc
             AddFoodOrPoison();
             AddSlowOrSpeed();
             AddSlowOrSpeed();
+            AddSlowOrSpeed();
         }
+
         //draw all items
         private void DrawFoodsAndPoisonsAndSlowAndSpeed()
         {
@@ -179,8 +182,8 @@ namespace Snake2Arc
         //generate and add slow or speed
         private void AddSlowOrSpeed()
         {
-            int alea = rand.Next(0, 10);
-            if (alea%3==1)
+            int alea = rand.Next(0, 50);
+            if (alea%5==0)
             {
                 //slow
                 Point slowPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2*SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2*SNAKETHICK, (int)(paintCanvas.Height - 2*SNAKETHICK))));
@@ -380,7 +383,7 @@ namespace Snake2Arc
                     foodPoints.Remove(p);
                     
                     Random r = new Random();
-                    int t = r.Next(0, 5);
+                    int t = r.Next(0, 4);
                     for (int i = 0; i < t; i++)
                     {
                         AddFoodOrPoison();
@@ -454,7 +457,6 @@ namespace Snake2Arc
         //check colision between head of snake and the gameboard borders
         private void CheckHeadOfSnake(Snake snake)
         {
-           
                 if (snake.SnakeBody[0].X < 0 + SNAKETHICK
                     || snake.SnakeBody[0].X >= paintCanvas.ActualWidth - 1 * SNAKETHICK
                     || snake.SnakeBody[0].Y < 0 + SNAKETHICK
@@ -465,23 +467,25 @@ namespace Snake2Arc
                         EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
                     }
                 }
-            
         }
 
         //keyboard management
         private void OnButtonKeyDown(object sender, KeyEventArgs e)
         {
-
             switch (e.Key)
             {
                 //pause treatment
-                case Key.P:
-                    IsPaused = !IsPaused;
-                    pauseMenu.Visibility = Visibility.Visible;
-                    break;
                 case Key.Escape:
-                    IsPaused = !IsPaused;
-                    pauseMenu.Visibility = Visibility.Visible;
+                    if (IsPaused)
+                    {
+                        IsPaused = false;
+                        pauseMenu.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        IsPaused = true;
+                        pauseMenu.Visibility = Visibility.Visible;
+                    }
                     break;
                 //player1
                 case Key.Down:
@@ -577,6 +581,7 @@ namespace Snake2Arc
         {
             mainMenu.Visibility = Visibility.Visible;
             leaderBoard.Visibility = Visibility.Collapsed;
+            IsPaused = false;
             paintCanvas.Children.Clear();
             paintCanvas.Children.Add(mainMenu);
             scoreBoard.Text = "Snake2Arc";
@@ -598,6 +603,8 @@ namespace Snake2Arc
             pauseMenu.Visibility = Visibility.Collapsed;
             mainMenu.Visibility = Visibility.Visible;
             timer.Tick -= new EventHandler(TimerTick);
+            KeyDown -= new KeyEventHandler(OnButtonKeyDown);
+            IsPaused = false;
             paintCanvas.Children.Add(mainMenu);
             scoreBoard.Text = "Snake2Arc";
         }
