@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Media;
+using WMPLib;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,7 +25,7 @@ namespace Snake2Arc
     {
 
         //music side
-        
+        private WindowsMediaPlayer player = new WindowsMediaPlayer();
 
         //bool to adapt code
         public bool IsNotAlone { get; set; }
@@ -54,23 +54,27 @@ namespace Snake2Arc
         private readonly Random rand = new Random();
 
         private DispatcherTimer timer;
-
+     
 
         public ObservableCollection<Score> LeaderBoardList              //observable -> get notification when list change
         {
             get; set;
         } = new ObservableCollection<Score>();
+        public bool IsWantedMusic { get; private set; }
 
         public GameWindow()
         {
             InitializeComponent();
+            player.URL = "mainGameMusic.mp3";
+            player.settings.setMode("loop",true);
             IsPaused = true;
+            IsWantedMusic = true;
         }
+
+
 
         private void RunGame(Boolean IsNotAlone)
         {
-     //       soundPlayer.SoundLocation= "C:/DEV/DOTNET/Snake2Arc/Snake2Arc/bin/mainGameSound.wav";
-     
             this.IsNotAlone = IsNotAlone;//set To TRUE to with 2 snakes
             IsDisplayingEnd = false;
             IsPaused = false;
@@ -236,6 +240,7 @@ namespace Snake2Arc
                 paintCanvas.Children.Add(snakeEllipse);
             }
         }
+
         private void TimerTick(object sender, EventArgs e)
         {
             if (!IsPaused)
@@ -578,6 +583,19 @@ namespace Snake2Arc
             else
             {
                 thickSlider.Value = 10;
+            }
+        }
+
+        private void Change_Check_Music(object sender, RoutedEventArgs e)
+        {
+            IsWantedMusic = !IsWantedMusic;
+            if (!IsWantedMusic)
+            {
+                player.controls.pause();
+            }
+            else
+            {
+                player.controls.play();
             }
         }
     }

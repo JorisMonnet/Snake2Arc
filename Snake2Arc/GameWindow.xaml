@@ -91,6 +91,7 @@
                             <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Padding="2"  Text="Option"/>
                             <TextBlock Margin="20" TextAlignment="Center" FontSize="12" Text="Easy - Medium -> Hardcore"/>
                             <Slider Maximum="20" Minimum="5" IsSnapToTickEnabled="True" TickFrequency="5" Value="10" ValueChanged="Change_Snake_Thick" Name="thickSlider"/>
+                            <CheckBox HorizontalAlignment="Center" IsChecked="True" Name="checkMusic" Unchecked="Change_Check_Music" Checked="Change_Check_Music" Visibility="Visible">Music</CheckBox>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click" Content="Back to Main"/>
                         </StackPanel>
                     </Border>
