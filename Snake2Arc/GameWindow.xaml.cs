@@ -286,6 +286,7 @@ namespace Snake2Arc
                 paintCanvas.Children.Add(pauseMenu);
             }
         }
+
         private void CheckSpeedOrSlow(Snake snake)
         {
             Point head = snake.SnakeBody[0];
@@ -295,12 +296,13 @@ namespace Snake2Arc
                 if ((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
                      (Math.Abs(p.Y - head.Y) < (SNAKETHICK)))
                 {
-                    snake.Speed= snake.Speed<0?1:snake.Speed-1;
+                    snake.Speed = snake.Speed < 0 ? 1 : snake.Speed - 1;
                     slowPoints.Remove(p);
                     Random r = new Random();
                     int t = r.Next(0, 3);
-                    for (int i = 0; i <t ; i++) { 
-                    AddSlowOrSpeed();
+                    for (int i = 0; i < t; i++)
+                    {
+                        AddSlowOrSpeed();
                     }
                     break;
                 }
@@ -322,6 +324,7 @@ namespace Snake2Arc
                 }
             }
         }
+
 
         private void CheckPoison(Snake snake)
         {
