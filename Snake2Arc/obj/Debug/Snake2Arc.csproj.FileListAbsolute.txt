@@ -33,3 +33,8 @@ C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Interop.WMPLib.dll
 C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.csproj.ResolveComReference.cache
 C:\DEV\DOTNET\Snake2Arc\Snake2Arc\bin\Debug\mainGameMusic.mp3
 C:\DEV\DOTNET\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc_Content.g.cs
+C:\Users\Joris\Desktop\3\Snake2Arc\Snake2Arc\obj\Debug\Interop.AgentWmiLib.dll
+C:\Users\Joris\Desktop\3\Snake2Arc\Snake2Arc\obj\Debug\Interop.WMPLib.dll
+C:\Users\Joris\Desktop\3\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc.csproj.ResolveComReference.cache
+C:\Users\Joris\Desktop\3\Snake2Arc\Snake2Arc\obj\Debug\Snake2Arc_Content.g.cs
+C:\Users\Joris\Desktop\3\Snake2Arc\Snake2Arc\bin\Debug\mainGameMusic.mp3

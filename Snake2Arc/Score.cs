@@ -9,6 +9,6 @@ namespace Snake2Arc
     public class Score
     {
         public int ScoreValue { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
     }
 }

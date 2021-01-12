@@ -1,4 +1,5 @@
 ﻿<Window x:Class="Snake2Arc.GameWindow"
+        x:Name="MainWindow" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,9 +10,9 @@
         Title="Snake2Arc" WindowStyle="SingleBorderWindow"   Background="#272928">
 
      <Window.Resources>
-        <CollectionViewSource Source="{Binding ElementName=window, Path=LeaderBoardList}" x:Key="LeaderBoardListSource">
+        <CollectionViewSource Source="{Binding ElementName=MainWindow, Path=LeaderBoardList}" x:Key="LeaderBoardListSource">
             <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription Direction="Descending" PropertyName="Score" />
+                <scm:SortDescription Direction="Descending" PropertyName="ScoreValue" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
      </Window.Resources>
@@ -33,16 +34,16 @@
             <Viewbox x:Name="viewBoxCanvas" MaxHeight="980" MaxWidth="1460" Grid.Row="1" Grid.Column="0">
                 <Canvas Name="paintCanvas" Background="Black"
                                     Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Height="450" Width="550">
-                    <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="200" Canvas.Left="150" Canvas.Top="100" Name="mainMenu" Panel.ZIndex="2">
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="170" Canvas.Left="150" Canvas.Top="100" Name="mainMenu" Panel.ZIndex="2">
                         <StackPanel Orientation="Vertical" Background="white">
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Click"         Content="Play Solo"/>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Double_Click"  Content="Play Double"/>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_LeaderBoard_Click"  Content="LeaderBoard"/>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_Options_Click"      Content="Options"/>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="BtnCloseClick"             Content="Quit"/>
+                            <Button Margin="5" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Click"         Content="Play Solo"/>
+                            <Button Margin="5" Padding="2" Background="#FF8A2BE2" Click="Button_Play_Double_Click"  Content="Play Double"/>
+                            <Button Margin="5" Padding="2" Background="#FF8A2BE2" Click="Button_LeaderBoard_Click"  Content="LeaderBoard"/>
+                            <Button Margin="5" Padding="2" Background="#FF8A2BE2" Click="Button_Options_Click"      Content="Options"/>
+                            <Button Margin="5" Padding="2" Background="#FF8A2BE2" Click="BtnCloseClick"             Content="Quit"/>
                         </StackPanel>
                     </Border>
-                    <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="200" Canvas.Left="150" Canvas.Top="100" Name="leaderBoard" Panel.ZIndex="2" Visibility="Collapsed">
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="285" Canvas.Left="150" Canvas.Top="100" Name="leaderBoard" Panel.ZIndex="2" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="white">
                             <TextBlock HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Text="Leaderboard"/>
                             <ItemsControl ItemsSource="{Binding Source={StaticResource LeaderBoardListSource}}">
@@ -60,17 +61,16 @@
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="200" Canvas.Left="150" Canvas.Top="100" Name="addNewScore" Panel.ZIndex="2" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="AliceBlue">
-                            <TextBlock  HorizontalAlignment="Center"        FontSize="30" FontWeight="Bold" Margin="15"         Text="You are one of the 5 best scorers !"/>
-                            <TextBox    HorizontalContentAlignment="Center" FontSize="30" MaxLength="25"    Margin="20"         Name="playerNameAdded"/>
-                            <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Click="Add_new_score"   Name="button_add_new_score" Background="#FF8A2BE2" Content="Add your score"/>
+                            <TextBlock  HorizontalAlignment="Center"        FontSize="20" FontWeight="Bold" Margin="15"         TextWrapping="Wrap" Text="You are one of the 5 best scorers !"/>
+                            <TextBox    HorizontalContentAlignment="Center" FontSize="20" MaxLength="25"    Margin="20"         Name="playerNameAdded"/>
+                            <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Click="Button_add_new_score"   Name="button_add_new_score" Background="#FF8A2BE2" Content="Add your score"/>
                         </StackPanel>
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="200" Canvas.Left="150" Canvas.Top="100" Name="gameOver1Player" Panel.ZIndex="2" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="AliceBlue">
                             <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Text="GAME OVER, Your score:" TextWrapping="Wrap"/>
-                            <TextBlock Name="scoreWin1Player" TextAlignment="Center" FontSize="36" Foreground="red">0</TextBlock>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Add_new_score"  Content="Add score to LeaderBoard"/>
-                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click"  Content="Return to main menu"/>
+                            <TextBlock Name="scoreWin1Player" TextAlignment="Center" FontSize="36" Foreground="red" Text="0"/>
+                            <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click_after_game"  Content="Return to main menu"/>
                         </StackPanel>
                     </Border>
                     <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="200" Canvas.Left="150" Canvas.Top="100" Name="gameOver2Player" Panel.ZIndex="2" Visibility="Collapsed">

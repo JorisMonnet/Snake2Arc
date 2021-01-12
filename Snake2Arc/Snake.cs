@@ -87,7 +87,7 @@ namespace Snake2Arc
             }
             else
             {
-                gW.EndGame(SnakeColor.ToString() == "#FF8A2BE2" ? true : false);
+                gW.EndGame(SnakeColor.ToString() == "#FF8A2BE2");
             }
         }
 
