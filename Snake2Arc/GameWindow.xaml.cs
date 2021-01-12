@@ -27,6 +27,7 @@ namespace Snake2Arc
         public bool IsNotAlone { get; set; }
         private bool IsDisplayingEnd { get; set; }
         private bool IsPaused { get; set; }
+
         //things to eat
         private readonly List<Point> foodPoints = new List<Point>();
         private readonly List<Point> poisonPoints = new List<Point>();
@@ -49,6 +50,7 @@ namespace Snake2Arc
         //random number for food spawning
         private readonly Random rand = new Random();
 
+        //timer for refresh
         private DispatcherTimer timer;
 
 
@@ -63,9 +65,10 @@ namespace Snake2Arc
             IsPaused = true;
         }
 
+        //to restart and relaunch a game
         private void RunGame(Boolean IsNotAlone)
         {
-            this.IsNotAlone = IsNotAlone;//set To TRUE to with 2 snakes
+            this.IsNotAlone = IsNotAlone;
             IsDisplayingEnd = false;
             IsPaused = false;
             snake1 = new Snake(Brushes.BlueViolet, true);
@@ -77,17 +80,19 @@ namespace Snake2Arc
             //refresh managment
             timer = new DispatcherTimer();
             timer.Tick += new EventHandler(TimerTick);
-            //snakes speed
             timer.Interval = REFRESHDELAY;
             timer.Start();
-
+            
+            //reset things to eat
             foodPoints.Clear();
             poisonPoints.Clear();
             speedPoints.Clear();
             slowPoints.Clear();
+
             //keyboard managment
             KeyDown += new KeyEventHandler(OnButtonKeyDown);
 
+            //add first set of items
             AddFood();
             AddFood();
             AddFoodOrPoison();
@@ -95,6 +100,7 @@ namespace Snake2Arc
             AddSlowOrSpeed();
             AddSlowOrSpeed();
         }
+        //draw all items
         private void DrawFoodsAndPoisonsAndSlowAndSpeed()
         {
             for (int i = 0; i < foodPoints.Count; i++)
@@ -115,6 +121,7 @@ namespace Snake2Arc
             }
         }
 
+        //draw slow or speed
         private void DrawSlowOrSpeed(int index, Point point)
         {
             Ellipse speedOrSlowEllipse = new Ellipse
@@ -130,6 +137,7 @@ namespace Snake2Arc
             paintCanvas.Children.Insert(index, speedOrSlowEllipse);
         }
 
+        //draw food
         private void DrawFood(int index, Point foodPoint)
         {
             Ellipse foodEllipse = new Ellipse
@@ -144,6 +152,8 @@ namespace Snake2Arc
 
             paintCanvas.Children.Insert(index, foodEllipse);
         }
+        
+        //draw poison
         private void DrawPoison(int index, Point poisonPoint)
         {
             Ellipse foodEllipse = new Ellipse
@@ -159,6 +169,7 @@ namespace Snake2Arc
             paintCanvas.Children.Insert(index, foodEllipse);
         }
 
+        //generate and add slow or speed
         private void AddSlowOrSpeed()
         {
             int alea = rand.Next(0, 10);
@@ -176,6 +187,7 @@ namespace Snake2Arc
             }
         }
 
+        //generate and add food or poison
         private void AddFoodOrPoison()
         {
             int alea = rand.Next(0, 10);
@@ -192,18 +204,20 @@ namespace Snake2Arc
             }
         }
 
-
+        //ceiling int to fit into canvas & be at right spot
         private int SnakeCeiling(int entry)
         {
             return (int)Math.Ceiling(entry / (SNAKETHICK * 1.0)) * SNAKETHICK;
         }
 
+        //generate and add a food
         private void AddFood()
         {
             Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Width - 2 * SNAKETHICK))), SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK, (int)(paintCanvas.Height - 2 * SNAKETHICK))));
             foodPoints.Add(foodPoint);
         }
 
+        //draw the snakes
         private void DrawSnakes()
         {
             DrawASnake(snake1);
@@ -213,6 +227,7 @@ namespace Snake2Arc
             }
         }
 
+        //draw only one snake
         private void DrawASnake(Snake snake)
         {
             foreach (Point p in snake.SnakeBody)
@@ -230,6 +245,8 @@ namespace Snake2Arc
                 paintCanvas.Children.Add(snakeEllipse);
             }
         }
+        
+        //refresh on each timer end
         private void TimerTick(object sender, EventArgs e)
         {
             if (!IsPaused)
@@ -275,6 +292,8 @@ namespace Snake2Arc
                 paintCanvas.Children.Add(pauseMenu);
             }
         }
+
+        //check colisions between given snake and speed or slow
         private void CheckSpeedOrSlow(Snake snake)
         {
             Point head = snake.SnakeBody[0];
@@ -312,6 +331,7 @@ namespace Snake2Arc
             }
         }
 
+        //check colision between given snake and poison
         private void CheckPoison(Snake snake)
         {
             Point head = snake.SnakeBody[0];
@@ -336,6 +356,7 @@ namespace Snake2Arc
             }
         }
 
+        //check colision between given snake and food
         private void CheckFood(Snake snake)
         {
             Point head = snake.SnakeBody[0];
@@ -359,6 +380,7 @@ namespace Snake2Arc
             }
         }
 
+        //general collision check
         private void CheckColisions()
         {
             CheckHeadOfSnake(snake1);
@@ -400,6 +422,7 @@ namespace Snake2Arc
             }
         }
 
+        //check colision between given snake and himself
         private void CheckSelfCollision(Snake snake)
         {
             Point head = snake.SnakeBody[0];
@@ -418,6 +441,7 @@ namespace Snake2Arc
             }
         }
 
+        //check colision between head of snake and the gameboard borders
         private void CheckHeadOfSnake(Snake snake)
         {
            
@@ -434,7 +458,7 @@ namespace Snake2Arc
             
         }
 
-
+        //keyboard management
         private void OnButtonKeyDown(object sender, KeyEventArgs e)
         {
 
@@ -484,6 +508,7 @@ namespace Snake2Arc
             }
         }
 
+        //end game management
         public void EndGame(bool isFirstLooser)
         {
             //stop refresh
@@ -504,6 +529,7 @@ namespace Snake2Arc
 
         }
 
+        //button event management
 
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
@@ -545,6 +571,7 @@ namespace Snake2Arc
             paintCanvas.Children.Add(mainMenu);
             scoreBoard.Text = "Snake2Arc";
         }
+        
         private void Add_new_score(object sender, RoutedEventArgs e)
         {
 
@@ -555,6 +582,7 @@ namespace Snake2Arc
             IsPaused = false;
             pauseMenu.Visibility = Visibility.Collapsed;
         }
+        
         private void Button_leave_click(object sender, RoutedEventArgs e)
         {
             pauseMenu.Visibility = Visibility.Collapsed;
