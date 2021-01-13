@@ -1,19 +1,23 @@
 <?xml version="1.0"?>
 <ArrayOfScore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Score>
-    <ScoreValue>9</ScoreValue>
-    <Name>z</Name>
+    <ScoreValue>7</ScoreValue>
+    <Name>adrien</Name>
+  </Score>
+  <Score>
+    <ScoreValue>2</ScoreValue>
+    <Name>dza</Name>
+  </Score>
+  <Score>
+    <ScoreValue>2</ScoreValue>
+    <Name>dzefr</Name>
+  </Score>
+  <Score>
+    <ScoreValue>6</ScoreValue>
+    <Name>first</Name>
   </Score>
   <Score>
     <ScoreValue>3</ScoreValue>
-    <Name>s</Name>
-  </Score>
-  <Score>
-    <ScoreValue>2</ScoreValue>
-    <Name>s</Name>
-  </Score>
-  <Score>
-    <ScoreValue>2</ScoreValue>
-    <Name>joris</Name>
+    <Name>salut</Name>
   </Score>
 </ArrayOfScore>

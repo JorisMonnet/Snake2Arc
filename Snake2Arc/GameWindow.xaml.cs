@@ -633,10 +633,10 @@ namespace Snake2Arc
         private void Button_add_new_score(object sender,RoutedEventArgs e)
         {
             playerNameAdded.Focus();
-            if(LeaderBoardList.Count > 0)
+            if(LeaderBoardList.Count == 5)
             {
                 Score scoreAbove = LeaderBoardList.OrderByDescending(x => x.ScoreValue).FirstOrDefault(x => x.ScoreValue > finalScoreSolo);
-                if((LeaderBoardList.Count == 5 && finalScoreSolo > LeaderBoardList.Min(x => x.ScoreValue)) || (LeaderBoardList.Count < 5 && scoreAbove == null))
+                if(scoreAbove != null)
                 {
                     LeaderBoardList.Insert(LeaderBoardList.IndexOf(scoreAbove) + 1,new Score() { Name = playerNameAdded.Text,ScoreValue = finalScoreSolo });
                 }
@@ -645,7 +645,7 @@ namespace Snake2Arc
                     LeaderBoardList.Insert(0,new Score() { Name = playerNameAdded.Text,ScoreValue = finalScoreSolo });
                 }
             }
-            else if(LeaderBoardList.Count == 0)
+            else if(LeaderBoardList.Count < 5)
             {
                 LeaderBoardList.Add(new Score() { Name = playerNameAdded.Text,ScoreValue = finalScoreSolo });
             }
