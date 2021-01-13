@@ -231,7 +231,7 @@ namespace Snake2Arc
         private void AddFoodOrPoison()
         {
             int alea = rand.Next(0,10);
-            if(alea % 4 == 2 && foodPoints.Count != 0)
+            if(alea % 4 == 1 && foodPoints.Count != 0)
             {
                 //malus
                 poisonPoints.Add(GenerateItemPoint());
@@ -285,6 +285,19 @@ namespace Snake2Arc
 
                 paintCanvas.Children.Add(snakeEllipse);
             }
+            //snake's head
+            Point pHead = snake.SnakeBody[0];
+            Ellipse snakeHeadEllipse = new Ellipse
+            {
+                Fill = Brushes.White,
+                Width = SNAKETHICK/2,
+                Height = SNAKETHICK/2
+            };
+
+            Canvas.SetTop(snakeHeadEllipse, pHead.Y+ SNAKETHICK / 4);
+            Canvas.SetLeft(snakeHeadEllipse, pHead.X + SNAKETHICK / 4);
+
+            paintCanvas.Children.Add(snakeHeadEllipse);
         }
 
 
@@ -396,8 +409,8 @@ namespace Snake2Arc
         private void AddNewFoodOrPoison()
         {
             Random r = new Random();
-            int max = r.Next(1,4);
-            for(int i = 0;i < max;i++)
+            int t = r.Next(1,4);
+            for(int i = 0;i < t;i++)
             {
                 AddFoodOrPoison();
             }
