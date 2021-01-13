@@ -93,9 +93,9 @@ namespace Snake2Arc
         /// <param name="gameWindow"></param>
         public void PoisonSnake(GameWindow gameWindow)
         {
-            if(SnakeBody.Count - 2 > 0)
+            if(SnakeBody.Count - 3 > 0)
             {
-                SnakeBody.RemoveAt(SnakeBody.Count - 1);
+                SnakeBody.RemoveAt(SnakeBody.Count - 2); //poison Twice to be punitive
                 UpdateSnake(Speed != 0);
             }
             else

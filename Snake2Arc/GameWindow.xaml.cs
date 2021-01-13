@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Snake2Arc
 {
@@ -105,8 +106,8 @@ namespace Snake2Arc
             KeyDown += new KeyEventHandler(OnButtonKeyDown);
 
             //add first set of items
-            AddFood();
-            AddFood();
+            foodPoints.Add(GenerateItemPoint());
+            foodPoints.Add(GenerateItemPoint());
             AddFoodOrPoison();
             AddFoodOrPoison();
             AddSlowOrSpeed();
@@ -206,15 +207,22 @@ namespace Snake2Arc
             if(alea % 5 == 0)
             {
                 //slow
-                Point slowPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Width - 2 * SNAKETHICK))),SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Height - 2 * SNAKETHICK))));
-                slowPoints.Add(slowPoint);
+                slowPoints.Add(GenerateItemPoint());
             }
             else
             {
                 //speed
-                Point speedPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Width - 2 * SNAKETHICK))),SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Height - 2 * SNAKETHICK))));
-                speedPoints.Add(speedPoint);
+                speedPoints.Add(GenerateItemPoint());
             }
+        }
+
+        /// <summary>
+        /// generate the point wher will be placed the item
+        /// </summary>
+        /// <returns></returns>
+        private Point GenerateItemPoint()
+        {
+            return new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Width - 2 * SNAKETHICK))),SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Height - 2 * SNAKETHICK))));
         }
 
         /// <summary>
@@ -226,12 +234,12 @@ namespace Snake2Arc
             if(alea % 4 == 2 && foodPoints.Count != 0)
             {
                 //malus
-                Point poisonPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Width - 2 * SNAKETHICK))),SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Height - 2 * SNAKETHICK))));
-                poisonPoints.Add(poisonPoint);
+                poisonPoints.Add(GenerateItemPoint());
             }
             else
             {
-                AddFood();
+                //bonus
+                foodPoints.Add(GenerateItemPoint());
             }
         }
 
@@ -243,15 +251,6 @@ namespace Snake2Arc
         private int SnakeCeiling(int entry)
         {
             return (int)Math.Ceiling(entry / (SNAKETHICK * 1.0)) * SNAKETHICK;
-        }
-
-        /// <summary>
-        /// generate and add a food
-        /// </summary>
-        private void AddFood()
-        {
-            Point foodPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Width - 2 * SNAKETHICK))),SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Height - 2 * SNAKETHICK))));
-            foodPoints.Add(foodPoint);
         }
 
         /// <summary>
@@ -304,9 +303,7 @@ namespace Snake2Arc
                     snake1.UpdateSnake(true);
                     finalScoreSolo = snake1.Score;
                     CheckColisions();
-                    CheckFood(snake1);
-                    CheckPoison(snake1);
-                    CheckSpeedOrSlow(snake1);
+                    CheckItems(snake1);
                 }
                 if(snake1.Speed == 0)
                 {
@@ -318,9 +315,7 @@ namespace Snake2Arc
                     {
                         snake2.UpdateSnake(true);
                         CheckColisions();
-                        CheckFood(snake2);
-                        CheckPoison(snake2);
-                        CheckSpeedOrSlow(snake2);
+                        CheckItems(snake2);
                     }
                     if(snake2.Speed == 0)
                     {
@@ -344,29 +339,46 @@ namespace Snake2Arc
         /// Check colisions between given snake and speed or slow
         /// </summary>
         /// <param name="snake"></param>
-        private void CheckSpeedOrSlow(Snake snake)
+        private void CheckItems(Snake snake)
         {
             Point head = snake.SnakeBody[0];
-            foreach(Point p in slowPoints)
+            
+            //slow
+            slowPoints.Where(p => Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK).FirstOrDefault(p =>
             {
-                if(Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK)
-                {
-                    slowPoints.Remove(p);
-                    ApplySpeedOrSlow(snake,snake.Speed < 0 ? 1 : snake.Speed - 1);
-                    break;
-                }
-            }
-            foreach(Point p in speedPoints)
+                ApplySpeedOrSlow(snake,snake.Speed < 0 ? 1 : snake.Speed - 1);
+                return slowPoints.Remove(p);
+            });
+
+            //speed
+            speedPoints.Where(p => Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK).FirstOrDefault(p =>
             {
-                if(Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK)
-                {
-                    speedPoints.Remove(p);
-                    ApplySpeedOrSlow(snake,snake.Speed >= 2 ? 2 : snake.Speed + 1);
-                    break;
-                }
-            }
+                ApplySpeedOrSlow(snake,snake.Speed >= 2 ? 2 : snake.Speed + 1);
+                return speedPoints.Remove(p);
+            });
+
+            //poison
+            poisonPoints.Where(p => Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK).FirstOrDefault(p =>
+            {
+                snake.PoisonSnake(this);
+                AddNewFoodOrPoison();
+                return poisonPoints.Remove(p);
+            });
+
+            //food
+            foodPoints.Where(p => Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK).FirstOrDefault(p =>
+            {
+                snake.Eat();
+                AddNewFoodOrPoison();
+                return foodPoints.Remove(p);
+            });
         }
 
+        /// <summary>
+        /// apply speed effect on the snake and create new speed or slow items
+        /// </summary>
+        /// <param name="snake"></param>
+        /// <param name="speed"></param>
         private void ApplySpeedOrSlow(Snake snake,int speed)
         {
             snake.Speed = speed;
@@ -377,57 +389,17 @@ namespace Snake2Arc
                 AddSlowOrSpeed();
             }
         }
-
+        
         /// <summary>
-        /// Check colision between given snake and poison
+        /// Add all new item food or poison
         /// </summary>
-        /// <param name="snake"></param>
-        private void CheckPoison(Snake snake)
+        private void AddNewFoodOrPoison()
         {
-            Point head = snake.SnakeBody[0];
-
-            foreach(Point p in poisonPoints)
+            Random r = new Random();
+            int max = r.Next(1,4);
+            for(int i = 0;i < max;i++)
             {
-                if(Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK)
-                {
-                    snake.PoisonSnake(this);
-                    snake.PoisonSnake(this);//poison Twice to be punitive
-                    poisonPoints.Remove(p);
-
-                    Random r = new Random();
-                    int t = r.Next(0,3);
-                    for(int i = 0;i < t;i++)
-                    {
-                        AddFoodOrPoison();
-                    }
-                    break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Check colision between given snake and food
-        /// </summary>
-        /// <param name="snake"></param>
-        private void CheckFood(Snake snake)
-        {
-            Point head = snake.SnakeBody[0];
-
-            foreach(Point p in foodPoints)
-            {
-                if(Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK)
-                {
-                    snake.Eat();
-                    foodPoints.Remove(p);
-
-                    Random r = new Random();
-                    int t = r.Next(0,4);
-                    for(int i = 0;i < t;i++)
-                    {
-                        AddFoodOrPoison();
-                    }
-                    break;
-                }
+                AddFoodOrPoison();
             }
         }
 
@@ -729,9 +701,9 @@ namespace Snake2Arc
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Score>));
                 using(Stream reader = new FileStream("leadeBoardList.xml",FileMode.Open))
                 {
-                    List<Score> tempList = (List<Score>)serializer.Deserialize(reader);
+                    List<Score> temporaryList = (List<Score>)serializer.Deserialize(reader);
                     LeaderBoardList.Clear();
-                    foreach(var score in tempList.OrderByDescending(x => x.ScoreValue))
+                    foreach(var score in temporaryList.OrderByDescending(x => x.ScoreValue))
                         LeaderBoardList.Add(score);
                 }
             }
