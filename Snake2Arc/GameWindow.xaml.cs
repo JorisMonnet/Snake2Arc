@@ -332,11 +332,11 @@ namespace Snake2Arc
                 DrawSnakes();
                 DrawFoodsAndPoisonsAndSlowAndSpeed();
 
-                scoreBoard.Text = $"- Score : Player1(purple)={snake1.Score}" + (IsNotAlone ? $"  | Player2(green)={snake2.Score} -" : " -");
+                scoreBoard.Text = $"- Score : purple = {snake1.Score}" + (IsNotAlone ? $"  | green = {snake2.Score} -" : " -");
             }
             else
             {
-                scoreBoard.Text = $"PAUSED - Score : Player1(purple)={snake1.Score}" + (IsNotAlone ? $"  | Player2(green)={snake2.Score} -" : " -");
+                scoreBoard.Text = $"PAUSED - Score : purple = {snake1.Score}" + (IsNotAlone ? $"  | green = {snake2.Score} -" : " -");
                 paintCanvas.Children.Clear();
                 paintCanvas.Children.Add(pauseMenu);
             }
@@ -593,7 +593,7 @@ namespace Snake2Arc
                 gameOver2Player.Visibility = Visibility.Visible;
                 paintCanvas.Children.Clear();
                 paintCanvas.Children.Add(gameOver2Player);
-                whoLose2Player.Text = "GAME OVER, Player " + (isFirstLooser ? "1 " : "2 ") + "\nLoosed\n Player " + (!isFirstLooser ? "1 " : "2 ") + " wins.";
+                whoLose2Player.Text = "GAME OVER, " + (isFirstLooser ? "Purple" : "Green") + " Loosed\n" + (!isFirstLooser ? "Purple" : "Green") + " wins.";
             }
             else
             {
@@ -727,14 +727,7 @@ namespace Snake2Arc
         /// <param name="e"></param>
         private void Change_Snake_Thick(object sender,RoutedEventArgs e)
         {
-            if((int)thickSlider.Value != 15)
-            {
-                SNAKETHICK = (int)thickSlider.Value;
-            }
-            else
-            {
-                thickSlider.Value = 10;
-            }
+            SNAKETHICK = (int)thickSlider.Value;
         }
 
         /// <summary>

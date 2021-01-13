@@ -66,14 +66,14 @@
                             <Button     HorizontalAlignment="Center"        FontSize="20" Padding="5"   Click="Button_add_new_score"   Name="button_add_new_score" Background="#FF8A2BE2" Content="Add your score"/>
                         </StackPanel>
                     </Border>
-                    <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="200" Canvas.Left="150" Canvas.Top="100" Name="gameOver1Player" Panel.ZIndex="2" Visibility="Collapsed">
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="150" Canvas.Left="200" Canvas.Top="100" Name="gameOver1Player" Panel.ZIndex="2" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="AliceBlue">
                             <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Text="GAME OVER, Your score:" TextWrapping="Wrap"/>
                             <TextBlock Name="scoreWin1Player" TextAlignment="Center" FontSize="36" Foreground="red" Text="0"/>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click_after_game"  Content="Return to main menu"/>
                         </StackPanel>
                     </Border>
-                    <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="200" Canvas.Left="150" Canvas.Top="100" Name="gameOver2Player" Panel.ZIndex="2" Visibility="Collapsed">
+                    <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="125" Canvas.Left="150" Canvas.Top="100" Name="gameOver2Player" Panel.ZIndex="2" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="AliceBlue">
                             <TextBlock Margin="20" Name="whoLose2Player" TextAlignment="Center" FontSize="16" Text="GAME OVER, Player " TextWrapping="Wrap"/>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click"  Content="Return to main menu"/>
@@ -89,7 +89,7 @@
                     <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="200" Canvas.Left="150" Canvas.Top="100" Name="optionMenu" Panel.ZIndex="2" Visibility="Collapsed">
                         <StackPanel Orientation="Vertical" Background="white">
                             <TextBlock Margin="20" TextAlignment="Center" FontSize="16" Padding="2"  Text="Option"/>
-                            <TextBlock Margin="20" TextAlignment="Center" FontSize="12" Text="Easy - Medium -> Hardcore"/>
+                            <TextBlock Margin="20" TextAlignment="Center" FontSize="12" Text="Easy - Medium - Hard - Hardcore"/>
                             <Slider Maximum="20" Minimum="5" IsSnapToTickEnabled="True" TickFrequency="5" Value="10" ValueChanged="Change_Snake_Thick" Name="thickSlider"/>
                             <CheckBox HorizontalAlignment="Center" IsChecked="True" Name="checkMusic" Unchecked="Change_Check_Music" Checked="Change_Check_Music" Visibility="Visible">Music</CheckBox>
                             <Button Margin="4" Padding="2" Background="#FF8A2BE2" Click="Button_return_menu_click" Content="Back to Main"/>

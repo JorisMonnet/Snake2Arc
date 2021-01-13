@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <ArrayOfScore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Score>
-    <ScoreValue>9</ScoreValue>
-    <Name>joris le boss</Name>
+    <ScoreValue>21</ScoreValue>
+    <Name>Galette-Saucisse</Name>
   </Score>
   <Score>
-    <ScoreValue>3</ScoreValue>
-    <Name>joris 3</Name>
+    <ScoreValue>13</ScoreValue>
+    <Name>Parcode</Name>
   </Score>
   <Score>
-    <ScoreValue>3</ScoreValue>
-    <Name>gvyj</Name>
+    <ScoreValue>21</ScoreValue>
+    <Name>joueur inexperimenté</Name>
   </Score>
   <Score>
-    <ScoreValue>3</ScoreValue>
-    <Name>uiy</Name>
+    <ScoreValue>18</ScoreValue>
+    <Name>sebastien patoche</Name>
   </Score>
   <Score>
-    <ScoreValue>3</ScoreValue>
-    <Name>ui</Name>
+    <ScoreValue>19</ScoreValue>
+    <Name>Adrien</Name>
   </Score>
 </ArrayOfScore>
