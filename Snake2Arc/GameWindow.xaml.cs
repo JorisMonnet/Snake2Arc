@@ -59,7 +59,7 @@ namespace Snake2Arc
         private DispatcherTimer timer;
 
         //observable -> get notification when list change
-        public ObservableCollection<Score> LeaderBoardList              
+        public ObservableCollection<Score> LeaderBoardList
         {
             get; set;
         } = new ObservableCollection<Score>();
@@ -349,38 +349,34 @@ namespace Snake2Arc
             Point head = snake.SnakeBody[0];
             foreach(Point p in slowPoints)
             {
-                if((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
-                     (Math.Abs(p.Y - head.Y) < (SNAKETHICK)))
+                if(Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK)
                 {
-                    snake.Speed = snake.Speed < 0 ? 1 : snake.Speed - 1;
                     slowPoints.Remove(p);
-                    Random r = new Random();
-                    int t = r.Next(0,3);
-                    for(int i = 0;i < t;i++)
-                    {
-                        AddSlowOrSpeed();
-                    }
+                    ApplySpeedOrSlow(snake,snake.Speed < 0 ? 1 : snake.Speed - 1);
                     break;
                 }
             }
             foreach(Point p in speedPoints)
             {
-                if((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
-                     (Math.Abs(p.Y - head.Y) < (SNAKETHICK)))
+                if(Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK)
                 {
-                    snake.Speed = snake.Speed >= 2 ? 2 : snake.Speed + 1;
                     speedPoints.Remove(p);
-                    Random r = new Random();
-                    int t = r.Next(0,3);
-                    for(int i = 0;i < t;i++)
-                    {
-                        AddSlowOrSpeed();
-                    }
+                    ApplySpeedOrSlow(snake,snake.Speed >= 2 ? 2 : snake.Speed + 1);
                     break;
                 }
             }
         }
 
+        private void ApplySpeedOrSlow(Snake snake,int speed)
+        {
+            snake.Speed = speed;
+            Random r = new Random();
+            int t = r.Next(0,3);
+            for(int i = 0;i < t;i++)
+            {
+                AddSlowOrSpeed();
+            }
+        }
 
         /// <summary>
         /// Check colision between given snake and poison
@@ -392,8 +388,7 @@ namespace Snake2Arc
 
             foreach(Point p in poisonPoints)
             {
-                if((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
-                     (Math.Abs(p.Y - head.Y) < (SNAKETHICK)))
+                if(Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK)
                 {
                     snake.PoisonSnake(this);
                     snake.PoisonSnake(this);//poison Twice to be punitive
@@ -420,8 +415,7 @@ namespace Snake2Arc
 
             foreach(Point p in foodPoints)
             {
-                if((Math.Abs(p.X - head.X) < (SNAKETHICK)) &&
-                     (Math.Abs(p.Y - head.Y) < (SNAKETHICK)))
+                if(Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK)
                 {
                     snake.Eat();
                     foodPoints.Remove(p);
@@ -444,7 +438,7 @@ namespace Snake2Arc
         {
             CheckHeadOfSnake(snake1);
             CheckSelfCollision(snake1);
-            
+
             if(IsNotAlone) //collisions between snakes
             {
                 CheckHeadOfSnake(snake2);
@@ -595,7 +589,7 @@ namespace Snake2Arc
             mainMenu.Visibility = Visibility.Collapsed;
             RunGame(false);
         }
-        
+
         private void Button_Play_Double_Click(object sender,RoutedEventArgs e)
         {
             mainMenu.Visibility = Visibility.Collapsed;
@@ -635,7 +629,7 @@ namespace Snake2Arc
         private void Button_return_menu_click_after_game(object sender,RoutedEventArgs e)
         {
             gameOver1Player.Visibility = Visibility.Collapsed;
-            if(LeaderBoardList.Count <5 || finalScoreSolo > LeaderBoardList.Min(x => x.ScoreValue))
+            if(LeaderBoardList.Count < 5 || finalScoreSolo > LeaderBoardList.Min(x => x.ScoreValue))
             {
                 addNewScore.Visibility = Visibility.Visible;
                 paintCanvas.Children.Clear();
