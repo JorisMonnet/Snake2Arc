@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Snake2Arc
 {
@@ -223,11 +224,12 @@ namespace Snake2Arc
         private void AddFoodOrPoison()
         {
             int alea = rand.Next(0,10);
-            if(alea % 4 == 2 && foodPoints.Count != 0)
+            if(alea % 4 == 1 && foodPoints.Count != 0)
             {
                 //malus
                 Point poisonPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Width - 2 * SNAKETHICK))),SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Height - 2 * SNAKETHICK))));
                 poisonPoints.Add(poisonPoint);
+                Debug.WriteLine(foodPoints.Count);
             }
             else
             {
@@ -434,7 +436,7 @@ namespace Snake2Arc
                     foodPoints.Remove(p);
 
                     Random r = new Random();
-                    int t = r.Next(0,4);
+                    int t = r.Next(1,4);
                     for(int i = 0;i < t;i++)
                     {
                         AddFoodOrPoison();
