@@ -444,32 +444,31 @@ namespace Snake2Arc
         {
             CheckHeadOfSnake(snake1);
             CheckSelfCollision(snake1);
-            if(IsNotAlone)
+            
+            if(IsNotAlone) //collisions between snakes
             {
                 CheckHeadOfSnake(snake2);
                 CheckSelfCollision(snake2);
 
                 Point head2 = snake2.SnakeBody[0];
-
-                //collisions between snakes
                 Point head1 = snake1.SnakeBody[0];
 
-                foreach(Point p in snake2.SnakeBody)
-                {
-                    if((Math.Abs(p.X - head1.X) < (SNAKETHICK)) &&
-                         (Math.Abs(p.Y - head1.Y) < (SNAKETHICK)))
-                    {
-                        EndGame(true);
-                    }
-                }
-                foreach(Point p in snake1.SnakeBody)
-                {
-                    if((Math.Abs(p.X - head2.X) < (SNAKETHICK)) &&
-                         (Math.Abs(p.Y - head2.Y) < (SNAKETHICK)))
-                    {
-                        EndGame(false);
-                    }
-                }
+                snake2.SnakeBody.ForEach(p => CheckOnePointCollisionSnake(p,head1,true));
+                snake1.SnakeBody.ForEach(p => CheckOnePointCollisionSnake(p,head2,false));
+            }
+        }
+
+        /// <summary>
+        /// Check collision between one snake point and the head of a snake
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="head"></param>
+        /// <param name="isFirstLooser"></param>
+        private void CheckOnePointCollisionSnake(Point p,Point head,Boolean isFirstLooser)
+        {
+            if(Math.Abs(p.X - head.X) < SNAKETHICK && Math.Abs(p.Y - head.Y) < SNAKETHICK)
+            {
+                EndGame(isFirstLooser);
             }
         }
 
@@ -483,11 +482,7 @@ namespace Snake2Arc
             for(int i = 1;i < snake.SnakeBody.Count;i++)
             {
                 Point point = new Point(snake.SnakeBody[i].X,snake.SnakeBody[i].Y);
-                if((Math.Abs(point.X - head.X) < (SNAKETHICK)) &&
-                     (Math.Abs(point.Y - head.Y) < (SNAKETHICK)))
-                {
-                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
-                }
+                CheckOnePointCollisionSnake(point,head,snake.SnakeColor.ToString() == "#FF8A2BE2");
             }
         }
 
