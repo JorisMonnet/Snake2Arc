@@ -286,6 +286,19 @@ namespace Snake2Arc
 
                 paintCanvas.Children.Add(snakeEllipse);
             }
+            //snake's head
+            Point pHead = snake.SnakeBody[0];
+            Ellipse snakeHeadEllipse = new Ellipse
+            {
+                Fill = Brushes.White,
+                Width = SNAKETHICK/2,
+                Height = SNAKETHICK/2
+            };
+
+            Canvas.SetTop(snakeHeadEllipse, pHead.Y+ SNAKETHICK / 4);
+            Canvas.SetLeft(snakeHeadEllipse, pHead.X + SNAKETHICK / 4);
+
+            paintCanvas.Children.Add(snakeHeadEllipse);
         }
 
 
