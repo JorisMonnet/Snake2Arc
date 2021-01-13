@@ -28,11 +28,10 @@ namespace Snake2Arc
     {
 
         //music side
-        private WindowsMediaPlayer player = new WindowsMediaPlayer();
+        private readonly WindowsMediaPlayer player = new WindowsMediaPlayer();
 
         //bool to adapt code
         public bool IsNotAlone { get; set; }
-        private bool IsDisplayingEnd { get; set; }
         private bool IsPaused { get; set; }
 
         //things to eat
@@ -83,7 +82,6 @@ namespace Snake2Arc
         private void RunGame(Boolean IsNotAlone)
         {
             this.IsNotAlone = IsNotAlone;
-            IsDisplayingEnd = false;
             IsPaused = false;
             snake1 = new Snake(Brushes.BlueViolet,true);
             if(IsNotAlone)
@@ -461,11 +459,7 @@ namespace Snake2Arc
                     if((Math.Abs(p.X - head1.X) < (SNAKETHICK)) &&
                          (Math.Abs(p.Y - head1.Y) < (SNAKETHICK)))
                     {
-                        if(!IsDisplayingEnd)
-                        {
-                            EndGame(true);
-                        }
-                        break;
+                        EndGame(true);
                     }
                 }
                 foreach(Point p in snake1.SnakeBody)
@@ -473,11 +467,7 @@ namespace Snake2Arc
                     if((Math.Abs(p.X - head2.X) < (SNAKETHICK)) &&
                          (Math.Abs(p.Y - head2.Y) < (SNAKETHICK)))
                     {
-                        if(!IsDisplayingEnd)
-                        {
-                            EndGame(false);
-                        }
-                        break;
+                        EndGame(false);
                     }
                 }
             }
@@ -496,11 +486,7 @@ namespace Snake2Arc
                 if((Math.Abs(point.X - head.X) < (SNAKETHICK)) &&
                      (Math.Abs(point.Y - head.Y) < (SNAKETHICK)))
                 {
-                    if(!IsDisplayingEnd)
-                    {
-                        EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
-                    }
-                    break;
+                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
                 }
             }
         }
@@ -512,14 +498,11 @@ namespace Snake2Arc
         private void CheckHeadOfSnake(Snake snake)
         {
             if(snake.SnakeBody[0].X < 0 + SNAKETHICK
-                || snake.SnakeBody[0].X >= paintCanvas.ActualWidth - 1 * SNAKETHICK
+                || snake.SnakeBody[0].X >= paintCanvas.ActualWidth - SNAKETHICK
                 || snake.SnakeBody[0].Y < 0 + SNAKETHICK
-                || snake.SnakeBody[0].Y >= paintCanvas.ActualHeight - 1 * SNAKETHICK)
+                || snake.SnakeBody[0].Y >= paintCanvas.ActualHeight - SNAKETHICK)
             {
-                if(!IsDisplayingEnd)
-                {
-                    EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
-                }
+                EndGame(snake.SnakeColor.ToString() == "#FF8A2BE2");
             }
         }
 
@@ -617,7 +600,7 @@ namespace Snake2Arc
             mainMenu.Visibility = Visibility.Collapsed;
             RunGame(false);
         }
-
+        
         private void Button_Play_Double_Click(object sender,RoutedEventArgs e)
         {
             mainMenu.Visibility = Visibility.Collapsed;

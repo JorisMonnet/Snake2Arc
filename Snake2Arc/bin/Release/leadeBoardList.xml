@@ -2,6 +2,10 @@
 <ArrayOfScore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Score>
     <ScoreValue>2</ScoreValue>
+    <Name>s</Name>
+  </Score>
+  <Score>
+    <ScoreValue>2</ScoreValue>
     <Name>joris</Name>
   </Score>
 </ArrayOfScore>
