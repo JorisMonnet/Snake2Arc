@@ -222,7 +222,7 @@ namespace Snake2Arc
         /// <returns></returns>
         private Point GenerateItemPoint()
         {
-            return new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Width - 2 * SNAKETHICK))),SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Height - 2 * SNAKETHICK))));
+            return new Point(SnakeCeiling(rand.Next(2 * SNAKETHICK,(int)(paintCanvas.Width - 2 * SNAKETHICK))),SnakeCeiling(rand.Next(2 * SNAKETHICK,(int)(paintCanvas.Height - 2 * SNAKETHICK))));
         }
 
         /// <summary>
@@ -248,9 +248,9 @@ namespace Snake2Arc
         /// </summary>
         /// <param name="entry">value to fit</param>
         /// <returns></returns>
-        private int SnakeCeiling(int entry)
+        public static int SnakeCeiling(int entry)
         {
-            return (int)Math.Ceiling(entry / (SNAKETHICK * 1.0)) * SNAKETHICK;
+            return (int)(Math.Ceiling(entry / (SNAKETHICK * 1.0)) * SNAKETHICK);
         }
 
         /// <summary>

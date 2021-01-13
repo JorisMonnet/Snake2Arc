@@ -17,7 +17,7 @@
         </CollectionViewSource>
      </Window.Resources>
 
-    <Viewbox x:Name="mainViewBox">
+    <Viewbox x:Name="mainViewBox" MaxHeight="1080" MaxWidth="1920">
         <Grid  HorizontalAlignment="Center" VerticalAlignment="Center"  >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -31,7 +31,7 @@
                 <TextBlock Name="scoreBoard" Foreground="White" FontSize="50" Text="Snake2Arc"/>
             </WrapPanel>
 
-            <Viewbox x:Name="viewBoxCanvas" MaxHeight="980" MaxWidth="1460" Grid.Row="1" Grid.Column="0">
+            <Viewbox x:Name="viewBoxCanvas" Grid.Row="1" Grid.Column="0">
                 <Canvas Name="paintCanvas" Background="Black"
                                     Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Height="450" Width="550">
                     <Border BorderBrush="Silver" BorderThickness="2" Width="250" Height="170" Canvas.Left="150" Canvas.Top="100" Name="mainMenu" Panel.ZIndex="2">

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Media;
+using System;
 using System.Windows;
 using System.Windows.Media;
 
@@ -25,7 +25,7 @@ namespace Snake2Arc
             SpeedDelay = 20;
             SnakeColor = color;
             SnakeBody = new List<Point>();
-            Size = oneOrTwo ? 100 : 300;
+            Size = oneOrTwo ? GameWindow.SnakeCeiling(100): GameWindow.SnakeCeiling(300);
             SnakeBody.Add(new Point(Size,Size));
             SnakeBody.Add(new Point(Size + GameWindow.SNAKETHICK,Size));
         }
@@ -65,6 +65,7 @@ namespace Snake2Arc
                 {
                     newBody.Add(new Point(SnakeBody[0].X + GameWindow.SNAKETHICK,SnakeBody[0].Y));
                 }
+                Console.WriteLine(newBody[0]);
                 SnakeBody.RemoveAt(SnakeBody.Count - 1);
                 foreach(Point p in SnakeBody)
                 {
