@@ -229,7 +229,6 @@ namespace Snake2Arc
                 //malus
                 Point poisonPoint = new Point(SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Width - 2 * SNAKETHICK))),SnakeCeiling(rand.Next(0 + 2 * SNAKETHICK,(int)(paintCanvas.Height - 2 * SNAKETHICK))));
                 poisonPoints.Add(poisonPoint);
-                Debug.WriteLine(foodPoints.Count);
             }
             else
             {
