@@ -657,7 +657,7 @@ namespace Snake2Arc
         private void Button_return_menu_click_after_game(object sender,RoutedEventArgs e)
         {
             gameOver1Player.Visibility = Visibility.Collapsed;
-            if(finalScoreSolo > LeaderBoardList.Min(x => x.ScoreValue))
+            if(LeaderBoardList.Count <5 || finalScoreSolo > LeaderBoardList.Min(x => x.ScoreValue))
             {
                 addNewScore.Visibility = Visibility.Visible;
                 paintCanvas.Children.Clear();
