@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ArrayOfScore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Score>
+    <ScoreValue>9</ScoreValue>
+    <Name>ad en i</Name>
+  </Score>
+  <Score>
+    <ScoreValue>7</ScoreValue>
+    <Name>adrien</Name>
+  </Score>
+  <Score>
+    <ScoreValue>6</ScoreValue>
+    <Name>first</Name>
+  </Score>
+  <Score>
+    <ScoreValue>3</ScoreValue>
+    <Name>salut</Name>
+  </Score>
+  <Score>
+    <ScoreValue>2</ScoreValue>
+    <Name>dza</Name>
+  </Score>
+</ArrayOfScore>
